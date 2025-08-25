@@ -57,7 +57,7 @@ export default function WatchedVideosSection() {
                     src={item.thumbnail}
                     alt="Thumbnail"
                     fill
-                    sizes="(max-width: 1200px) 50vw, 100vw"
+                    unoptimized
                     className="object-cover rounded-md shadow"
                   />
                   <Badge

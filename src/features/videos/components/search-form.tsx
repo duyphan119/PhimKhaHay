@@ -92,7 +92,7 @@ export default function SearchForm() {
                           src={`${data.data.APP_DOMAIN_CDN_IMAGE}/uploads/movies/${video.poster_url}`}
                           alt="Poster"
                           fill
-                          sizes="(max-width: 1200px) 50vw, 100vw"
+                          unoptimized
                           className="object-cover rounded-md shadow"
                         />
                       </div>

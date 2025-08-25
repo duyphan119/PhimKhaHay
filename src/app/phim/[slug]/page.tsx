@@ -60,7 +60,7 @@ export default async function VideoDetails({ params }: VideoDetailsProps) {
                 src={`${APP_DOMAIN_CDN_IMAGE}/uploads/movies/${item.thumb_url}`}
                 alt="Poster"
                 fill
-                sizes="(max-width: 1200px) 50vw, 100vw"
+                unoptimized
                 className="object-cover rounded-md shadow"
                 priority
               />

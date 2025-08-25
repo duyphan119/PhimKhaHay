@@ -41,7 +41,7 @@ export default function WatchedVideo() {
                 src={item.thumbnail}
                 alt="Poster"
                 fill
-                sizes="(max-width: 1200px) 50vw, 100vw"
+                unoptimized
                 className="object-cover rounded-md shadow"
               />
 
