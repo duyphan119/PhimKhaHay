@@ -26,8 +26,10 @@ export default function WatchedVideosSection() {
 
   return (
     <section className="space-y-4 mt-12">
-      <div className="flex items-center justify-between gap-2 bg-neutral-900 p-4 rounded-md">
-        <h5 className="text-xl font-medium">Xem tiếp?</h5>
+      <div className="flex items-center justify-between gap-2 _bg-layout p-4 rounded-md">
+        <h5 className="text-xl font-medium bg-gradient-to-r from-green-400 to-lime-400 text-transparent bg-clip-text">
+          Xem tiếp?
+        </h5>
 
         <Link
           href="/da-xem"
@@ -46,41 +48,46 @@ export default function WatchedVideosSection() {
               key={item.id}
               className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
             >
-              <Link
-                href={`/xem-phim/${item.slug}${item.query}`}
-                className="relative block w-full aspect-video select-none"
-              >
-                <Image
-                  src={item.thumbnail}
-                  alt="Thumbnail"
-                  fill
-                  sizes="(max-width: 1200px) 50vw, 100vw"
-                  className="object-cover rounded-md shadow"
-                />
-                <Badge
-                  variant="watchedEpisode"
-                  className="absolute top-0 right-0 "
-                >
-                  {item.episodeName}
-                </Badge>
-                <Badge variant="language" className="absolute bottom-0 left-0 ">
-                  {shortenVideoLanguage(shortenServerName(item.serverName))}
-                </Badge>
-              </Link>
-              <div className="mt-2">
+              <div className="_bg-layout rounded-md">
                 <Link
-                  href={`/phim/${item.slug}`}
-                  title={item.name}
-                  className="font-medium line-clamp-2 hover:text-primary hover:underline hover:underline-offset-2"
+                  href={`/xem-phim/${item.slug}${item.query}`}
+                  className="relative block w-full aspect-video select-none"
                 >
-                  {item.name}
+                  <Image
+                    src={item.thumbnail}
+                    alt="Thumbnail"
+                    fill
+                    sizes="(max-width: 1200px) 50vw, 100vw"
+                    className="object-cover rounded-md shadow"
+                  />
+                  <Badge
+                    variant="watchedEpisode"
+                    className="absolute top-0.5 right-0.5 "
+                  >
+                    Tập {item.serverDataItemName}
+                  </Badge>
+                  <Badge
+                    variant="language"
+                    className="absolute bottom-0.5 left-0.5 "
+                  >
+                    {shortenVideoLanguage(shortenServerName(item.serverName))}
+                  </Badge>
                 </Link>
-                <p
-                  title={item.originName}
-                  className="text-muted-foreground text-sm line-clamp-2"
-                >
-                  {item.originName}
-                </p>
+                <div className="p-2 text-center">
+                  <Link
+                    href={`/phim/${item.slug}`}
+                    title={item.originName}
+                    className="_text-primary line-clamp-2 _hover-underline"
+                  >
+                    {item.originName}
+                  </Link>
+                  <p
+                    title={item.name}
+                    className="text-muted-foreground text-sm line-clamp-2"
+                  >
+                    {item.name}
+                  </p>
+                </div>
               </div>
             </CarouselItem>
           ))}

@@ -1,48 +1,58 @@
 "use client";
 
 import Link from "next/link";
-import { LatestVideo } from "../data";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { cn, shortenVideoLanguage } from "@/lib/utils";
 
 type Props = {
-  video: LatestVideo;
+  video: TVideoItem;
   imageType: "poster" | "thumbnail";
   className?: string;
+  appDomainCdnImage: string;
 };
 
-export default function VideoCard({ video, imageType, className }: Props) {
+export default function VideoCard({
+  video,
+  imageType,
+  className,
+  appDomainCdnImage,
+}: Props) {
   return (
-    <div className={className}>
+    <div className={cn("rounded-md", className)}>
       <Link
         href={`/phim/${video.slug}`}
         className={cn(
-          "relative block w-full select-none overflow-hidden",
-          imageType === "thumbnail" ? "aspect-video" : "aspect-[23/35]"
+          "relative block w-full select-none",
+          imageType === "thumbnail" ? "aspect-video" : "aspect-[2/3]"
         )}
       >
         <Image
-          src={imageType === "thumbnail" ? video.thumbnail : video.poster}
+          unoptimized
+          src={`${appDomainCdnImage}/uploads/movies/${
+            imageType === "thumbnail" ? video.poster_url : video.thumb_url
+          }`}
           alt={imageType === "thumbnail" ? "Thumbnail" : "Poster"}
           fill
-          className="object-cover rounded-md shadow hover:scale-105 transition-transform duration-300"
+          className="object-cover shadow rounded-md"
         />
 
         <Badge variant="episode" className="absolute top-0.5 right-0.5 ">
-          {video.episodeCurrent}
+          {video.episode_current === "Tập 0"
+            ? "Sắp chiếu"
+            : video.episode_current}
         </Badge>
         <Badge variant="language" className="absolute bottom-0.5 left-0.5 ">
-          {shortenVideoLanguage(video.language)}
+          {shortenVideoLanguage(video.lang)}
         </Badge>
       </Link>
       <div className="p-2 text-center">
         <Link
           href={`/phim/${video.slug}`}
-          title={video.originName}
-          className="font-lime-400 line-clamp-2 hover:underline hover:underline-offset-2"
+          title={video.origin_name}
+          className="_text-primary line-clamp-2 _hover-underline"
         >
-          {video.originName}
+          {video.origin_name}
         </Link>
         <p
           title={video.name}

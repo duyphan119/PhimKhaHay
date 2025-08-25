@@ -1,9 +1,13 @@
 import Breadcrumb from "@/components/breadcrumb";
-import Servers from "@/features/servers/components/servers";
+import Actors from "@/features/actors/components/actors";
+import actorApi from "@/features/actors/data";
+import Episodes from "@/features/episodes/components/episodes";
+import Images from "@/features/images/components/images";
+import imageApi from "@/features/images/data";
 import RecommendVideos from "@/features/videos/components/recommend-videos";
-import VideoContent from "@/features/videos/components/video-content";
 import VideoInfo from "@/features/videos/components/video-info";
-import { getVideo } from "@/features/videos/data";
+import videoApi from "@/features/videos/data";
+import { getSeo } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -19,12 +23,10 @@ export const generateMetadata = async ({
 }: VideoDetailsProps): Promise<Metadata> => {
   const { slug } = await params;
   try {
-    const { video } = await getVideo(slug);
-    if (video) {
-      return {
-        title: `PhimKhaHay | ${video.name}`,
-      };
-    }
+    const {
+      data: { seoOnPage, APP_DOMAIN_CDN_IMAGE },
+    } = await videoApi.fetchVideoDetailsData(slug);
+    return getSeo(seoOnPage, APP_DOMAIN_CDN_IMAGE);
   } catch (error) {
     console.log(error);
   }
@@ -36,64 +38,81 @@ export const generateMetadata = async ({
 export default async function VideoDetails({ params }: VideoDetailsProps) {
   const { slug } = await params;
 
-  const { servers, video } = await getVideo(slug);
+  const results = await Promise.allSettled([
+    videoApi.fetchVideoDetailsData(slug),
+    actorApi.fetchActorsData(slug),
+    imageApi.fetchImagesData(slug),
+  ]);
 
-  if (!video) return notFound();
+  if (results[0].status !== "fulfilled") return notFound();
+  const {
+    data: { item, breadCrumb, APP_DOMAIN_CDN_IMAGE },
+  } = results[0].value;
 
   return (
-    <div className="_container">
-      <div className="grid grid-cols-12 gap-4 py-4">
-        <Breadcrumb
-          items={[
-            {
-              href: "/danh-sach",
-              text: "Danh sách phim",
-            },
-            {
-              text: video.name,
-            },
-          ]}
-          className="col-span-12"
-        />
-        <div className="col-span-12 lg:col-span-9">
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-12 sm:col-span-6 xl:col-span-3">
-              <div className="relative w-full aspect-[23/35]">
-                <Image
-                  src={video.poster}
-                  alt="Poster"
-                  fill
-                  sizes="(max-width: 1200px) 50vw, 100vw"
-                  className="object-cover rounded-md shadow"
-                  priority
-                />
-              </div>
+    <div className="grid grid-cols-12 gap-4">
+      <Breadcrumb breadCrumb={breadCrumb} className="col-span-12" />
+      <div className="col-span-12 lg:col-span-9">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-12 sm:col-span-6 xl:col-span-4">
+            <div className="relative w-full aspect-[2/3]">
+              <Image
+                src={`${APP_DOMAIN_CDN_IMAGE}/uploads/movies/${item.thumb_url}`}
+                alt="Poster"
+                fill
+                sizes="(max-width: 1200px) 50vw, 100vw"
+                className="object-cover rounded-md shadow"
+                priority
+              />
             </div>
-            <div className="col-span-12 sm:col-span-6 xl:col-span-9">
-              <VideoInfo video={video} buttonPlayVisible={true} />
-            </div>
-            <div className="col-span-12">
-              <div className="mb-2">Danh sách tập</div>
-              <Servers servers={servers} videoSlug={video.slug} />
-            </div>
-            <div className="col-span-12">
-              <div className="text-lg font-medium">Nội dung</div>
-              <VideoContent content={video.content} />
-            </div>
-            {video.trailer && (
+          </div>
+          <div className="col-span-12 sm:col-span-6 xl:col-span-8">
+            <VideoInfo video={item} buttonPlayVisible={true} />
+          </div>
+          {results[1].status === "fulfilled" &&
+            results[1].value.data.peoples.length > 0 && (
               <div className="col-span-12">
-                <div className="text-lg font-medium">Trailer</div>
-                <iframe
-                  src={video.trailer.replace("watch?v=", "embed/")}
-                  className="w-full aspect-video"
-                ></iframe>
+                <div className="text-xl font-medium _text-title-pink mb-1">
+                  Diễn viên
+                </div>
+
+                <Actors actorsData={results[1].value.data} />
               </div>
             )}
-          </div>
+          {item.episodes[0]?.server_data?.[0].name !== "" && (
+            <div className="col-span-12">
+              <div className="text-xl font-medium _text-title-pink mb-1">
+                Danh sách tập
+              </div>
+              <Episodes videoSlug={item.slug} episodes={item.episodes} />
+            </div>
+          )}
+          {results[2].status === "fulfilled" && (
+            <div className="col-span-12">
+              <div className="text-xl font-medium _text-title-pink mb-1">
+                Hình ảnh
+              </div>
+              <Images imagesData={results[2].value.data} />
+            </div>
+          )}
+          {item.trailer_url && (
+            <div className="col-span-12">
+              <div className="text-lg font-medium">Trailer</div>
+              <iframe
+                src={item.trailer_url.replace("watch?v=", "embed/")}
+                className="w-full aspect-video"
+              ></iframe>
+            </div>
+          )}
         </div>
-        <div className="col-span-12 lg:col-span-3">
-          <RecommendVideos slug={video.slug} country={video.countries[0]} />
-        </div>
+      </div>
+      <div className="col-span-12 lg:col-span-3">
+        <RecommendVideos
+          slug={item.slug}
+          country={item.country}
+          category={item.category}
+          videoType={item.type}
+        />
       </div>
     </div>
   );

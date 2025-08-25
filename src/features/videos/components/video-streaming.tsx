@@ -6,19 +6,18 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import queryString from "query-string";
 import { useEffect } from "react";
-import { Episode } from "../data";
 
 type Props = {
   embedUrl: string;
-  nextEpisode?: Episode;
-  previousEpisode?: Episode;
+  nextServerDataItem?: TServerDataItem;
+  previousServerDataItem?: TServerDataItem;
   watchedVideoInput: WatchedVideo;
 };
 
 export default function VideoStreaming({
   embedUrl,
-  nextEpisode,
-  previousEpisode,
+  nextServerDataItem,
+  previousServerDataItem,
   watchedVideoInput,
 }: Props) {
   const router = useRouter();
@@ -27,7 +26,7 @@ export default function VideoStreaming({
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (!watchedVideoInput.episodeName) return;
+    if (!watchedVideoInput.serverDataItemName) return;
     const timeoutId = setTimeout(() => {
       saveWatchedVideo(watchedVideoInput);
     }, 4567);
@@ -37,26 +36,26 @@ export default function VideoStreaming({
     };
   }, [watchedVideoInput]);
 
-  const handleSelectPreviousEpisode = () => {
-    if (!previousEpisode) return;
+  const handleSelectPreviousServerDataItem = () => {
+    if (!previousServerDataItem) return;
     const indexServer = Number(searchParams.get("ser")) || 0;
     const url = queryString.stringifyUrl({
       url: pathname,
       query: {
-        ep: previousEpisode.slug,
+        ep: previousServerDataItem.slug,
         ser: indexServer,
       },
     });
     router.push(url);
   };
 
-  const handleSelectNextEpisode = () => {
-    if (!nextEpisode) return;
+  const handleSelectnextServerDataItem = () => {
+    if (!nextServerDataItem) return;
     const indexServer = Number(searchParams.get("ser")) || 0;
     const url = queryString.stringifyUrl({
       url: pathname,
       query: {
-        ep: nextEpisode.slug,
+        ep: nextServerDataItem.slug,
         ser: indexServer,
       },
     });
@@ -71,13 +70,16 @@ export default function VideoStreaming({
         className="w-full aspect-video"
       ></iframe>
       <div className="flex items-center justify-center gap-4">
-        {previousEpisode && (
-          <Button variant="secondary" onClick={handleSelectPreviousEpisode}>
+        {previousServerDataItem && (
+          <Button
+            variant="secondary"
+            onClick={handleSelectPreviousServerDataItem}
+          >
             <ChevronLeftIcon className="translate-y-[2px]" /> Tập trước
           </Button>
         )}
-        {nextEpisode && (
-          <Button variant="secondary" onClick={handleSelectNextEpisode}>
+        {nextServerDataItem && (
+          <Button variant="secondary" onClick={handleSelectnextServerDataItem}>
             Tập tiếp
             <ChevronRightIcon className="translate-y-[2px]" />
           </Button>

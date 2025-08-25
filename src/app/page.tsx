@@ -1,127 +1,182 @@
+import categoryApi, { categorySlugTitleMap } from "@/features/categories/data";
+import countryApi from "@/features/countries/data";
 import LatestVideosCarousel from "@/features/videos/components/latest-videos-carousel";
 import VideosCategorySection from "@/features/videos/components/videos-category-section";
 import VideosCountrySection from "@/features/videos/components/videos-country-section";
-import {
-  getLatestVideos,
-  getVideosByCategory,
-  getVideosByCountry,
-} from "@/features/videos/data";
+import videoApi from "@/features/videos/data";
 import WatchedVideosSection from "@/features/watched-videos/components/watched-videos-section";
-import { Metadata } from "next";
+import { getSeo } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "PhimKhaHay | Trang chủ",
+export const generateMetadata = async () => {
+  const defaultTitle = "PhimKhaHay | Trang chủ";
+  try {
+    const {
+      data: { seoOnPage, APP_DOMAIN_CDN_IMAGE },
+    } = await videoApi.fetchHomeData();
+
+    return getSeo(
+      {
+        ...seoOnPage,
+        titleHead: defaultTitle,
+      },
+      APP_DOMAIN_CDN_IMAGE
+    );
+  } catch (error) {
+    console.log(error);
+  }
+
+  return {
+    title: defaultTitle,
+  };
 };
 
 export default async function Home() {
   const results = await Promise.allSettled([
-    getLatestVideos(),
-    getVideosByCountry("han-quoc"),
-    getVideosByCountry("trung-quoc"),
-    getVideosByCountry("nhat-ban"),
-    getVideosByCategory("hai-huoc", { limit: 6 }),
-    getVideosByCategory("phieu-luu", { limit: 6 }),
-    getVideosByCategory("hoc-duong", { limit: 6 }),
-    getVideosByCategory("the-thao", { limit: 6 }),
-    getVideosByCategory("kinh-di", { limit: 6 }),
-    getVideosByCategory("hinh-su", { limit: 6 }),
-    getVideosByCategory("vien-tuong", { limit: 6 }),
-    getVideosByCategory("vo-thuat", { limit: 6 }),
+    videoApi.fetchHomeData(),
+    countryApi.fetchVideosData("han-quoc"),
+    categoryApi.fetchVideosData("hoc-duong", {
+      limit: "6",
+      country: "han-quoc",
+    }),
+    categoryApi.fetchVideosData("hinh-su", { limit: "6", country: "han-quoc" }),
+    countryApi.fetchVideosData("trung-quoc"),
+    categoryApi.fetchVideosData("vien-tuong", {
+      limit: "6",
+      country: "trung-quoc",
+    }),
+    categoryApi.fetchVideosData("co-trang", {
+      limit: "6",
+      country: "trung-quoc",
+    }),
+    countryApi.fetchVideosData("nhat-ban"),
+    categoryApi.fetchVideosData("phieu-luu", {
+      limit: "6",
+      country: "nhat-ban",
+    }),
+    categoryApi.fetchVideosData("the-thao", {
+      limit: "6",
+      country: "nhat-ban",
+    }),
+    categoryApi.fetchVideosData("hai-huoc", { limit: "6" }),
+    categoryApi.fetchVideosData("kinh-di", { limit: "6" }),
   ]);
 
-  const latestVideos =
-    results[0].status === "fulfilled" ? results[0].value.items : [];
-  const koreaVideos =
-    results[1].status === "fulfilled" ? results[1].value.items : [];
-  const chinaVideos =
-    results[2].status === "fulfilled" ? results[2].value.items : [];
-  const japanVideos =
-    results[3].status === "fulfilled" ? results[3].value.items : [];
+  const appDomainCdnImage =
+    results[0].status === "fulfilled"
+      ? results[0].value.data.APP_DOMAIN_CDN_IMAGE
+      : "";
 
   return (
     <div className="">
-      <LatestVideosCarousel videos={latestVideos} />
+      <LatestVideosCarousel
+        appDomainCdnImage={appDomainCdnImage}
+        videos={
+          results[0].status === "fulfilled" ? results[0].value.data.items : []
+        }
+      />
 
       <WatchedVideosSection />
-      <div className="mt-12 p-4 rounded-md _bg-layout space-y-8">
-        <VideosCountrySection
-          title="PHIM HÀN QUỐC"
-          titleColor="blue"
-          href="/danh-sach?country=han-quoc"
-          videos={koreaVideos}
-        />
+      <VideosCountrySection
+        appDomainCdnImage={appDomainCdnImage}
+        title="PHIM HÀN QUỐC"
+        titleColor="blue"
+        href="/quoc-gia/han-quoc"
+        videos={
+          results[1].status === "fulfilled" ? results[1].value.data.items : []
+        }
+      />
 
-        <VideosCountrySection
-          title="PHIM TRUNG QUỐC"
-          titleColor="yellow"
-          href="/danh-sach?country=trung-quoc"
-          videos={chinaVideos}
-        />
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["hoc-duong"]}
+        videos={
+          results[2].status === "fulfilled" ? results[2].value.data.items : []
+        }
+        href="/the-loai/hoc-duong"
+      />
 
-        <VideosCountrySection
-          title="PHIM NHẬT BẢN"
-          titleColor="red"
-          href="/danh-sach?country=nhat-ban"
-          videos={japanVideos}
-        />
-      </div>
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["hinh-su"]}
+        videos={
+          results[3].status === "fulfilled" ? results[3].value.data.items : []
+        }
+        href="/the-loai/hinh-su"
+      />
 
-      {results[4].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Tiếng cười sảng khoái"
-          videos={results[4].value.items}
-          href="/danh-sach?category=hai-huoc"
-        />
-      )}
-      {results[5].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Chuyến đi mạo hiểm"
-          videos={results[5].value.items}
-          href="/danh-sach?category=phieu-luu"
-        />
-      )}
-      {results[6].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Tuổi học trò"
-          videos={results[6].value.items}
-          href="/danh-sach?category=hoc-duong"
-        />
-      )}
-      {results[7].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Sức mạnh và tốc độ"
-          videos={results[7].value.items}
-          href="/danh-sach?category=the-thao"
-        />
-      )}
-      {results[8].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Rùng rợn, ám ảnh"
-          videos={results[8].value.items}
-          href="/danh-sach?category=kinh-di"
-        />
-      )}
-      {results[9].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Tội ác và công lý"
-          videos={results[9].value.items}
-          href="/danh-sach?category=hinh-su"
-        />
-      )}
-      {results[10].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Tương lai giả tưởng"
-          videos={results[10].value.items}
-          href="/danh-sach?category=vien-tuong"
-        />
-      )}
-      {results[11].status === "fulfilled" && (
-        <VideosCategorySection
-          title="Quyền cước tinh hoa"
-          videos={results[11].value.items}
-          href="/danh-sach?category=vo-thuat"
-        />
-      )}
+      <VideosCountrySection
+        appDomainCdnImage={appDomainCdnImage}
+        title="PHIM TRUNG QUỐC"
+        titleColor="yellow"
+        href="/quoc-gia/trung-quoc"
+        videos={
+          results[4].status === "fulfilled" ? results[4].value.data.items : []
+        }
+      />
+
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["vien-tuong"]}
+        videos={
+          results[5].status === "fulfilled" ? results[5].value.data.items : []
+        }
+        href="/the-loai/vien-tuong"
+      />
+
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["co-trang"]}
+        videos={
+          results[6].status === "fulfilled" ? results[6].value.data.items : []
+        }
+        href="/the-loai/co-trang"
+      />
+
+      <VideosCountrySection
+        appDomainCdnImage={appDomainCdnImage}
+        title="PHIM NHẬT BẢN"
+        titleColor="red"
+        href="/quoc-gia/nhat-ban"
+        videos={
+          results[7].status === "fulfilled" ? results[7].value.data.items : []
+        }
+      />
+
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["phieu-luu"]}
+        videos={
+          results[8].status === "fulfilled" ? results[8].value.data.items : []
+        }
+        href="/the-loai/phieu-luu"
+      />
+
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["the-thao"]}
+        videos={
+          results[9].status === "fulfilled" ? results[9].value.data.items : []
+        }
+        href="/the-loai/the-thao"
+      />
+
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["hai-huoc"]}
+        videos={
+          results[10].status === "fulfilled" ? results[10].value.data.items : []
+        }
+        href="/the-loai/hai-huoc"
+      />
+
+      <VideosCategorySection
+        appDomainCdnImage={appDomainCdnImage}
+        title={categorySlugTitleMap["kinh-di"]}
+        videos={
+          results[11].status === "fulfilled" ? results[11].value.data.items : []
+        }
+        href="/the-loai/kinh-di"
+      />
     </div>
   );
 }

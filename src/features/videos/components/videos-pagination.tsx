@@ -7,18 +7,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  Pagination as PaginationResponse,
-  VideosParams,
-} from "@/features/videos/data";
+
 import { usePathname, useRouter } from "next/navigation";
 import qs from "query-string";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 type VideosPaginationProps = {
-  pagination: PaginationResponse;
+  pagination: TPagination;
   className?: string;
-  searchParams?: VideosParams;
+  searchParams?: TPaginationFilter;
 };
 
 export default function VideosPagination({

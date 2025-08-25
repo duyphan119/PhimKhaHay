@@ -3,7 +3,7 @@ export type WatchedVideo = {
   slug: string;
   name: string;
   thumbnail: string;
-  episodeName: string;
+  serverDataItemName: string;
   serverName: string;
   time: number;
   originName: string;
@@ -29,7 +29,7 @@ export const saveWatchedVideo = (input: WatchedVideo) => {
   const index = watchedVideos.findIndex(({ id }) => id === input.id);
 
   if (index !== -1) {
-    const watchedEpisodeString = `${input.episodeName}${input.serverName}`;
+    const watchedEpisodeString = `${input.serverDataItemName}${input.serverName}`;
     input.otherWatchedEpisodes = [
       ...watchedVideos[index].otherWatchedEpisodes.filter(
         (item) => item !== watchedEpisodeString

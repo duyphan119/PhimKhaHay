@@ -6,17 +6,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { LatestVideo } from "../data";
-import { cn, shortenVideoLanguage } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+import VideoCard from "./video-card";
 
 type Props = {
   title: string;
-  videos: LatestVideo[];
+  videos: TVideoItem[];
   href: string;
   titleColor: "red" | "blue" | "yellow";
+  appDomainCdnImage: string;
 };
 
 export default function VideosCountrySection({
@@ -24,9 +23,10 @@ export default function VideosCountrySection({
   videos,
   href,
   titleColor,
+  appDomainCdnImage,
 }: Props) {
   return (
-    <section className="grid grid-cols-5 xl:grid-cols-6 gap-4">
+    <section className="grid grid-cols-5 xl:grid-cols-6 gap-4 _bg-layout mt-12 p-4">
       <div className="col-span-5 md:col-span-1 flex md:flex-col md:justify-center justify-between">
         <h6
           className={cn(
@@ -53,45 +53,14 @@ export default function VideosCountrySection({
           <CarouselContent>
             {videos.map((video) => (
               <CarouselItem
-                key={video.id}
+                key={video._id}
                 className="basis-1/2 md:basis-1/3 xl:basis-1/4"
               >
-                <Link
-                  href={`/phim/${video.slug}`}
-                  className="relative block w-full aspect-video select-none _bg-container overflow-hidden"
-                >
-                  <Image
-                    src={video.thumbnail}
-                    alt="Thumbnail"
-                    fill
-                    sizes="(max-width: 1200px) 50vw, 100vw"
-                    className="object-cover rounded-md shadow hover:scale-105 transition-transform duration-200"
-                  />
-                  <Badge variant="episode" className="absolute top-0 right-0 ">
-                    {video.episodeCurrent}
-                  </Badge>
-                  <Badge
-                    variant="language"
-                    className="absolute bottom-0 left-0 "
-                  >
-                    {shortenVideoLanguage(video.language)}
-                  </Badge>
-                </Link>
-                <div className="p-2 text-center _bg-container">
-                  <Link
-                    href={`/phim/${video.slug}`}
-                    title={video.originName}
-                    className="font-medium line-clamp-2 text-lime-400 hover:underline hover:underline-offset-2"
-                  >
-                    {video.originName}
-                  </Link>
-                  <p
-                    title={video.name}
-                    className="text-muted-foreground text-xs line-clamp-2"
-                  >
-                    {video.name}
-                  </p>
-                </div>
+                <VideoCard
+                  appDomainCdnImage={appDomainCdnImage}
+                  video={video}
+                  imageType="thumbnail"
+                />
               </CarouselItem>
             ))}
           </CarouselContent>

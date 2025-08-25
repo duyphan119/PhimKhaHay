@@ -1,104 +1,62 @@
 "use client";
 
-import { Country } from "@/features/countries/data";
-import useGetVideosByTypeList from "@/features/videos/hooks/useGetVideosByTypeList";
 import RecommendVideosSkeleton from "@/features/videos/skeletons/recommend-videos-skeleton";
-import Image from "next/image";
+import { VIDEO_TYPE_SLUG } from "@/lib/constants";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import queryString from "query-string";
+import videoApi from "../data";
+import VideoCard from "./video-card";
 
 type RecommendVideosProps = {
   slug: string;
-  country?: Country;
+  country: TCountry[];
+  category: TCategory[];
+  videoType: string;
 };
-
-const LIMIT = 9;
 
 export default function RecommendVideos({
   slug,
   country,
+  category,
+  videoType,
 }: RecommendVideosProps) {
-  const { data: seriesData } = useGetVideosByTypeList("phim-bo", {
-    country: country?.slug,
-    limit: LIMIT,
-  });
-  const { data: movieData } = useGetVideosByTypeList("phim-le", {
-    country: country?.slug,
-    limit: LIMIT,
+  const filter = {
+    category: category.map(({ slug }) => slug).join(","),
+    country: country.map(({ slug }) => slug).join(","),
+    limit: "16",
+  };
+  const { data } = useQuery({
+    queryKey: ["recommend-videos", slug],
+    queryFn: () => videoApi.fetchVideosData(VIDEO_TYPE_SLUG[videoType], filter),
   });
 
-  if (!seriesData || !movieData) return <RecommendVideosSkeleton />;
+  if (!data) return <RecommendVideosSkeleton />;
 
   return (
     <>
       <div className="text-lg font-medium">
         <Link
-          href={`/danh-sach?typelist=phim-bo`}
-          className="hover:text-lime-400"
+          href={queryString.stringifyUrl({
+            url: `/danh-sach/${VIDEO_TYPE_SLUG[videoType]}`,
+            query: filter,
+          })}
+          className="_text-primary _hover-underline"
         >
-          CÓ THỂ BẠN THÍCH
+          Có thể bạn thích
         </Link>
       </div>
       <div className="space-y-4 mt-4">
-        {seriesData.pages[0].items
-          .filter((item) => item.slug !== slug)
-
-          .map((video, index) => (
-            <div key={index} className="group">
-              <div className="grid grid-cols-12 gap-4">
-                <Link
-                  href={`/phim/${video.slug}`}
-                  className="col-span-12 md:col-span-4"
-                >
-                  <div className="relative aspect-video">
-                    <Image
-                      src={video.thumbnail}
-                      alt="Thumbnail"
-                      fill
-                      sizes="(max-width: 1200px) 50vw, 100vw"
-                      className="object-cover rounded-md shadow"
-                    />
-                  </div>
-                </Link>
-                <div className="col-span-12 md:col-span-8">
-                  <Link
-                    href={`/phim/${video.slug}`}
-                    className="group-hover:text-lime-400 text-sm line-clamp-2"
-                  >
-                    {video.name}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        {movieData.pages[0].items
+        {data.data.items
           .filter((item) => item.slug !== slug)
           .map((video, index) => (
-            <div key={index} className="group">
-              <div className="grid grid-cols-12 gap-4">
-                <Link
-                  href={`/xem-phim/${video.slug}`}
-                  className="col-span-12 md:col-span-4"
-                >
-                  <div className="relative aspect-video">
-                    <Image
-                      src={video.thumbnail}
-                      alt="Thumbnail"
-                      fill
-                      sizes="(max-width: 1200px) 50vw, 100vw"
-                      className="object-cover rounded-md shadow"
-                    />
-                  </div>
-                </Link>
-                <div className="col-span-12 md:col-span-8">
-                  <Link
-                    href={`/xem-phim/${video.slug}`}
-                    className="group-hover:text-lime-400 text-sm line-clamp-2"
-                  >
-                    {video.name}
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <VideoCard
+              key={index}
+              video={video}
+              imageType="thumbnail"
+              appDomainCdnImage={data.data.APP_DOMAIN_CDN_IMAGE}
+              className="_bg-layout"
+            />
           ))}
       </div>
     </>

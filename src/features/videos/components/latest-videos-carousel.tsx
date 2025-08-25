@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { LatestVideo } from "@/features/videos/data";
 import Autoplay from "embla-carousel-autoplay";
 import { InfoIcon, PlayIcon } from "lucide-react";
 import Image from "next/image";
@@ -16,11 +15,13 @@ import Link from "next/link";
 import { Fragment } from "react";
 
 type LatestVideosCarouselProps = {
-  videos: LatestVideo[];
+  videos: TVideoItem[];
+  appDomainCdnImage: string;
 };
 
 export default function LatestVideosCarousel({
   videos,
+  appDomainCdnImage,
 }: LatestVideosCarouselProps) {
   return (
     <Carousel
@@ -32,39 +33,42 @@ export default function LatestVideosCarousel({
     >
       <CarouselContent>
         {videos.map((video) => (
-          <CarouselItem key={video.id} className="">
-            <div className="select-none relative h-[calc(100vh-12rem)] w-full">
+          <CarouselItem key={video._id} className="">
+            <div className="select-none relative aspect-video lg:aspect-auto lg:h-[calc(100vh-12rem)] w-full">
               <Link
                 href={`/phim/${video.slug}`}
                 className="block w-full h-full relative"
               >
+                {/* api không trả về poster_url */}
                 <Image
-                  src={video.thumbnail}
+                  unoptimized
+                  src={`${appDomainCdnImage}/uploads/movies/${video.thumb_url.replace(
+                    "-thumb",
+                    "-poster"
+                  )}`}
                   alt="Thumbnail"
                   fill
-                  sizes="(max-width: 1200px) 50vw, 100vw"
                   className="object-contain object-right"
-                  priority
                 />
               </Link>
 
               <div className="absolute bg-gradient-to-r from-background to-background/20 inset-0 z-[10] p-4 md:p-10 flex items-center">
                 <div className="flex flex-col justify-end w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5">
                   <h1 className="md:block hidden font-medium text-5xl text-lime-400 mb-1">
-                    {video.originName}
+                    {video.origin_name}
                   </h1>
                   <h4 className="md:block hidden text-2xl mb-6">
                     {video.name}
                   </h4>
                   <Link
                     href={`/xem-phim/${video.slug}`}
-                    className="md:hidden text-center md:text-3xl hover:text-primary hover:underline hover:underline-offset-2 px-12"
+                    className="md:hidden text-center md:text-3xl hover:text-primary _hover-underline px-12"
                   >
                     {video.name}
                   </Link>
                   <div className="hidden md:flex items-center flex-wrap mb-1 text-xs md:text-sm">
                     <div className="w-16">Quốc gia</div>
-                    {video.countries.map((country, index) => (
+                    {video.country.map((country, index) => (
                       <Fragment key={index}>
                         {index > 0 ? (
                           <span>,&nbsp;</span>
@@ -73,7 +77,7 @@ export default function LatestVideosCarousel({
                         )}
                         <Link
                           href={`/quoc-gia/${country.slug}`}
-                          className="hover:text-primary hover:underline hover:underline-offset-2"
+                          className="hover:text-primary _hover-underline"
                         >
                           {country.name}
                         </Link>
@@ -85,14 +89,14 @@ export default function LatestVideosCarousel({
                     <span>:&nbsp;</span>
                     <Link
                       href={`/nam-phat-hanh/${video.year}`}
-                      className="hover:text-primary hover:underline hover:underline-offset-2"
+                      className="hover:text-primary _hover-underline"
                     >
                       {video.year}
                     </Link>
                   </div>
                   <div className="hidden md:flex items-center flex-wrap text-xs md:text-sm">
                     <div className="w-16">Thể loại</div>
-                    {video.categories.map((category, index) => (
+                    {video.category.map((category, index) => (
                       <Fragment key={index}>
                         {index > 0 ? (
                           <span>,&nbsp;</span>
@@ -101,7 +105,7 @@ export default function LatestVideosCarousel({
                         )}
                         <Link
                           href={`/the-loai/${category.slug}`}
-                          className="hover:text-primary hover:underline hover:underline-offset-2"
+                          className="hover:text-primary _hover-underline"
                         >
                           {category.name}
                         </Link>

@@ -1,4 +1,3 @@
-import { SeoOnPage } from "@/features/videos/data";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -25,7 +24,7 @@ export function shortenVideoLanguage(videoLanguage: string) {
   );
 }
 
-export function getSeo(seoOnPage: SeoOnPage, appDomainCdnImage: string) {
+export function getSeo(seoOnPage: TSeoOnPage, appDomainCdnImage: string) {
   return {
     title: `PhimKhaHay | ${seoOnPage.titleHead}`,
     description: seoOnPage.descriptionHead,
@@ -48,7 +47,10 @@ export function getSeo(seoOnPage: SeoOnPage, appDomainCdnImage: string) {
       title: seoOnPage.titleHead,
       description: seoOnPage.descriptionHead,
       images: seoOnPage.og_image.map((img) => ({
-        url: `${appDomainCdnImage}/${img}`,
+        url: `${appDomainCdnImage}/uploads/movies/${img
+          .replace("movies/", "")
+          .replace("uploads/", "")
+          .replace("/", "")}`,
         width: 1200,
         height: 630,
         alt: seoOnPage.titleHead,

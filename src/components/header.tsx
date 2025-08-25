@@ -5,6 +5,7 @@ import CountriesNavigationMenu from "@/features/countries/components/countries-n
 import SearchForm from "@/features/videos/components/search-form";
 import Link from "next/link";
 import DrawerMenu from "./drawer-menu";
+import YearsNavigationMenu from "@/features/years/components/years-navigation-menu";
 
 export default function Header() {
   return (
@@ -37,6 +38,7 @@ export default function Header() {
           </Link>
           <CategoriesNavigationMenu />
           <CountriesNavigationMenu />
+          <YearsNavigationMenu />
         </div>
         <SearchForm />
       </div>

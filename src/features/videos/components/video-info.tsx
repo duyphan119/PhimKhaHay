@@ -1,10 +1,18 @@
-import { buttonVariants } from "@/components/ui/button";
-import { Video } from "@/features/videos/data";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { Fragment } from "react";
+import VideoContent from "./video-content";
+import { STATUS_LABELS } from "@/lib/constants";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 type VideoInfoProps = {
-  video: Video;
+  video: TVideoDetails;
   buttonPlayVisible?: boolean;
 };
 
@@ -13,51 +21,93 @@ export default function VideoInfo({
   buttonPlayVisible = false,
 }: VideoInfoProps) {
   return (
-    <div>
-      <div className="text-3xl font-medium">{video.name}</div>
-      <div className="text-neutral-400">{video.originName}</div>
-      <div className="text-sm mt-4">Đạo diễn: {video.director}</div>
-      <div className="text-sm">
+    <div className="">
+      <div className="text-3xl font-medium _text-primary">
+        {video.origin_name}
+      </div>
+      <div className="text-neutral-400">{video.name}</div>
+      <div className=" mt-4">
+        Đạo diễn: {video.director.join(", ") || "Đang cập nhật"}
+      </div>
+      <div className="">
         Quốc gia:{" "}
-        {video.countries.map((item, index) => (
+        {video.country.map((item, index) => (
           <Fragment key={index}>
             {index > 0 && <span>, </span>}
             <Link
-              href={`/danh-sach?country=${item.slug}`}
-              className="hover:text-lime-400 hover:underline-offset-2 hover:underline"
+              href={`/quoc-gia/${item.slug}`}
+              className="hover:text-lime-400 _hover-underline"
             >
               {item.name}
             </Link>
           </Fragment>
         ))}
       </div>
-      <div className="text-sm">Năm: {video.year}</div>
-      <div className="text-sm">
+      <div className="">
+        Năm:{" "}
+        <Link
+          href={`/nam-phat-hanh/${video.year}`}
+          className="hover:text-lime-400 _hover-underline"
+        >
+          {video.year}
+        </Link>
+      </div>
+      <div className="">
         Thể loại:{" "}
-        {video.categories.map((item, index) => (
+        {video.category.map((item, index) => (
           <Fragment key={index}>
             {index > 0 && <span>, </span>}
             <Link
-              href={`/danh-sach?category=${item.slug}`}
-              className="hover:text-lime-400 hover:underline-offset-2 hover:underline"
+              href={`/the-loai/${item.slug}`}
+              className="hover:text-lime-400 _hover-underline"
             >
               {item.name}
             </Link>
           </Fragment>
         ))}
       </div>
-      <div className="text-sm">Diễn viên: {video.actors.join(", ")}</div>
+      <div className="">
+        Trạng thái:{" "}
+        {(video.episodes?.[0].server_data?.[0].link_embed &&
+          STATUS_LABELS[video.status]) ||
+          "Đang cập nhật"}
+      </div>
+      <div className="mt-4 ">
+        <div className="">Nội dung: </div>
+        <VideoContent content={video.content} />
+      </div>
       {buttonPlayVisible && (
-        <div className="mt-4">
-          <Link
-            href={`/xem-phim/${video.slug}`}
-            className={buttonVariants({
-              size: "xl",
-              variant: "gradientYellowRed",
-            })}
-          >
-            XEM NGAY
-          </Link>
+        <div className="mt-4 flex gap-4">
+          {video.trailer_url && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button size="xl" variant="gradientRed">
+                  XEM TRAILER
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="h-[50vh] aspect-video">
+                <DialogHeader className="sr-only">
+                  <DialogTitle>Trailer</DialogTitle>
+                </DialogHeader>
+                <iframe
+                  src={video.trailer_url.replace("/watch?v=", "/embed/")}
+                  className="aspect-video w-full"
+                />
+              </DialogContent>
+            </Dialog>
+          )}
+          {video.status !== "trailer" &&
+            video.episodes?.[0].server_data?.[0].link_embed !== "" && (
+              <Link
+                href={`/xem-phim/${video.slug}`}
+                className={buttonVariants({
+                  size: "xl",
+                  variant: "gradientYellowRed",
+                })}
+              >
+                XEM NGAY
+              </Link>
+            )}
         </div>
       )}
     </div>

@@ -22,7 +22,7 @@ export default function Footer() {
             <Link
               key={item.slug}
               href={`/danh-sach?typelist=${item.slug}`}
-              className="justify-start hover:text-primary hover:underline hover:underline-offset-2"
+              className="justify-start hover:text-primary _hover-underline"
             >
               {item.name}
             </Link>

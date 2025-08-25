@@ -12,15 +12,15 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { categories } from "@/features/categories/data";
-import { countries } from "@/features/countries/data";
 import { typeList } from "@/features/typelist/data";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
+import { useCommonData } from "./providers/common-data-provider";
 
 export default function DrawerMenu() {
+  const { categories, countries, years } = useCommonData();
   const [visible, setVisible] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -58,7 +58,7 @@ export default function DrawerMenu() {
                         key={country.name}
                         href={`/quoc-gia/${country.slug}`}
                         onClick={handleClick}
-                        className="col-span-1 text-sm font-medium px-4 py-2 hover:text-lime-400"
+                        className="col-span-1 text-sm font-medium px-4 py-2 hover:_text-primary"
                       >
                         {country.name}
                       </Link>
@@ -80,6 +80,25 @@ export default function DrawerMenu() {
                         className="col-span-1 text-sm font-medium px-4 py-2 hover:text-lime-400"
                       >
                         {category.name}
+                      </Link>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="year">
+                <AccordionTrigger>Năm</AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-2 bg-neutral-900">
+                    {years.map(({ year }) => (
+                      <Link
+                        key={year}
+                        href={`/nam-phat-hanh/${year}`}
+                        onClick={handleClick}
+                        className="col-span-1 text-sm font-medium px-4 py-2 hover:_text-primary"
+                      >
+                        {year}
                       </Link>
                     ))}
                   </div>

@@ -1,20 +1,7 @@
 "use client";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { useCommonData } from "@/components/providers/common-data-provider";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { categories } from "@/features/categories/data";
-import { countries } from "@/features/countries/data";
-import { TypeList, typeList } from "@/features/typelist/data";
-import { ArrowRightIcon, FilterIcon, SortDescIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { VideosParams } from "../data";
-import queryString from "query-string";
 import {
   Drawer,
   DrawerContent,
@@ -24,6 +11,11 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { TypeList, typeList } from "@/features/typelist/data";
+import { ArrowRightIcon, FilterIcon, XIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import queryString from "query-string";
+import { useEffect, useMemo, useState } from "react";
 
 type Query = {
   country?: string;
@@ -34,7 +26,7 @@ type Query = {
 };
 
 type VideosTypelistFilterProps = {
-  searchParams: VideosParams;
+  searchParams: TVideosFilter;
   typelist: TypeList;
 };
 
@@ -43,6 +35,8 @@ export default function VideosTypelistFilter({
   typelist: defaultTypelist,
 }: VideosTypelistFilterProps) {
   const router = useRouter();
+
+  const { categories, countries } = useCommonData();
 
   const currentYear = new Date().getFullYear();
 
@@ -245,209 +239,5 @@ export default function VideosTypelistFilter({
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  );
-  return (
-    <Accordion type="multiple" className="space-y-4">
-      <AccordionItem value="filter">
-        <AccordionTrigger
-          hideIcon={true}
-          className="bg-secondary hover:bg-secondary/70 rounded-md"
-        >
-          <FilterIcon className="size-4 mr-2" /> Bộ lọc
-        </AccordionTrigger>
-        <AccordionContent
-          noPadding={true}
-          className="bg-background p-4 rounded-md space-y-2"
-        >
-          <div className="flex items-start">
-            <p className="flex-shrink-0 text-sm pt-1 w-20">Kiểu phim:</p>
-            <div className="flex flex-wrap items-center gap-2">
-              {typeList.map(({ name, slug }) => {
-                const isActive = typelist === slug;
-                return (
-                  <Button
-                    key={slug}
-                    size="sm"
-                    variant={isActive ? "outlinePrimary" : "outline"}
-                    onClick={() => {
-                      setTypelist(slug as TypeList);
-                    }}
-                  >
-                    {name}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex items-start">
-            <p className="flex-shrink-0 text-sm pt-1 w-20">Quốc gia:</p>
-
-            <div className="flex flex-wrap items-center gap-2">
-              {countries.map(({ name, slug }) => {
-                const isActive = countriesSlug.includes(slug);
-                return (
-                  <Button
-                    key={slug}
-                    size="sm"
-                    variant={isActive ? "outlinePrimary" : "outline"}
-                    onClick={() => {
-                      handleClick("country", slug);
-                    }}
-                  >
-                    {name}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex items-start">
-            <p className="flex-shrink-0 text-sm pt-1 w-20">Thể loại:</p>
-
-            <div className="flex flex-wrap items-center gap-2">
-              {categories.map(({ name, slug }) => {
-                const isActive = categoriesSlug.includes(slug);
-                return (
-                  <Button
-                    key={slug}
-                    size="sm"
-                    variant={isActive ? "outlinePrimary" : "outline"}
-                    onClick={() => {
-                      handleClick("category", slug);
-                    }}
-                  >
-                    {name}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex items-start">
-            <p className="flex-shrink-0 text-sm pt-1 w-20">Năm:</p>
-
-            <div className="flex flex-wrap items-center gap-2">
-              {new Array(currentYear - 1969).fill("").map((_, index) => {
-                const value = currentYear - index;
-                const isActive = query.year === value;
-                return (
-                  <Button
-                    key={index}
-                    size="sm"
-                    variant={isActive ? "outlinePrimary" : "outline"}
-                    onClick={() => {
-                      handleClick("year", value);
-                    }}
-                  >
-                    {value}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <AccordionTrigger
-              onClick={handleFilter}
-              hideIcon={true}
-              className={buttonVariants({ size: "sm" })}
-            >
-              Lọc kết quả <ArrowRightIcon className="size-3" />
-            </AccordionTrigger>
-            <AccordionTrigger
-              hideIcon={true}
-              className={buttonVariants({ size: "sm", variant: "destructive" })}
-            >
-              <XIcon className="size-3" />
-              Đóng
-            </AccordionTrigger>
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="sort">
-        <AccordionTrigger
-          hideIcon={true}
-          className="bg-secondary hover:bg-secondary/70 rounded-md"
-        >
-          <SortDescIcon className="size-4 mr-2" /> Sắp xếp
-        </AccordionTrigger>
-        <AccordionContent
-          noPadding={true}
-          className="bg-background p-4 rounded-md space-y-2"
-        >
-          <div className="flex items-start">
-            <p className="flex-shrink-0 text-sm pt-1 w-20">Xếp theo:</p>
-            <div className="flex flex-wrap items-center gap-2">
-              {[
-                {
-                  name: "Thời gian cập nhật",
-                  value: "modified.time",
-                },
-                {
-                  name: "Năm phát hành",
-                  value: "year",
-                },
-              ].map(({ name, value }) => {
-                const isActive = query.sort_field === value;
-                return (
-                  <Button
-                    key={value}
-                    size="sm"
-                    variant={isActive ? "outlinePrimary" : "outline"}
-                    onClick={() => {
-                      handleClick("sort_field", value);
-                    }}
-                  >
-                    {name}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex items-start">
-            <p className="flex-shrink-0 text-sm pt-1 w-20">Cách xếp:</p>
-            <div className="flex flex-wrap items-center gap-2">
-              {[
-                {
-                  name: "Giảm dần",
-                  value: "desc",
-                },
-                {
-                  name: "Tăng dần",
-                  value: "asc",
-                },
-              ].map(({ name, value }) => {
-                const isActive = query.sort_type === value;
-                return (
-                  <Button
-                    key={value}
-                    size="sm"
-                    variant={isActive ? "outlinePrimary" : "outline"}
-                    onClick={() => {
-                      handleClick("sort_type", value);
-                    }}
-                  >
-                    {name}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <AccordionTrigger
-              onClick={handleFilter}
-              hideIcon={true}
-              className={buttonVariants({ size: "sm" })}
-            >
-              Sắp xếp kết quả <ArrowRightIcon className="size-3" />
-            </AccordionTrigger>
-            <AccordionTrigger
-              hideIcon={true}
-              className={buttonVariants({ size: "sm", variant: "destructive" })}
-            >
-              <XIcon className="size-3" />
-              Đóng
-            </AccordionTrigger>
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
   );
 }

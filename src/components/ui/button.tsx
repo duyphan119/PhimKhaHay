@@ -12,6 +12,8 @@ const buttonVariants = cva(
         default: "bg-primary text-neutral-800 shadow hover:bg-primary/90",
         gradientGrayNeutral:
           "bg-gradient-to-br from-gray-400/70 to-neutral-500/70 hover:from-neutral-500/70 hover:to-gray-400/70",
+        gradientRed:
+          "bg-gradient-to-br from-red-600/70 to-destructive/70 hover:from-destructive/70 hover:to-red-600/70",
         gradientYellowRed:
           "bg-gradient-to-br from-yellow-500/70 to-orange-500/70 hover:from-orange-500/70 hover:to-yellow-500/70",
         gradientBluePurple:

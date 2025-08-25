@@ -23,9 +23,7 @@ export default function SearchForm() {
   const divRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const { data, isLoading } = useSearchVideos({
-    keyword: input,
-  });
+  const { data, isLoading } = useSearchVideos(input, {});
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,7 +76,7 @@ export default function SearchForm() {
             <>
               <ScrollArea className="">
                 <div className="space-y-4 max-h-64 p-4">
-                  {data.items.map((video) => (
+                  {data.data.items.map((video) => (
                     <Link
                       key={video.slug}
                       href={`/phim/${video.slug}`}
@@ -87,11 +85,11 @@ export default function SearchForm() {
                         setVisible(false);
                         window.location.href = `/phim/${video.slug}`;
                       }}
-                      className="grid grid-cols-4 gap-4 hover:text-primary hover:underline hover:underline-offset-2"
+                      className="grid grid-cols-4 gap-4 hover:text-primary _hover-underline"
                     >
                       <div className="col-span-1 relative aspect-video">
                         <Image
-                          src={video.thumbnail}
+                          src={`${data.data.APP_DOMAIN_CDN_IMAGE}/uploads/movies/${video.poster_url}`}
                           alt="Poster"
                           fill
                           sizes="(max-width: 1200px) 50vw, 100vw"
