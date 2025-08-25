@@ -61,7 +61,12 @@ const actorApi = {
   },
   fetchActorDetailsData: async (actorId: number | string) => {
     const html = await (
-      await fetch(`https://www.themoviedb.org/person/${actorId}?language=en-En`)
+      await fetch(
+        `https://www.themoviedb.org/person/${actorId}?language=en-En`,
+        {
+          cache: "no-cache",
+        }
+      )
     ).text();
     const $ = cheerio.load(html);
 
@@ -106,6 +111,7 @@ const actorApi = {
     const [res, profile] = await Promise.all([
       fetch(`https://www.themoviedb.org/person/${actorId}?language=en-En`, {
         headers: { "Accept-Language": "en-US,en;q=0.9" },
+        cache: "no-cache",
       }),
       actorApi.fetchActorDetailsData(actorId),
     ]);

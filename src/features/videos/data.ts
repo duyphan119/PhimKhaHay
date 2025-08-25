@@ -24,6 +24,7 @@ const videoApi = {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-cache",
     });
 
     if (!res.ok) {
@@ -46,6 +47,7 @@ const videoApi = {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-cache",
     });
 
     if (!res.ok) {
@@ -68,6 +70,7 @@ const videoApi = {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-cache",
     });
 
     if (!res.ok) {
