@@ -1,6 +1,5 @@
 "use client";
 
-import { useCommonData } from "@/components/providers/common-data-provider";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,24 +9,24 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
+import { typeList } from "../data";
 
-export default function YearsNavigationMenu() {
-  const { years } = useCommonData();
+export default function TypelistNavigationMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Năm</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Kiểu phim</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ScrollArea>
-              <div className="grid max-h-[70vh] grid-cols-6 lg:w-[600px] sm:w-[300px] w-screen bg-neutral-900">
-                {years.map(({ year }) => (
+              <div className="grid max-h-[70vh] grid-cols-3 lg:w-[600px] sm:w-[300px] w-screen bg-neutral-900">
+                {typeList.map((item) => (
                   <Link
-                    key={year}
-                    href={`/nam-phat-hanh/${year}`}
-                    className="p-2 col-span-6 sm:col-span-2 md:col-span-3 lg:col-span-1  _hover-underline hover:_text-primary"
+                    key={item.name}
+                    href={`/the-loai/${item.slug}`}
+                    className="p-2 col-span-1  _hover-underline hover:_text-primary"
                   >
-                    {year}
+                    {item.name}
                   </Link>
                 ))}
               </div>

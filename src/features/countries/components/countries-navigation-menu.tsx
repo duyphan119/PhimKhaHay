@@ -25,7 +25,7 @@ export default function CountriesNavigationMenu() {
                   <Link
                     key={country.name}
                     href={`/quoc-gia/${country.slug}`}
-                    className="p-2 col-span-6 sm:col-span-2 md:col-span-3 lg:col-span-1 text-neutral-200 _hover-underline hover:_text-primary"
+                    className="p-2 col-span-6 sm:col-span-2 md:col-span-3 lg:col-span-1  _hover-underline hover:_text-primary"
                   >
                     {country.name}
                   </Link>

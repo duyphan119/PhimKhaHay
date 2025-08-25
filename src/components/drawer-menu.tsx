@@ -35,19 +35,25 @@ export default function DrawerMenu() {
         <DrawerTitle className="sr-only">Menu</DrawerTitle>
         <ScrollArea className="py-2 h-full">
           <div className="space-y-4">
-            {typeList.slice(0, 2).map((item) => (
-              <Link
-                key={item.name}
-                href={`/danh-sach?typelist=${item.slug}`}
-                onClick={handleClick}
-                className="block px-4 py-2"
-              >
-                {item.name}
-              </Link>
-            ))}
-            <Link href="/da-xem" className="block px-4 py-2">
-              Đã xem
-            </Link>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="country">
+                <AccordionTrigger>Kiểu phim</AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-2 bg-neutral-900">
+                    {typeList.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={`/danh-sach/${item.slug}`}
+                        onClick={handleClick}
+                        className="col-span-1 text-sm font-medium px-4 py-2 hover:_text-primary"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
             <Accordion type="single" collapsible>
               <AccordionItem value="country">
                 <AccordionTrigger>Quốc gia</AccordionTrigger>
@@ -105,6 +111,9 @@ export default function DrawerMenu() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+            <Link href="/da-xem" className="block px-4 py-2">
+              Đã xem
+            </Link>
           </div>
         </ScrollArea>
       </DrawerContent>
