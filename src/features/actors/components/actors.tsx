@@ -13,7 +13,7 @@ export default function Actors({ actorsData }: Props) {
       {actorsData.peoples.map((item, index) => (
         <div
           key={index}
-          className="lg:col-span-2 _bg-layout rounded-md overflow-hidden"
+          className="col-span-6 sm:col-span-4 md:col-span-3 lg:col-span-2 _bg-layout rounded-md overflow-hidden"
         >
           <Link
             href={`/dien-vien/${item.tmdb_people_id}`}

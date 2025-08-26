@@ -67,7 +67,7 @@ export default function VideosCategoryFilter({
       };
       router.push(`/danh-sach/${typelist}?${queryString.stringify(newQuery)}`);
     } else {
-      router.push(`/quoc-gia/${slug}?${queryString.stringify(othersQuery)}`);
+      router.push(`/the-loai/${slug}?${queryString.stringify(othersQuery)}`);
     }
   };
 
