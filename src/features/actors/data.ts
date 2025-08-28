@@ -59,7 +59,9 @@ const actorApi = {
     const data: TActorsResponse = await res.json();
     return data;
   },
-  fetchActorDetailsData: async (actorId: number | string) => {
+  fetchActorDetailsData: async (
+    actorId: number | string
+  ): Promise<TActorProfileRaw> => {
     const html = await (
       await fetch(
         `https://www.themoviedb.org/person/${actorId}?language=en-En`,
@@ -102,19 +104,16 @@ const actorApi = {
   fetchVideosData: async function fetchActorData(
     actorId: number | string
   ): Promise<{
-    breadCrumb: TBreadcrumb;
     items: TVideoItem[];
-    profile: ProfileRaw;
     APP_DOMAIN_CDN_IMAGE: string;
-    seoOnPage: TSeoOnPage;
   }> {
-    const [res, profile] = await Promise.all([
-      fetch(`https://www.themoviedb.org/person/${actorId}?language=en-En`, {
+    const res = await fetch(
+      `https://www.themoviedb.org/person/${actorId}?language=en-En`,
+      {
         headers: { "Accept-Language": "en-US,en;q=0.9" },
         cache: "no-cache",
-      }),
-      actorApi.fetchActorDetailsData(actorId),
-    ]);
+      }
+    );
 
     const html = await res.text();
     const $ = cheerio.load(html);
@@ -138,7 +137,6 @@ const actorApi = {
     );
 
     const items: TVideoItem[] = [];
-    const ogImages: string[] = [];
     const videoIds = new Set<string>();
     let appDomainCdnImage = "";
 
@@ -157,23 +155,12 @@ const actorApi = {
         if (video && !videoIds.has(video._id)) {
           videoIds.add(video._id);
           items.push(video);
-          ogImages.push(video.thumb_url);
         }
       }
     });
 
     return {
-      profile,
-      breadCrumb: [
-        { name: `Diễn viên ${profile.name}`, position: 1, isCurrent: true },
-      ],
       items,
-      seoOnPage: {
-        titleHead: `Diễn viên ${profile.name}`,
-        descriptionHead: `Danh sách phim của diễn viên ${profile.name}`,
-        og_image: ogImages,
-        og_type: "website",
-      },
       APP_DOMAIN_CDN_IMAGE: appDomainCdnImage,
     };
   },

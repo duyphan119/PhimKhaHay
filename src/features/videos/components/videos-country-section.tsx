@@ -9,6 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import VideoCard from "./video-card";
+import VideoCardSkeleton from "../skeletons/video-card-skeleton";
 
 type Props = {
   title: string;
@@ -16,6 +17,7 @@ type Props = {
   href: string;
   titleColor: "red" | "blue" | "yellow";
   appDomainCdnImage: string;
+  isLoading?: boolean;
 };
 
 export default function VideosCountrySection({
@@ -24,6 +26,7 @@ export default function VideosCountrySection({
   href,
   titleColor,
   appDomainCdnImage,
+  isLoading = false,
 }: Props) {
   return (
     <section className="grid grid-cols-5 xl:grid-cols-6 gap-4 _bg-layout mt-12 p-4">
@@ -51,18 +54,27 @@ export default function VideosCountrySection({
       <div className="col-span-5 md:col-span-4 xl:col-span-5">
         <Carousel>
           <CarouselContent>
-            {videos.map((video) => (
-              <CarouselItem
-                key={video._id}
-                className="basis-1/2 md:basis-1/3 xl:basis-1/4"
-              >
-                <VideoCard
-                  appDomainCdnImage={appDomainCdnImage}
-                  video={video}
-                  imageType="thumbnail"
-                />
-              </CarouselItem>
-            ))}
+            {isLoading
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="basis-1/2 md:basis-1/3 xl:basis-1/4"
+                  >
+                    <VideoCardSkeleton imageType="thumbnail" />
+                  </CarouselItem>
+                ))
+              : videos.map((video) => (
+                  <CarouselItem
+                    key={video._id}
+                    className="basis-1/2 md:basis-1/3 xl:basis-1/4"
+                  >
+                    <VideoCard
+                      appDomainCdnImage={appDomainCdnImage}
+                      video={video}
+                      imageType="thumbnail"
+                    />
+                  </CarouselItem>
+                ))}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />

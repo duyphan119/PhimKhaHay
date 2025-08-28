@@ -72,7 +72,9 @@ export default function VideosYearFilter({
       };
       router.push(`/danh-sach/${typelist}?${queryString.stringify(newQuery)}`);
     } else {
-      router.push(`/quoc-gia/${slug}?${queryString.stringify(othersQuery)}`);
+      router.push(
+        `/nam-phat-hanh/${slug}?${queryString.stringify(othersQuery)}`
+      );
     }
   };
 

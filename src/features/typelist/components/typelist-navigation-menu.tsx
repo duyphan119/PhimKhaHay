@@ -23,7 +23,7 @@ export default function TypelistNavigationMenu() {
                 {typeList.map((item) => (
                   <Link
                     key={item.name}
-                    href={`/the-loai/${item.slug}`}
+                    href={`/danh-sach/${item.slug}`}
                     className="p-2 col-span-1  _hover-underline hover:_text-primary"
                   >
                     {item.name}

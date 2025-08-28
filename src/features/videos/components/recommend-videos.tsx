@@ -24,7 +24,7 @@ export default function RecommendVideos({
   const filter = {
     category: category.map(({ slug }) => slug).join(","),
     country: country.map(({ slug }) => slug).join(","),
-    limit: "16",
+    limit: "18",
   };
   const { data } = useQuery({
     queryKey: ["recommend-videos", slug],
@@ -41,21 +41,21 @@ export default function RecommendVideos({
             url: `/danh-sach/${VIDEO_TYPE_SLUG[videoType]}`,
             query: filter,
           })}
-          className="_text-primary _hover-underline"
+          className="_text-title-pink"
         >
           Có thể bạn thích
         </Link>
       </div>
-      <div className="space-y-4 mt-4">
+      <div className="mt-4 grid grid-cols-12 gap-4">
         {data.data.items
           .filter((item) => item.slug !== slug)
           .map((video, index) => (
             <VideoCard
               key={index}
               video={video}
-              imageType="thumbnail"
+              imageType="poster"
               appDomainCdnImage={data.data.APP_DOMAIN_CDN_IMAGE}
-              className="_bg-layout"
+              className="_bg-layout col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2"
             />
           ))}
       </div>

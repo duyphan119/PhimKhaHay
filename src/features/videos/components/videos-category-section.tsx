@@ -1,12 +1,14 @@
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import VideoCard from "./video-card";
+import VideoCardSkeleton from "../skeletons/video-card-skeleton";
 
 type Props = {
   title: string;
   videos: TVideoItem[];
   href: string;
   appDomainCdnImage: string;
+  isLoading?: boolean;
 };
 
 export default function VideosCategorySection({
@@ -14,6 +16,7 @@ export default function VideosCategorySection({
   videos,
   href,
   appDomainCdnImage,
+  isLoading,
 }: Props) {
   return (
     <section className="mt-12">
@@ -31,15 +34,23 @@ export default function VideosCategorySection({
         </Link>
       </div>
       <div className="grid lg:grid-cols-6 sm:grid-cols-3 grid-cols-2 gap-4 mt-4">
-        {videos.map((video) => (
-          <VideoCard
-            key={video._id}
-            appDomainCdnImage={appDomainCdnImage}
-            video={video}
-            imageType="poster"
-            className="col-span-1 _bg-layout rounded-es-md rounded-ee-md"
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, index) => (
+              <VideoCardSkeleton
+                key={index}
+                imageType="poster"
+                className="col-span-1 _bg-layout rounded-es-md rounded-ee-md"
+              />
+            ))
+          : videos.map((video) => (
+              <VideoCard
+                key={video._id}
+                appDomainCdnImage={appDomainCdnImage}
+                video={video}
+                imageType="poster"
+                className="col-span-1 _bg-layout rounded-es-md rounded-ee-md"
+              />
+            ))}
       </div>
     </section>
   );

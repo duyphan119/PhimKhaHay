@@ -1,9 +1,6 @@
-import Breadcrumb from "@/components/breadcrumb";
 import countryApi from "@/features/countries/data";
-import VideoCard from "@/features/videos/components/video-card";
-import VideosCountryFilter from "@/features/videos/components/videos-country-filter";
-import VideosPagination from "@/features/videos/components/videos-pagination";
 import { getSeo } from "@/lib/utils";
+import VideosCountry from "@/pages/videos-country";
 import { Metadata } from "next";
 
 type PageProps = {
@@ -33,37 +30,10 @@ export default async function Page({ params, searchParams }: PageProps) {
   const { slug: countrySlug } = await params;
   const awaitedSearchParams = await searchParams;
 
-  const {
-    data: {
-      items,
-      params: { pagination },
-      breadCrumb,
-      APP_DOMAIN_CDN_IMAGE,
-    },
-  } = await countryApi.fetchVideosData(countrySlug, awaitedSearchParams);
-
   return (
-    <div className="space-y-4">
-      <Breadcrumb breadCrumb={breadCrumb} />
-      <VideosCountryFilter
-        slug={countrySlug}
-        searchParams={awaitedSearchParams}
-      />
-      <div className="grid grid-cols-12 gap-4">
-        {items.map((video) => (
-          <VideoCard
-            appDomainCdnImage={APP_DOMAIN_CDN_IMAGE}
-            key={video._id}
-            video={video}
-            imageType="poster"
-            className="col-span-6 sm:col-span-4 md:col-span-3 lg:col-span-2"
-          />
-        ))}
-      </div>
-      <VideosPagination
-        pagination={pagination}
-        searchParams={awaitedSearchParams}
-      />
-    </div>
+    <VideosCountry
+      countrySlug={countrySlug}
+      searchParams={awaitedSearchParams}
+    />
   );
 }

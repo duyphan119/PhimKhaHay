@@ -240,3 +240,12 @@ type TImagesResponse = {
     }[];
   };
 };
+
+type TActorProfileRaw = {
+  gender: string;
+  id: number | string;
+  birthday: string;
+  name: string;
+  avatar?: string;
+  biography: string;
+};

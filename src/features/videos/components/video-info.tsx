@@ -1,8 +1,4 @@
 import { Button, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-import { Fragment } from "react";
-import VideoContent from "./video-content";
-import { STATUS_LABELS } from "@/lib/constants";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +6,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Link from "next/link";
+import { Fragment } from "react";
+import VideoContent from "./video-content";
 
 type VideoInfoProps = {
   video: TVideoDetails;
@@ -66,12 +65,15 @@ export default function VideoInfo({
           </Fragment>
         ))}
       </div>
+      <div className="">Thời gian: {video.time}</div>
       <div className="">
-        Trạng thái:{" "}
-        {(video.episodes?.[0].server_data?.[0].link_embed &&
-          STATUS_LABELS[video.status]) ||
-          "Đang cập nhật"}
+        Đã chiếu:{" "}
+        {video.episode_current === "Tập 0"
+          ? "Đang cập nhật"
+          : video.episode_current}
       </div>
+      <div className="">Ngôn ngữ: {video.lang}</div>
+      <div className="">Chất lượng: {video.quality}</div>
       <div className="mt-4 ">
         <div className="">Nội dung: </div>
         <VideoContent content={video.content} />

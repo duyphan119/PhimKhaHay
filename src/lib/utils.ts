@@ -28,33 +28,33 @@ export function getSeo(seoOnPage: TSeoOnPage, appDomainCdnImage: string) {
   return {
     title: `PhimKhaHay | ${seoOnPage.titleHead}`,
     description: seoOnPage.descriptionHead,
-    openGraph: {
-      type: seoOnPage.og_type as
-        | "website"
-        | "article"
-        | "book"
-        | "profile"
-        | "music.song"
-        | "music.album"
-        | "music.playlist"
-        | "music.radio_station"
-        | "video.movie"
-        | "video.episode"
-        | "video.tv_show"
-        | "video.other"
-        | undefined,
-      url: seoOnPage.og_url,
-      title: seoOnPage.titleHead,
-      description: seoOnPage.descriptionHead,
-      images: seoOnPage.og_image.map((img) => ({
-        url: `${appDomainCdnImage}/uploads/movies/${img
-          .replace("movies/", "")
-          .replace("uploads/", "")
-          .replace("/", "")}`,
-        width: 1200,
-        height: 630,
-        alt: seoOnPage.titleHead,
-      })),
-    },
+    // openGraph: {
+    //   type: seoOnPage.og_type as
+    //     | "website"
+    //     | "article"
+    //     | "book"
+    //     | "profile"
+    //     | "music.song"
+    //     | "music.album"
+    //     | "music.playlist"
+    //     | "music.radio_station"
+    //     | "video.movie"
+    //     | "video.episode"
+    //     | "video.tv_show"
+    //     | "video.other"
+    //     | undefined,
+    //   url: seoOnPage.og_url,
+    //   title: seoOnPage.titleHead,
+    //   description: seoOnPage.descriptionHead,
+    //   images: seoOnPage.og_image.map((img) => ({
+    //     url: `${appDomainCdnImage}/uploads/movies/${img
+    //       .replace("movies/", "")
+    //       .replace("uploads/", "")
+    //       .replace("/", "")}`,
+    //     width: 1200,
+    //     height: 630,
+    //     alt: seoOnPage.titleHead,
+    //   })),
+    // },
   };
 }

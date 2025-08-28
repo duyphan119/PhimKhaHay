@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { cn, shortenVideoLanguage } from "@/lib/utils";
+import VideoCardSkeleton from "../skeletons/video-card-skeleton";
 
 type Props = {
   video: TVideoItem;

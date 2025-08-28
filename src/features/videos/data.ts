@@ -1,8 +1,14 @@
 import queryString from "query-string";
 
 const videoApi = {
-  fetchHomeData: async (): Promise<TVideosResponse> => {
-    const res = await fetch("https://ophim1.com/v1/api/home", {
+  fetchHomeData: async (
+    filter?: TPaginationFilter
+  ): Promise<TVideosResponse> => {
+    const url = queryString.stringifyUrl({
+      url: "https://ophim1.com/v1/api/danh-sach",
+      query: filter || { limit: 8 },
+    });
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
