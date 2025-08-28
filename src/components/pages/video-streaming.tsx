@@ -1,28 +1,14 @@
 "use client";
 
 import Breadcrumb from "@/components/breadcrumb";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import Actors from "@/features/actors/components/actors";
-import actorApi from "@/features/actors/data";
 import Episodes from "@/features/episodes/components/episodes";
-import Images from "@/features/images/components/images";
-import imageApi from "@/features/images/data";
 import RecommendVideos from "@/features/videos/components/recommend-videos";
-import VideoCard from "@/features/videos/components/video-card";
-import VideoInfo from "@/features/videos/components/video-info";
 import videoApi from "@/features/videos/data";
-import VideoInfoSkeleton from "@/features/videos/skeletons/video-info-skeleton";
 import { saveWatchedVideo } from "@/features/watched-videos/data";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import { ChevronLeftIcon, ChevronRightIcon, PlusSquare } from "lucide-react";
-import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import queryString from "query-string";
