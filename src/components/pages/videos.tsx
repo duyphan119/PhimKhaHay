@@ -29,7 +29,11 @@ export default function Videos({ typelist, searchParams }: Props) {
         const totalPages = Math.ceil(totalItems / totalItemsPerPage);
         return currentPage < totalPages ? currentPage + 1 : undefined;
       },
-      queryFn: () => videoApi.fetchVideosData(typelist, searchParams),
+      queryFn: ({ pageParam }) =>
+        videoApi.fetchVideosData(typelist, {
+          ...searchParams,
+          page: "" + pageParam,
+        }),
     });
   const items = data?.pages.flatMap((page) => page.data.items) ?? [];
   const appDomainCdnImage = data?.pages?.[0].data.APP_DOMAIN_CDN_IMAGE || "";

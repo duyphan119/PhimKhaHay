@@ -28,7 +28,11 @@ export default function VideosCategory({ categorySlug, searchParams }: Props) {
         const totalPages = Math.ceil(totalItems / totalItemsPerPage);
         return currentPage < totalPages ? currentPage + 1 : undefined;
       },
-      queryFn: () => categoryApi.fetchVideosData(categorySlug, searchParams),
+      queryFn: ({ pageParam }) =>
+        categoryApi.fetchVideosData(categorySlug, {
+          ...searchParams,
+          page: "" + pageParam,
+        }),
     });
   const items = data?.pages.flatMap((page) => page.data.items) ?? [];
   const appDomainCdnImage = data?.pages?.[0].data.APP_DOMAIN_CDN_IMAGE || "";

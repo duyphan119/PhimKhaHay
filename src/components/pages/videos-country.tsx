@@ -28,7 +28,11 @@ export default function VideosCountry({ countrySlug, searchParams }: Props) {
         const totalPages = Math.ceil(totalItems / totalItemsPerPage);
         return currentPage < totalPages ? currentPage + 1 : undefined;
       },
-      queryFn: () => countryApi.fetchVideosData(countrySlug, searchParams),
+      queryFn: ({ pageParam }) =>
+        countryApi.fetchVideosData(countrySlug, {
+          ...searchParams,
+          page: "" + pageParam,
+        }),
     });
   const items = data?.pages.flatMap((page) => page.data.items) ?? [];
   const appDomainCdnImage = data?.pages?.[0].data.APP_DOMAIN_CDN_IMAGE || "";
