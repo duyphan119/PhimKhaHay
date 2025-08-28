@@ -2,12 +2,10 @@
 
 import Breadcrumb from "@/components/breadcrumb";
 import { Skeleton } from "@/components/ui/skeleton";
-import actorApi from "@/features/actors/data";
 import VideoCard from "@/features/videos/components/video-card";
 import VideoCardSkeleton from "@/features/videos/skeletons/video-card-skeleton";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect } from "react";
 
 type Props = {
   actorId: string | number;

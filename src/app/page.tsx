@@ -6,16 +6,13 @@ export const generateMetadata = async () => {
   const defaultTitle = "PhimKhaHay | Trang chủ";
   try {
     const {
-      data: { seoOnPage, APP_DOMAIN_CDN_IMAGE },
+      data: { seoOnPage },
     } = await videoApi.fetchHomeData();
 
-    return getSeo(
-      {
-        ...seoOnPage,
-        titleHead: defaultTitle,
-      },
-      APP_DOMAIN_CDN_IMAGE
-    );
+    return getSeo({
+      ...seoOnPage,
+      titleHead: defaultTitle,
+    });
   } catch (error) {
     console.log(error);
   }

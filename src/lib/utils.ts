@@ -24,7 +24,7 @@ export function shortenVideoLanguage(videoLanguage: string) {
   );
 }
 
-export function getSeo(seoOnPage: TSeoOnPage, appDomainCdnImage: string) {
+export function getSeo(seoOnPage: TSeoOnPage) {
   return {
     title: `PhimKhaHay | ${seoOnPage.titleHead}`,
     description: seoOnPage.descriptionHead,

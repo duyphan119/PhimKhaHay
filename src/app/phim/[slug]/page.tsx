@@ -15,9 +15,9 @@ export const generateMetadata = async ({
   const { slug } = await params;
   try {
     const {
-      data: { seoOnPage, APP_DOMAIN_CDN_IMAGE },
+      data: { seoOnPage },
     } = await videoApi.fetchVideoDetailsData(slug);
-    return getSeo(seoOnPage, APP_DOMAIN_CDN_IMAGE);
+    return getSeo(seoOnPage);
   } catch (error) {
     console.log(error);
   }

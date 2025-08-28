@@ -1,15 +1,6 @@
 import * as cheerio from "cheerio";
 import videoApi from "../videos/data";
 
-type ProfileRaw = {
-  gender: string;
-  id: number | string;
-  birthday: string;
-  name: string;
-  avatar?: string;
-  biography: string;
-};
-
 function convertBirthday(text: string): string {
   // Regex tách: January 30, 2002 (23 years old)
   const regex =

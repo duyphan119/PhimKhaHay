@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Actors from "@/features/actors/components/actors";
 import actorApi from "@/features/actors/data";
@@ -24,7 +24,7 @@ import { useQueries } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon, PlusSquare } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { useEffect } from "react";
 
@@ -34,8 +34,6 @@ export default function VideoStreaming({
   slug,
   searchParams: { ep, ser },
 }: Props) {
-  const router = useRouter();
-
   const [
     { data: video, isError },
     { data: actors },
@@ -68,23 +66,24 @@ export default function VideoStreaming({
   const curSData = curEp?.server_data[sdIndex === -1 ? 0 : sdIndex];
   const len = curEp?.server_data.length || 0;
 
-  if (isError || (item && !curSData?.name)) return redirect("/");
-
   useEffect(() => {
-    if (!item) return;
-    saveWatchedVideo({
-      id: item._id,
-      name: item.name,
-      originName: item.origin_name,
-      otherWatchedEpisodes: [],
-      query: `?${queryString.stringify({ ep: curSData.slug, ser: epIndex })}`,
-      serverDataItemName: curSData.name,
-      serverName: curEp.server_name,
-      slug: item.slug,
-      thumbnail: `${cdn}/uploads/movies/${item.poster_url}`,
-      time: new Date().getTime(),
-    });
+    if (item) {
+      saveWatchedVideo({
+        id: item._id,
+        name: item.name,
+        originName: item.origin_name,
+        otherWatchedEpisodes: [],
+        query: `?${queryString.stringify({ ep: curSData.slug, ser: epIndex })}`,
+        serverDataItemName: curSData.name,
+        serverName: curEp.server_name,
+        slug: item.slug,
+        thumbnail: `${cdn}/uploads/movies/${item.poster_url}`,
+        time: new Date().getTime(),
+      });
+    }
   }, [item, cdn, curEp, curSData, epIndex]);
+
+  if (isError || (item && !curSData?.name)) return redirect("/");
 
   return (
     <div className="grid grid-cols-12 gap-4">

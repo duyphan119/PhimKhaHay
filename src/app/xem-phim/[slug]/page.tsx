@@ -2,7 +2,6 @@ import videoApi from "@/features/videos/data";
 import { getSeo } from "@/lib/utils";
 import VideoStreaming from "@/pages/video-streaming";
 import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{
@@ -21,7 +20,7 @@ export const generateMetadata = async ({
   const { slug } = await params;
   try {
     const {
-      data: { item, seoOnPage, APP_DOMAIN_CDN_IMAGE },
+      data: { item, seoOnPage },
     } = await videoApi.fetchVideoDetailsData(slug);
     const { ep, ser } = await searchParams;
     if (item) {
@@ -29,15 +28,12 @@ export const generateMetadata = async ({
       const serverDataItem =
         episode?.server_data?.find(({ slug }) => slug === ep) ||
         episode?.server_data?.[0];
-      return getSeo(
-        {
-          ...seoOnPage,
-          titleHead: `PhimKhaHay ${
-            episode ? `| ${serverDataItem.name} |` : "|"
-          } ${item.name}`,
-        },
-        APP_DOMAIN_CDN_IMAGE
-      );
+      return getSeo({
+        ...seoOnPage,
+        titleHead: `PhimKhaHay ${
+          episode ? `| ${serverDataItem.name} |` : "|"
+        } ${item.name}`,
+      });
     }
   } catch (error) {
     console.log(error);

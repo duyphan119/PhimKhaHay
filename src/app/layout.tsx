@@ -35,32 +35,32 @@ export default async function RootLayout({
     yearApi.fetchYearsData(),
   ]);
   return (
-    <QueryProvider>
-      <CommonDataProvider
-        categories={
-          results[0].status === "fulfilled" ? results[0].value.data.items : []
-        }
-        countries={
-          results[1].status === "fulfilled" ? results[1].value.data.items : []
-        }
-        years={
-          results[2].status === "fulfilled" ? results[2].value.data.items : []
-        }
-      >
-        <html lang="en" suppressHydrationWarning>
-          <body
-            className={cn(
-              "flex flex-col min-h-screen antialiased",
-              rubik.className,
-              rubik.variable
-            )}
+    <CommonDataProvider
+      categories={
+        results[0].status === "fulfilled" ? results[0].value.data.items : []
+      }
+      countries={
+        results[1].status === "fulfilled" ? results[1].value.data.items : []
+      }
+      years={
+        results[2].status === "fulfilled" ? results[2].value.data.items : []
+      }
+    >
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            "flex flex-col min-h-screen antialiased",
+            rubik.className,
+            rubik.variable
+          )}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
           >
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
+            <QueryProvider>
               <NextTopLoader color="hsl(var(--primary))" />
               <Header />
               <main className="flex-1 _bg-layout">
@@ -74,10 +74,10 @@ export default async function RootLayout({
               </main>
               <Footer />
               <ScrollToTop />
-            </ThemeProvider>
-          </body>
-        </html>
-      </CommonDataProvider>
-    </QueryProvider>
+            </QueryProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </CommonDataProvider>
   );
 }

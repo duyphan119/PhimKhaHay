@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { cn, shortenVideoLanguage } from "@/lib/utils";
-import VideoCardSkeleton from "../skeletons/video-card-skeleton";
+import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   video: TVideoItem;

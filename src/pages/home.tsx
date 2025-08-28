@@ -12,7 +12,7 @@ import { Fragment } from "react";
 
 type BaseConfig = {
   key: (string | number)[];
-  fn: () => Promise<any>;
+  fn: () => Promise<TVideosResponse>;
 };
 
 type LatestConfig = BaseConfig & {
@@ -154,7 +154,7 @@ export default function Home() {
   });
 
   return (
-    <div>
+    <>
       {queries.map((query, i) => {
         const cfg = queryConfigs[i];
         const data = query.data?.data;
@@ -203,6 +203,6 @@ export default function Home() {
 
         return null;
       })}
-    </div>
+    </>
   );
 }

@@ -1,6 +1,3 @@
-import Breadcrumb from "@/components/breadcrumb";
-import VideoCard from "@/features/videos/components/video-card";
-import VideosPagination from "@/features/videos/components/videos-pagination";
 import videoApi from "@/features/videos/data";
 import { getSeo } from "@/lib/utils";
 import Search from "@/pages/search";
@@ -16,13 +13,13 @@ export const generateMetadata = async ({
   const { keyword, ...awaitedSearchParams } = await searchParams;
   try {
     const {
-      data: { seoOnPage, APP_DOMAIN_CDN_IMAGE },
+      data: { seoOnPage },
     } = await videoApi.searchVideos(keyword, {
       ...awaitedSearchParams,
       limit: "30",
     });
 
-    return getSeo(seoOnPage, APP_DOMAIN_CDN_IMAGE);
+    return getSeo(seoOnPage);
   } catch (error) {
     console.log(error);
   }

@@ -18,9 +18,9 @@ export const generateMetadata = async ({
   const awaitedSearchParams = await searchParams;
   try {
     const {
-      data: { seoOnPage, APP_DOMAIN_CDN_IMAGE },
+      data: { seoOnPage },
     } = await countryApi.fetchVideosData(typelist, awaitedSearchParams);
-    return getSeo(seoOnPage, APP_DOMAIN_CDN_IMAGE);
+    return getSeo(seoOnPage);
   } catch (error) {
     console.log(error);
   }
