@@ -7,7 +7,7 @@ const imageApi = {
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "no-cache",
+        next: { revalidate: 100 },
       }
     );
 

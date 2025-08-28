@@ -1,6 +1,6 @@
 import videoApi from "@/features/videos/data";
 import { getSeo } from "@/lib/utils";
-import VideoStreaming from "@/pages/video-streaming";
+import VideoStreaming from "@/components/pages/video-streaming";
 import { Metadata } from "next";
 
 type Props = {

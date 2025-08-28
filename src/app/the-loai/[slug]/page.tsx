@@ -1,6 +1,6 @@
 import categoryApi from "@/features/categories/data";
 import { getSeo } from "@/lib/utils";
-import VideosCategory from "@/pages/videos-category";
+import VideosCategory from "@/components/pages/videos-category";
 import { Metadata } from "next";
 
 type PageProps = {

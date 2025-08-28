@@ -1,6 +1,6 @@
 import videoApi from "@/features/videos/data";
 import { getSeo } from "@/lib/utils";
-import Home from "@/pages/home";
+import Home from "@/components/pages/home";
 
 export const generateMetadata = async () => {
   const defaultTitle = "PhimKhaHay | Trang chủ";

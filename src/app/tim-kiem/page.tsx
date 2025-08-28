@@ -1,6 +1,6 @@
 import videoApi from "@/features/videos/data";
 import { getSeo } from "@/lib/utils";
-import Search from "@/pages/search";
+import Search from "@/components/pages/search";
 import { Metadata } from "next";
 
 type Props = {

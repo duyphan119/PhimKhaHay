@@ -18,7 +18,7 @@ export default function Actor({ actorId }: Props) {
         queryKey: ["actor", actorId],
         queryFn: async () => {
           const res = await fetch(`/api/actors/${actorId}`, {
-            cache: "no-cache",
+            next: { revalidate: 100 },
           });
           const data = await res.json();
 
@@ -29,7 +29,7 @@ export default function Actor({ actorId }: Props) {
         queryKey: ["videos-actor", actorId],
         queryFn: async () => {
           const res = await fetch(`/api/actors/${actorId}/videos`, {
-            cache: "no-cache",
+            next: { revalidate: 100 },
           });
 
           const data = await res.json();

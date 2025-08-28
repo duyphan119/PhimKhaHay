@@ -1,17 +1,14 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import CommonDataProvider from "@/components/providers/common-data-provider";
 import QueryProvider from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import ScrollToTop from "@/components/scroll-to-top";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import CommonDataProvider from "@/components/providers/common-data-provider";
-import categoryApi from "@/features/categories/data";
-import countryApi from "@/features/countries/data";
-import yearApi from "@/features/years/data";
 
 const rubik = Rubik({
   variable: "--font-rubik",
@@ -24,28 +21,13 @@ export const metadata: Metadata = {
   description: "PhimKhaHay - Web xem phim miễn phí",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const results = await Promise.allSettled([
-    categoryApi.fetchCategoriesData(),
-    countryApi.fetchCountriesData(),
-    yearApi.fetchYearsData(),
-  ]);
   return (
-    <CommonDataProvider
-      categories={
-        results[0].status === "fulfilled" ? results[0].value.data.items : []
-      }
-      countries={
-        results[1].status === "fulfilled" ? results[1].value.data.items : []
-      }
-      years={
-        results[2].status === "fulfilled" ? results[2].value.data.items : []
-      }
-    >
+    <CommonDataProvider categories={[]} countries={[]} years={[]}>
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(

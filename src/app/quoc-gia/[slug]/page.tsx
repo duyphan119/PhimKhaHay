@@ -1,6 +1,6 @@
 import countryApi from "@/features/countries/data";
 import { getSeo } from "@/lib/utils";
-import VideosCountry from "@/pages/videos-country";
+import VideosCountry from "@/components/pages/videos-country";
 import { Metadata } from "next";
 
 type PageProps = {

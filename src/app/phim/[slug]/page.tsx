@@ -1,6 +1,6 @@
 import videoApi from "@/features/videos/data";
 import { getSeo } from "@/lib/utils";
-import VideoDetails from "@/pages/video-details";
+import VideoDetails from "@/components/pages/video-details";
 import { Metadata } from "next";
 
 type VideoDetailsProps = {

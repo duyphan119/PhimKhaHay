@@ -1,5 +1,5 @@
 import actorApi from "@/features/actors/data";
-import Actor from "@/pages/actor";
+import Actor from "@/components/pages/actor";
 import { Metadata } from "next";
 
 type Props = {

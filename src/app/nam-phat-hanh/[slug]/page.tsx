@@ -1,6 +1,6 @@
 import yearApi from "@/features/years/data";
 import { getSeo } from "@/lib/utils";
-import VideosYear from "@/pages/videos-year";
+import VideosYear from "@/components/pages/videos-year";
 import { Metadata } from "next";
 
 type PageProps = {

@@ -1,7 +1,7 @@
 import { TypeList } from "@/features/typelist/data";
 import videoApi from "@/features/videos/data";
 import { getSeo } from "@/lib/utils";
-import Videos from "@/pages/videos";
+import Videos from "@/components/pages/videos";
 import { Metadata } from "next";
 
 type PageProps = {

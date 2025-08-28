@@ -29,7 +29,7 @@ const countryApi = {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-cache",
+      next: { revalidate: 100 },
     });
 
     if (!res.ok) {

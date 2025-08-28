@@ -57,7 +57,7 @@ const actorApi = {
       await fetch(
         `https://www.themoviedb.org/person/${actorId}?language=en-En`,
         {
-          cache: "no-cache",
+          next: { revalidate: 100 },
         }
       )
     ).text();
@@ -102,7 +102,7 @@ const actorApi = {
       `https://www.themoviedb.org/person/${actorId}?language=en-En`,
       {
         headers: { "Accept-Language": "en-US,en;q=0.9" },
-        cache: "no-cache",
+        next: { revalidate: 100 },
       }
     );
 
