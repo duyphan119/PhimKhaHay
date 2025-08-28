@@ -27,22 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <CommonDataProvider categories={[]} countries={[]} years={[]}>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "flex flex-col min-h-screen antialiased",
-            rubik.className,
-            rubik.variable
-          )}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
+    <QueryProvider>
+      <CommonDataProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body
+            className={cn(
+              "flex flex-col min-h-screen antialiased",
+              rubik.className,
+              rubik.variable
+            )}
           >
-            <QueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
               <NextTopLoader color="hsl(var(--primary))" />
               <Header />
               <main className="flex-1 _bg-layout">
@@ -56,10 +56,10 @@ export default function RootLayout({
               </main>
               <Footer />
               <ScrollToTop />
-            </QueryProvider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </CommonDataProvider>
+            </ThemeProvider>
+          </body>
+        </html>
+      </CommonDataProvider>
+    </QueryProvider>
   );
 }

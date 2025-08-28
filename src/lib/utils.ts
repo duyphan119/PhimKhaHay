@@ -19,8 +19,10 @@ export function shortenServerName(serverName: string) {
 
 export function shortenVideoLanguage(videoLanguage: string) {
   return (
-    videoLanguage?.replace("Thuyết Minh", "TM").replace("Lồng Tiếng", "LT") ||
     videoLanguage
+      ?.replace("Thuyết Minh", "TM")
+      .replace("Lồng Tiếng", "LT")
+      .split(" ")[0] || videoLanguage
   );
 }
 

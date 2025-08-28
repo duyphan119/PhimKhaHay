@@ -70,7 +70,7 @@ export default function WatchedVideosSection() {
                     variant="language"
                     className="absolute bottom-0.5 left-0.5 "
                   >
-                    {shortenVideoLanguage(shortenServerName(item.serverName))}
+                    {shortenVideoLanguage(item.serverName)}
                   </Badge>
                 </Link>
                 <div className="p-2 text-center">
