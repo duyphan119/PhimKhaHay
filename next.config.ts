@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    TMDB_TOKEN: process.env.TMDB_TOKEN,
+  },
   experimental: {
     scrollRestoration: true,
   },
