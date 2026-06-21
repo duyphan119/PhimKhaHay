@@ -68,6 +68,7 @@ type TVideoDetailsResponse = {
 type TEpisode = {
   server_name: string;
   server_data: TServerData[];
+  is_ai: boolean;
 };
 
 type TServerData = {
@@ -78,14 +79,23 @@ type TServerData = {
   link_m3u8: string;
 };
 
-type TTypeList =
-  | "phim-bo"
-  | "phim-le"
-  | "tv-shows"
-  | "hoat-hinh"
-  | "phim-vietsub"
-  | "phim-thuyet-minh"
-  | "phim-long-tieng";
+type TTypeListItem = {
+  name: string;
+  slug:
+    | "phim-moi"
+    | "phim-bo"
+    | "phim-le"
+    | "tv-shows"
+    | "hoat-hinh"
+    | "phim-vietsub"
+    | "phim-thuyet-minh"
+    | "phim-long-tieng"
+    | "phim-bo-dang-chieu"
+    | "phim-bo-hoan-thanh"
+    | "phim-sap-chieu"
+    | "subteam"
+    | "phim-chieu-rap";
+};
 
 type TVideosParams = {
   type_list?: TTypeList;
@@ -137,6 +147,17 @@ type TMovieItem = {
   country: TCountry[];
 };
 
+type TMovieDetails = TMovieItem & {
+  director: string[];
+  alternative_names: string[];
+  actor: string[];
+  trailer_url: string;
+  content: string;
+  episode_total: string;
+  status: string;
+  episodes: TEpisode[];
+};
+
 type TTmdb = {
   type: string | null;
   id: string | number | null;
@@ -163,6 +184,7 @@ type TCountry = {
   id: string;
   name: string;
   slug: string;
+  tmdbName?: string;
 };
 
 type TParams = {
@@ -181,13 +203,13 @@ type TPagination = {
   totalItems: number;
   totalItemsPerPage: number;
   currentPage: number;
-  totalPages: number;
+  pageRanges?: number;
 };
 
-type TRecommendedVideo = {
+type ThotedVideo = {
   name: string;
   slug: string;
-  poster_url: string;
+  thumb_url: string;
 };
 
 type TCast = {
@@ -212,6 +234,11 @@ type TCastProfile = {
   name: string;
   place_of_birth?: string | null;
   profile_path: string | null;
+};
+
+type TCastImage = {
+  aspect_ratio: number;
+  file_path: string | null;
 };
 
 type TTvCredit = {

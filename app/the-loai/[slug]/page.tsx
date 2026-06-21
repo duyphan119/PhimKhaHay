@@ -1,10 +1,11 @@
 import Breadcrumb from "@/components/breadcrumb";
+import { categoriesApi } from "@/features/categories/api";
 
-import VideoCard from "@/components/video-card";
-import VideosFilter from "@/components/videos-filter";
-import VideosPagination from "@/components/videos-pagination";
-import { getVideosByCategory } from "@/lib/video";
+import VideoCard from "@/features/videos/components/video-card";
+import VideosFilter from "@/features/videos/components/videos-filter";
+import VideosPagination from "@/features/videos/components/videos-pagination";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -18,12 +19,13 @@ export const generateMetadata = async ({
   const awaitedParams = await params;
   const awaitedSearchParams = await searchParams;
 
-  const { data } = await getVideosByCategory(
+  const data = await categoriesApi.getVideos(
     awaitedParams.slug,
-    awaitedSearchParams,
+    { limit: "48", ...awaitedSearchParams },
   );
+  if (!data) return { title: "404 | Không tìm thấy trang" }
   return {
-    title: `KDPhim | ${data.seoOnPage.titleHead}`,
+    title: `phimkhahay | ${data.seoOnPage.titleHead}`,
     description: data.seoOnPage.descriptionHead,
   };
 };
@@ -32,10 +34,12 @@ export default async function Page({ params, searchParams }: Props) {
   const awaitedParams = await params;
   const awaitedSearchParams = await searchParams;
 
-  const { data } = await getVideosByCategory(
+  const data = await categoriesApi.getVideos(
     awaitedParams.slug,
-    awaitedSearchParams,
+    { limit: "48", ...awaitedSearchParams },
   );
+
+  if (!data) return notFound();
 
   return (
     <div className="_container space-y-4 py-4">
@@ -49,12 +53,12 @@ export default async function Page({ params, searchParams }: Props) {
         />
       </div>
 
-      <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
         {data.items.map((videoItem) => (
           <div key={videoItem._id} className="col-span-1">
             <VideoCard
               videoItem={videoItem}
-              imageDomain={data.APP_DOMAIN_CDN_IMAGE}
+
             />
           </div>
         ))}

@@ -4,9 +4,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
-import VideoDetails from "@/components/video-details";
 import { getServerName, stripHtml } from "@/lib/utils";
-import { getVideo } from "@/lib/video";
+import VideoDetailsPage from "@/features/videos/pages/video-details";
+import { videosApi } from "@/features/videos/api";
+import { notFound } from "next/navigation";
 
 type Params = {
   slug: string;
@@ -27,11 +28,13 @@ const createEpisodeLink = (
 async function getPageData(params: Promise<Params>) {
   const { slug, ep: episodeSlug, index } = await params;
 
-  const { movie, episodes } = await getVideo(slug);
+  const data = await videosApi.getDetails(slug);
+
+  if (!data) return null;
 
   const serverIndex = Number(index);
 
-  const currentServer = episodes?.[serverIndex];
+  const currentServer = data.item.episodes?.[serverIndex];
 
   const currentEpisode = currentServer?.server_data?.find(
     (ep) => ep.slug === episodeSlug,
@@ -41,8 +44,7 @@ async function getPageData(params: Promise<Params>) {
     slug,
     index,
     episodeSlug,
-    movie,
-    episodes,
+    item: data.item,
     serverIndex,
     currentServer,
     currentEpisode,
@@ -50,26 +52,26 @@ async function getPageData(params: Promise<Params>) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { movie, episodes, currentEpisode, serverIndex, index, episodeSlug } =
+  const data =
     await getPageData(params);
-
-  if (!movie) {
+  if (!data) {
     return {
-      title: "KDPhim | Không tìm thấy phim",
+      title: "phimkhahay | Không tìm thấy phim",
       description: "Phim không tồn tại hoặc đã bị xoá.",
     };
   }
+  const { item, currentEpisode, serverIndex, index, episodeSlug } = data;
 
   const episodeName =
     currentEpisode?.name || currentEpisode?.filename || "Xem phim";
 
-  const serverName = getServerName(episodes?.[serverIndex]?.server_name);
+  const serverName = getServerName(item.episodes?.[serverIndex]?.server_name);
 
   const description =
-    stripHtml(movie.content).slice(0, 160) ||
-    `Xem ${episodeName} của phim ${movie.name} chất lượng cao.`;
+    stripHtml(item.content).slice(0, 160) ||
+    `Xem ${episodeName} của phim ${item.name} chất lượng cao.`;
 
-  const title = `KDPhim | ${episodeName} - ${serverName} - ${movie.name}`;
+  const title = `phimkhahay | ${episodeName} - ${serverName} - ${item.name}`;
 
   return {
     title,
@@ -78,10 +80,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { movie, episodes, serverIndex, currentServer, currentEpisode } =
+  const data =
     await getPageData(params);
+  if (!data) return notFound();
 
-  if (!movie || !currentEpisode) return null;
+  const { item, currentEpisode, serverIndex, index, episodeSlug, currentServer } = data;
+
+  if (!item || !currentEpisode) return notFound();
 
   const currentEpisodeIndex =
     currentServer?.server_data?.findIndex(
@@ -91,49 +96,50 @@ export default async function Page({ params }: Props) {
   const prevEpisode =
     currentEpisodeIndex > 0
       ? currentServer?.server_data?.[currentEpisodeIndex - 1]
-      : episodes?.[serverIndex - 1]?.server_data?.at(-1);
+      : item.episodes?.[serverIndex - 1]?.server_data?.at(-1);
 
   const nextEpisode =
     currentEpisodeIndex < (currentServer?.server_data.length ?? 0) - 1
       ? currentServer?.server_data?.[currentEpisodeIndex + 1]
-      : episodes?.[serverIndex + 1]?.server_data?.[0];
+      : item.episodes?.[serverIndex + 1]?.server_data?.[0];
 
   const prevLink = prevEpisode
     ? createEpisodeLink(
-        movie.slug,
-        currentEpisodeIndex > 0 ? serverIndex : serverIndex - 1,
-        prevEpisode.slug,
-      )
+      item.slug,
+      currentEpisodeIndex > 0 ? serverIndex : serverIndex - 1,
+      prevEpisode.slug,
+    )
     : undefined;
 
   const nextLink = nextEpisode
     ? createEpisodeLink(
-        movie.slug,
-        currentEpisodeIndex < currentServer.server_data.length - 1
-          ? serverIndex
-          : serverIndex + 1,
-        nextEpisode.slug,
-      )
+      item.slug,
+      currentEpisodeIndex < currentServer.server_data.length - 1
+        ? serverIndex
+        : serverIndex + 1,
+      nextEpisode.slug,
+    )
     : undefined;
 
-  const serverName = getServerName(episodes?.[serverIndex]?.server_name);
+  const serverName = getServerName(item.episodes?.[serverIndex]?.server_name);
 
   return (
-    <VideoDetails
-      video={movie}
+    <VideoDetailsPage
+      item={item}
       hideButtons
-      episodes={episodes}
       currentEpisodeSlug={currentEpisode.slug}
       serverIndex={serverIndex}
       currentBreadcrumb={`${currentEpisode.name} - ${serverName}`}
     >
       <div className="aspect-video overflow-hidden rounded-lg bg-slate-950">
+
         <iframe
           src={currentEpisode.link_embed}
           width="100%"
           height="100%"
           allow="fullscreen"
           className="h-full w-full"
+
         />
       </div>
 
@@ -166,6 +172,6 @@ export default async function Page({ params }: Props) {
           )}
         </div>
       )}
-    </VideoDetails>
+    </VideoDetailsPage>
   );
 }

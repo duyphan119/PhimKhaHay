@@ -9,21 +9,26 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
+import CastImages from "./cast-images";
+import DialogImage from "./dialog-image";
 
 type CastProfileProps = TCastProfile & {
   className?: string;
 };
 
 export default function CastProfile({
-  id,
-  biography,
-  birthday,
   className = "",
-  place_of_birth,
-  gender,
-  name,
-  profile_path,
+  ...cast
 }: CastProfileProps) {
+  const {
+    id,
+    biography,
+    birthday,
+    place_of_birth,
+    gender,
+    name,
+    profile_path,
+  } = cast
   const isPageCastProfile =
     birthday || place_of_birth || biography ? true : false;
   const imageChildren = (
@@ -41,15 +46,16 @@ export default function CastProfile({
         fill
         className="object-cover transition-transform duration-500 hover:scale-105"
         loading="eager"
+        sizes="(max-width: 640px) 100vw, 50vw"
       />
 
       <div className="absolute inset-x-2 bottom-2 bg-background/80 text-muted-foreground p-2 rounded-lg text-center flex items-center justify-center gap-2 font-semibold">
-        <HugeiconsIcon
+        {isPageCastProfile ? <HugeiconsIcon
           icon={gender === 1 ? Female02Icon : Male02Icon}
           size={16}
-        />
+        /> : null}
 
-        <span className="font-semibold">{name}</span>
+        <span className={cn("font-semibold", isPageCastProfile ? "" : "text-sm")}>{name}</span>
       </div>
     </>
   );
@@ -61,19 +67,24 @@ export default function CastProfile({
       )}
     >
       {isPageCastProfile ? (
-        <div className="relative aspect-[2/3] overflow-hidden">
-          {imageChildren}
-        </div>
+        <DialogImage image={{
+          aspect_ratio: 2 / 3,
+          file_path: profile_path
+        }}>
+          <div className="relative aspect-2/3 overflow-hidden">
+            {imageChildren}
+          </div>
+        </DialogImage>
       ) : (
         <Link
           href={`/dien-vien/${id}`}
-          className="relative aspect-[2/3] overflow-hidden block"
+          className="relative aspect-2/3 overflow-hidden block"
         >
           {imageChildren}
         </Link>
       )}
 
-      {birthday || place_of_birth || biography ? (
+      {isPageCastProfile ? (
         <div className="space-y-3 p-4">
           {birthday && (
             <div className="flex items-start gap-3 rounded-xl bg-muted/40 p-3">
@@ -118,6 +129,8 @@ export default function CastProfile({
           )}
         </div>
       ) : null}
+
+      {isPageCastProfile ? <CastImages cast={cast} /> : null}
     </div>
   );
 }

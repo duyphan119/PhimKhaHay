@@ -1,6 +1,7 @@
-import VideoDetails from "@/components/video-details";
+import { castsApi } from "@/features/casts/api";
+import { videosApi } from "@/features/videos/api";
+import VideoDetailsPage from "@/features/videos/pages/video-details";
 import { stripHtml } from "@/lib/utils";
-import { getVideo } from "@/lib/video";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -11,29 +12,29 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const awaitedParams = await params;
 
-  const { movie } = await getVideo(awaitedParams.slug);
+  const data = await videosApi.getDetails(awaitedParams.slug);
 
-  if (!movie) {
+  if (!data) {
     return {
-      title: "KDPhim | Không tìm thấy phim",
+      title: "phimkhahay | Không tìm thấy phim",
       description: "Phim không tồn tại hoặc đã bị xoá.",
     };
   }
 
-  const title = `KDPhim |  ${movie.name}`;
+  const title = `phimkhahay |  ${data.item.name}`;
 
   return {
     title,
-    description: stripHtml(movie.content),
+    description: stripHtml(data.item.content),
   };
 }
 
 export default async function Page({ params }: Props) {
   const awaitedParams = await params;
 
-  const { movie, episodes } = await getVideo(awaitedParams.slug);
+  const data = await videosApi.getDetails(awaitedParams.slug);
 
-  if (!movie) return notFound();
+  if (!data) return notFound();
 
-  return <VideoDetails video={movie} episodes={episodes} />;
+  return <VideoDetailsPage item={data.item} />;
 }

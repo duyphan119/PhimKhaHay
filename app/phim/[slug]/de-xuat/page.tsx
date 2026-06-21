@@ -1,10 +1,10 @@
-import recommendVideos from "@/lib/recommend-videos.json";
-import { getVideo } from "@/lib/video";
+import { videosApi } from "@/features/videos/api";
+import hotVideos from "@/lib/hot-videos.json";
 import { promises as fs } from "fs";
 import { redirect } from "next/navigation";
 import path from "path";
 
-const filePath = path.join(process.cwd(), "lib", "recommend-videos.json");
+const filePath = path.join(process.cwd(), "lib", "hot-videos.json");
 
 // GET
 export async function getData() {
@@ -23,7 +23,7 @@ export async function postData(
   body: {
     name: string;
     slug: string;
-    poster_url: string;
+    thumb_url: string;
   }[],
 ) {
   try {
@@ -44,22 +44,24 @@ type Props = {
 export default async function Page({ params }: Props) {
   const awaitedParams = await params;
 
-  const { movie } = await getVideo(awaitedParams.slug);
+  const data = await videosApi.getDetails(awaitedParams.slug);
 
-  if (!movie) return null;
+  if (!data || !data.item) return null;
 
-  const index = recommendVideos.findIndex((item) => item.slug === movie.slug);
-  const newRecommendVideo = {
-    name: movie.name,
-    slug: movie.slug,
-    poster_url: movie.poster_url,
+  const videos = hotVideos as ThotedVideo[];
+
+  const index = videos.findIndex((item) => item.slug === data.item.slug);
+  const newhotVideo = {
+    name: data.item.name,
+    slug: data.item.slug,
+    thumb_url: data.item.thumb_url,
   };
 
- 
-  if (index === -1) await postData([newRecommendVideo, ...recommendVideos]);
-  else
-    await postData(recommendVideos.filter((item) => item.slug !== movie.slug));
 
-  
+  if (index === -1) await postData([newhotVideo, ...videos]);
+  else
+    await postData(videos.filter((item) => item.slug !== data.item.slug));
+
+
   return redirect(`/phim-hot`);
 }

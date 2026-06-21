@@ -1,4 +1,4 @@
-import { typeList } from "@/lib/constants";
+import { typelist } from "@/features/typelist/api";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ const footerLinks = [
   },
   {
     title: "Loại phim",
-    items: typeList.map(({ name, slug }) => ({
+    items: typelist.map(({ name, slug }) => ({
       name,
       href: `/danh-sach/${slug}`,
     })),
@@ -29,21 +29,21 @@ export default function Footer() {
             <Link
               href="/"
               title="Đi tới trang chủ"
-              className="relative block h-12 aspect-[1983/793]"
+              className="relative block h-10 aspect-3/1"
             >
               <Image
                 src="/images/logo.png"
-                alt="KDPHIM Logo"
+                alt="phimkhahay Logo"
                 fill
                 priority
                 unoptimized
-                className="object-contain"
+                className="object-cover"
                 sizes="90px"
               />
             </Link>
 
             <p className="max-w-md text-sm leading-6 text-muted-foreground">
-              KDPHIM là nền tảng xem phim online chất lượng cao với kho phim đa
+              phimkhahay là nền tảng xem phim online chất lượng cao với kho phim đa
               dạng: phim lẻ, phim bộ, anime, TV Shows và nhiều nội dung cập nhật
               mỗi ngày.
             </p>
@@ -94,7 +94,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-10 gap-3 border-t border-border pt-5 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p className="text-center">© 2026 KDPHIM. All rights reserved.</p>
+          <p className="text-center">© 2026 phimkhahay. All rights reserved.</p>
         </div>
       </div>
     </footer>

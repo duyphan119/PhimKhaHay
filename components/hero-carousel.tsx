@@ -8,6 +8,9 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import VideoImage from "@/features/videos/components/video-image";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { PlayIcon } from "@hugeicons/core-free-icons";
 
 type HeroCarouselProps = {
   items: TMovieItem[];
@@ -15,7 +18,7 @@ type HeroCarouselProps = {
 
 export default function HeroCarousel({ items }: HeroCarouselProps) {
   return (
-    <section className="">
+    <section className="mt-16 sm:mt-0">
       <CarouselAutoplay delay={4567}>
         <CarouselContent>
           {items
@@ -27,24 +30,18 @@ export default function HeroCarousel({ items }: HeroCarouselProps) {
             )
             .map((videoItem) => (
               <CarouselItem key={videoItem._id} >
-                <div className="relative aspect-video w-full">
-                  <Image
-                    unoptimized
-                    src={`https://phimapi.com/image.php?url=${videoItem.thumb_url}`}
-                    alt={videoItem.slug}
-                    fill={true}
-                    sizes="(max-width: 1200px) 100vw, 1200px"
-                    loading="eager"
-                    className="object-cover"
-                  />
-                  <div className="absolute left-0 bottom-0 max-w-[60%] bg-black/40 p-4 text-white shadow-xl flex flex-col justify-end">
+                <div className="relative w-screen lg:h-screen lg:aspect-auto aspect-video">
+                  <VideoImage src={videoItem.thumb_url.replace("-thumb.", "-poster.")} alt={videoItem.slug} />
+                  {/* <div className="absolute inset-0 pointer-events-none bg-radial-[ellipse_at_center] from-transparent via-black/20 to-black/80" /> */}
+                  <div className="absolute inset-y-0 left-0 right-0 bg-black/10 bg-linear-to-r from-black/60 via-black/30 to-black/60"></div>
+                  <div className="absolute inset-0 bg-transparent p-4 text-white flex flex-col justify-center px-16">
                     <Link
                       href={`/phim/${videoItem.slug}`}
-                      className="text-sm font-semibold line-clamp-2 hover:text-primary hover:underline hover:underline-offset-2 transition-colors duration-200"
+                      className="sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold line-clamp-2 hover:text-primary hover:underline hover:underline-offset-2 transition-colors duration-200"
                     >
                       {videoItem.name}
                     </Link>
-                    <div className="mt-3 space-y-1 text-xs text-secondary-foreground">
+                    <div className="lg:mt-4 mt-1 space-y-1 text-xs md:text-sm text-secondary-foreground">
                       <p>
                         Thể loại:{" "}
                         {videoItem.category.map((category, index) => (
@@ -76,12 +73,12 @@ export default function HeroCarousel({ items }: HeroCarouselProps) {
                         ))}
                       </p>
                     </div>
-                    <div className="mt-4">
+                    <div className="lg:mt-8 mt-2">
                       <Link
                         href={`/phim/${videoItem.slug}`}
-                        className={buttonVariants({ className: "px-40 lg:px-56" })}
-
+                        className={buttonVariants({ size: "lg" })}
                       >
+                        <HugeiconsIcon icon={PlayIcon} />
                         Xem ngay
                       </Link>
                     </div>

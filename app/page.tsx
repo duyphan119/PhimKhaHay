@@ -1,14 +1,12 @@
-import CastProfile from "@/components/cast-profile";
 import HeroCarousel from "@/components/hero-carousel";
 import SectionHeader from "@/components/section-header";
-import VideoCard from "@/components/video-card";
+import CastProfile from "@/features/casts/components/cast-profile";
+import { countriesApi } from "@/features/countries/api";
+import { videosApi } from "@/features/videos/api";
+import VideoCard from "@/features/videos/components/video-card";
 import { hotCasts } from "@/lib/constants";
-import recommendVideos from "@/lib/recommend-videos.json";
-import {
-  getLatestVideos,
-  getVideosByCountry,
-  getVideosByTypeList,
-} from "@/lib/video";
+import hotVideos from "@/lib/hot-videos.json";
+import { randomVideos } from "@/lib/utils";
 import {
   Fire,
   Globe02Icon,
@@ -18,74 +16,84 @@ import {
 
 const sections = [
   {
-    title: "Hoa ngữ đặc sắc",
+    title: "Phim nổi bật",
+    icon: Fire,
+    iconColor: "text-red-500",
+    gradientClassName: "from-red-500 via-orange-500 to-yellow-400",
+    href: "/phim-hot"
+  },
+  {
+    title: "Phim Trung Quốc",
     icon: Globe02Icon,
     iconColor: "text-cyan-500",
-    gradientClassName: "bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient",
-    href: "/danh-sach/phim-bo?country=trung-quoc"
+    gradientClassName: "from-cyan-400 via-sky-500 to-blue-600",
+    href: "/quoc-gia/trung-quoc"
   },
   {
-    title: "K-Drama gây sốt",
+    title: "Phim Hàn Quốc",
     icon: SparklesIcon,
     iconColor: "text-fuchsia-500",
-    gradientClassName: "bg-gradient-to-r from-fuchsia-500 via-pink-500 to-rose-500 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient",
-    href: "/danh-sach/phim-bo?country=han-quoc",
+    gradientClassName: "from-fuchsia-500 via-pink-500 to-rose-500",
+    href: "/quoc-gia/han-quoc",
   },
   {
-    title: "Thế giới Anime",
+    title: "Phim Nhật Bản",
     icon: PlayCircleIcon,
     iconColor: "text-emerald-500",
-    gradientClassName: "bg-gradient-to-r from-emerald-400 via-green-500 to-lime-400 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient",
+    gradientClassName: "from-emerald-400 via-green-500 to-lime-400",
     href: "/danh-sach/hoat-hinh"
   },
   {
     title: "Visual nổi bật",
     icon: PlayCircleIcon,
     iconColor: "text-violet-500",
-    gradientClassName: "bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient"
+    gradientClassName: "from-violet-500 via-purple-500 to-indigo-500"
   }
 ]
 
 export default async function Home() {
+  const currentYear = new Date().getFullYear();
   const [carouselItems, ...data] = await Promise.allSettled([
-    getLatestVideos({ page: 1 }),
-    getVideosByCountry("trung-quoc", {
+    videosApi.getHome(),
+    countriesApi.getVideos("trung-quoc", {
       page: "1",
-      limit: "12",
+      limit: "24",
+      year: currentYear + ''
     }),
-    getVideosByCountry("han-quoc", {
+    countriesApi.getVideos("han-quoc", {
       page: "1",
-      limit: "12",
+      limit: "24",
+      year: currentYear + ''
     }),
-    getVideosByTypeList("hoat-hinh", {
+    countriesApi.getVideos("nhat-ban", {
       page: "1",
-      limit: "12",
-      country: "nhat-ban",
-    })
+      limit: "24",
+      year: currentYear + ''
+    }),
   ])
+  const sectionVideos = data.map((item) => item.status === 'fulfilled' ? item.value : null)
 
-  const sectionVideos = data.map((item) => item.status === 'fulfilled' ? item.value.data : null)
+  const [firstSection, ...otherSections] = sections;
 
   return (
-    <div className="_container space-y-4 lg:space-y-8 pb-4 lg:pb-8">
+    <div className="space-y-4 lg:space-y-8 pb-4 lg:pb-8">
       <HeroCarousel items={carouselItems.status === 'fulfilled' ? (carouselItems.value?.items || []) : []} />
-      <div className="grid grid-cols-12 gap-8">
-        <div className="col-span-12 lg:col-span-9 space-y-4 lg:space-y-8 lg:order-1 order-2">
-          {sections.map((item, index) => (
+      <div className="_container grid grid-cols-12 gap-8">
+        <div className="col-span-12 lg:col-span-9 space-y-4 lg:space-y-8">
+          {otherSections.map((item, index) => (
             <section key={index} className="space-y-2 lg:space-y-4">
               <SectionHeader  {...item} />
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 lg:gap-4">
-                {index === sections.length - 1 ? hotCasts.map((cast) => (
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-4">
+                {index === otherSections.length - 1 ? hotCasts.map((cast) => (
                   <CastProfile
                     key={cast.id}
                     {...cast}
                     className="col-span-1"
                   />
-                )) : sectionVideos[index]?.items?.map((videoItem) => (
+                )) : sectionVideos[index]?.items.map((videoItem) => (
                   <div key={videoItem._id} className="col-span-1">
                     <VideoCard
                       videoItem={videoItem}
-                      imageDomain={sectionVideos[index]?.APP_DOMAIN_CDN_IMAGE}
                     />
                   </div>
                 ))}
@@ -93,18 +101,12 @@ export default async function Home() {
             </section>
           ))}
         </div>
-        <div className="col-span-12 lg:col-span-3 lg:order-2 order-1">
+        <div className="col-span-12 lg:col-span-3">
           <section className="space-y-2 lg:space-y-4">
-            <SectionHeader
-              title="Phim nổi bật"
-              icon={Fire}
-              iconColor="text-red-500"
-              gradientClassName="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient"
-              href="/phim-hot"
-            />
-            <div className="gap-2 lg:gap-4 grid grid-cols-2">
-              {recommendVideos.slice(0, 24).map((videoItem) => (
-                <div key={videoItem.slug} className="col-span-1 lg:col-span-2">
+            <SectionHeader {...firstSection} />
+            <div className="gap-2 lg:gap-4 grid grid-cols-12">
+              {randomVideos(hotVideos, 24).map((videoItem: ThotedVideo) => (
+                <div key={videoItem.slug} className="col-span-4 lg:col-span-12">
                   <VideoCard
                     videoItem={videoItem}
                     className="lg:hidden"

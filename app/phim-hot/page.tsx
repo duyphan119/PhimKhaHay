@@ -1,7 +1,7 @@
 import Breadcrumb from "@/components/breadcrumb";
-import VideoCard from "@/components/video-card";
-import VideosPagination from "@/components/videos-pagination";
-import recommendVideos from "@/lib/recommend-videos.json";
+import VideoCard from "@/features/videos/components/video-card";
+import VideosPagination from "@/features/videos/components/videos-pagination";
+import hotVideos from "@/lib/hot-videos.json";
 import { Metadata } from "next";
 
 type Props = {
@@ -15,8 +15,8 @@ export const generateMetadata = async ({
   const currentPage = Number(awaitedSearchParams.page);
 
   return {
-    title: `KDPhim | Phim hot${currentPage === 1 ? "" : " | Trang " + currentPage}`,
-    description: "Danh sách phim KDPhim đề xuất",
+    title: `phimkhahay | Phim hot${currentPage === 1 ? "" : " | Trang " + currentPage}`,
+    description: "Danh sách phim phimkhahay đề xuất",
   };
 };
 
@@ -37,8 +37,8 @@ export default async function Page({ searchParams }: Props) {
           },
         ]}
       />
-      <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {recommendVideos
+      <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+        {hotVideos
           .slice((currentPage - 1) * limit, currentPage * limit)
           .map((videoItem, index) => (
             <div key={index} className="col-span-1">
@@ -49,9 +49,8 @@ export default async function Page({ searchParams }: Props) {
       <VideosPagination
         pagination={{
           currentPage,
-          totalItems: recommendVideos.length,
+          totalItems: hotVideos.length,
           totalItemsPerPage: limit,
-          totalPages: Math.ceil(recommendVideos.length / limit),
         }}
       />
     </div>

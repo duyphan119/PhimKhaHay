@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 type SectionHeaderProps = {
   title: string;
-  icon: any;
+  icon?: any;
   iconColor?: string;
   gradientClassName?: string;
   href?: string;
@@ -19,17 +19,17 @@ export default function SectionHeader({
   href,
 }: SectionHeaderProps) {
   return (
-    <div className="flex items-center justify-between rounded-md bg-muted/60 px-3 py-2">
+    <div className="flex flex-col sm:flex-row items-center justify-between rounded-md bg-muted/60 px-3 py-2">
       <div className="flex items-center gap-2 text-lg font-semibold">
-        <HugeiconsIcon
+        {icon ? <HugeiconsIcon
           icon={icon}
           size={18}
           className={cn("shrink-0", iconColor)}
-        />
+        /> : null}
 
         <span
           className={
-            gradientClassName}
+            cn("bg-linear-to-r bg-clip-text text-transparent tracking-wide bg-position-[200%_200%] animate-gradient", gradientClassName)}
         >
           {title}
         </span>

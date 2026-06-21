@@ -1,50 +1,48 @@
 "use client";
 
 import Breadcrumb from "@/components/breadcrumb";
+import SectionHeader from "@/components/section-header";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import VideoCasts from "@/features/casts/components/video-casts";
+import RelatedVideos from "@/features/videos/components/related-videos";
+import VideoCard from "@/features/videos/components/video-card";
+import hotVideos from "@/lib/hot-videos.json";
+import { cn, randomVideos } from "@/lib/utils";
 import { Download, Fire, Play } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-import VideoCasts from "./video-casts";
 import { Fragment } from "react";
-import recommendVideos from "@/lib/recommend-videos.json";
-import VideoCard from "./video-card";
-import { sectionTitleVariants } from "@/lib/constants";
-import SectionHeader from "./section-header";
-import RelatedVideos from "./related-videos";
+import VideoImage from "../components/video-image";
 
-type Props = {
-  video: TVideoDetailsResponse["movie"];
-  episodes: TVideoDetailsResponse["episodes"];
+
+type VideoDetailsPageProps = {
+  item: TMovieDetails;
   hideButtons?: boolean;
   children?: React.ReactNode;
   currentEpisodeSlug?: string;
   serverIndex?: number;
   currentBreadcrumb?: string;
-};
+}
 
-export default function VideoDetails({
-  video,
+export default function VideoDetailsPage({
+  item,
   hideButtons,
   children,
-  episodes,
   currentEpisodeSlug,
   serverIndex,
   currentBreadcrumb,
-}: Props) {
-  const videoTypeSlug = video.type === "series" ? "phim-bo" : "phim-le";
-  const videoTypeName = video.type === "series" ? "Phim bộ" : "Phim lẻ";
-  const videoSlug = video.slug;
+}: VideoDetailsPageProps) {
+  const videoTypeSlug = item.type === "series" ? "phim-bo" : "phim-le";
+  const videoTypeName = item.type === "series" ? "Phim bộ" : "Phim lẻ";
+  const videoSlug = item.slug;
 
   let firstLink: string = `/phim/${videoSlug}`;
 
-  if (episodes?.length) {
+  if (item.episodes?.length) {
     // find first available
-    for (let i = 0; i < episodes.length; i++) {
-      const sd = episodes[i].server_data;
+    for (let i = 0; i < item.episodes.length; i++) {
+      const sd = item.episodes[i].server_data;
       if (sd && sd.length) {
         const ep = sd[0];
         firstLink = `/xem-phim/${videoSlug}/${i}/${ep.slug || ep.filename}`;
@@ -52,6 +50,7 @@ export default function VideoDetails({
       }
     }
   }
+
 
   return (
     <div className="_container py-4 flex flex-col gap-4">
@@ -66,28 +65,28 @@ export default function VideoDetails({
                 position: 1,
               },
               {
-                slug: `/nam/${videoTypeSlug}?year=${video.year}`,
+                slug: `/nam-phat-hanh/${videoTypeSlug}?year=${item.year}`,
                 isCurrent: false,
-                name: video.year + "",
+                name: item.year + "",
                 position: 2,
               },
               {
-                slug: `/nam/${videoTypeSlug}?year=${video.year}&country=${video.country[0].slug}`,
+                slug: `/nam-phat-hanh/${videoTypeSlug}?year=${item.year}&country=${item.country[0].slug}`,
                 isCurrent: false,
-                name: video.country[0].name,
+                name: item.country[0].name,
                 position: 3,
               },
               {
-                slug: `/nam/${videoTypeSlug}?year=${video.year}&country=${video.country[0].slug}&category=${video.category[0].slug}`,
+                slug: `/nam-phat-hanh/${videoTypeSlug}?year=${item.year}&country=${item.country[0].slug}&category=${item.category[0].slug}`,
                 isCurrent: false,
-                name: video.category[0].name,
+                name: item.category[0].name,
                 position: 4,
               },
               {
                 isCurrent: children ? false : true,
-                name: video.name,
+                name: item.name,
                 position: 5,
-                slug: children ? `/phim/${video.slug}` : undefined,
+                slug: children ? `/phim/${item.slug}` : undefined,
               },
               ...(children && currentBreadcrumb
                 ? [
@@ -111,10 +110,10 @@ export default function VideoDetails({
             >
               <div>
                 <h1 className="text-3xl font-semibold leading-tight">
-                  {video.name}
+                  {item.name}
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  {video.origin_name}
+                  {item.origin_name}
                 </p>
               </div>
             </div>
@@ -125,17 +124,8 @@ export default function VideoDetails({
                 children ? "order-4" : "order-2",
               )}
             >
-              <div className="relative aspect-[2/3] w-full overflow-hidden bg-slate-950 md:col-span-1">
-                <Image
-                  unoptimized
-                  src={`https://phimapi.com/image.php?url=${video.poster_url}`}
-                  alt={video.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 320px"
-                  className="object-cover"
-                  loading="eager"
-                  crossOrigin="anonymous"
-                />
+              <div className="relative aspect-2/3 w-full overflow-hidden bg-slate-950 md:col-span-1">
+                <VideoImage src={item.thumb_url} alt={item.name} />
 
                 {hideButtons ? null : (
                   <div className="absolute bottom-2 inset-x-2">
@@ -177,19 +167,19 @@ export default function VideoDetails({
                     Năm
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.year}
+                    {item.year}
                   </div>
                   <div className="col-span-1 rounded-md bg-muted px-3 py-2 font-semibold">
                     Đạo diễn
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.director || "Đang cập nhật"}
+                    {item.director.join(",") || "Đang cập nhật"}
                   </div>
                   <div className="col-span-1 rounded-md bg-muted px-3 py-2 font-semibold">
                     Quốc gia
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.country?.map((item, index) => (
+                    {item.country?.map((item, index) => (
                       <Fragment key={item.slug}>
                         {index !== 0 ? <span>,&nbsp;</span> : null}
                         <Link
@@ -206,7 +196,7 @@ export default function VideoDetails({
                     Thể loại
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.category.map((item, index) => (
+                    {item.category.map((item, index) => (
                       <Fragment key={item.slug}>
                         {index !== 0 ? <span>,&nbsp;</span> : null}
                         <Link
@@ -223,58 +213,55 @@ export default function VideoDetails({
                     Thời lượng
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.time}
+                    {item.time}
                   </div>
                   <div className="col-span-1 rounded-md bg-muted px-3 py-2 font-semibold">
                     Chất lượng
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.quality}
+                    {item.quality}
                   </div>
                   <div className="col-span-1 rounded-md bg-muted px-3 py-2 font-semibold">
                     Ngôn ngữ
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.lang}
+                    {item.lang}
                   </div>
                   <div className="col-span-1 rounded-md bg-muted px-3 py-2 font-semibold">
                     Trạng thái
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.status === "completed"
+                    {item.status === "completed"
                       ? "Hoàn thành"
-                      : `Đang chiếu ${video.episode_current.toLowerCase()}`}
+                      : `Đang chiếu ${item.episode_current.toLowerCase()}`}
                   </div>
                   <div className="col-span-1 rounded-md bg-muted px-3 py-2 font-semibold">
                     Tổng số tập
                   </div>
                   <div className="col-span-2 rounded-md bg-muted px-3 py-2">
-                    {video.episode_total}
+                    {item.episode_total}
                   </div>
                 </div>
               </div>
             </article>
             <div className={cn("space-y-4", children ? "order-5" : "order-3")}>
-              <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-xl font-semibold">Diễn viên</h2>
-                <VideoCasts
-                  castNames={video.actor}
-                  tmdbId={video.tmdb.id}
-                  tmdbType={video.tmdb.type}
-                />
-              </div>
+              <VideoCasts
+                castNames={item.actor}
+                tmdbId={item.tmdb.id}
+                tmdbType={item.tmdb.type}
+              />
 
               <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
                 <h2 className="text-xl font-semibold">Nội dung phim</h2>
-                <p
+                <div
                   dangerouslySetInnerHTML={{
-                    __html: video.content || "Chưa có mô tả cho phim này.",
+                    __html: item.content || "Chưa có mô tả cho phim này.",
                   }}
                   className="mt-4 leading-7 text-muted-foreground text-sm text-justify"
-                ></p>
+                ></div>
               </div>
             </div>
-            {episodes?.length ? (
+            {item.episodes?.length ? (
               <div
                 className={cn(
                   "rounded-sm border border-border bg-card p-6 shadow-sm",
@@ -285,12 +272,12 @@ export default function VideoDetails({
                   <div>
                     <h2 className="text-xl font-semibold">Danh sách tập</h2>
                     <p className="text-sm text-muted-foreground">
-                      {episodes.length} server khả dụng
+                      {item.episodes.length} server khả dụng
                     </p>
                   </div>
                 </div>
                 <div className="space-y-4">
-                  {episodes.map((server, index) => {
+                  {item.episodes.map((server, index) => {
                     const serverIsActive = index === serverIndex;
                     return (
                       <div
@@ -310,13 +297,13 @@ export default function VideoDetails({
                         </h3>
 
                         <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
-                          {server.server_data.map((item) => {
+                          {server.server_data.map((item, _index) => {
                             const episodeIsActive =
                               serverIsActive &&
                               item.slug === currentEpisodeSlug;
                             return (
                               <Link
-                                key={item.slug || item.filename}
+                                key={_index}
                                 title={item.name}
                                 href={`/xem-phim/${videoSlug}/${index}/${item.slug}`}
                                 className={buttonVariants({
@@ -339,7 +326,7 @@ export default function VideoDetails({
               </div>
             ) : null}
           </div>
-          <RelatedVideos currentSlug={video.slug} categories={video.category} countries={video.country} year={video.year} typelist={video.type === 'series' ? "phim-bo" : "phim-le"} />
+          <RelatedVideos currentSlug={item.slug} categories={item.category} countries={item.country} year={item.year} typelist={item.type === 'series' ? "phim-bo" : "phim-le"} />
         </div>
         <div className="col-span-4 sm:col-span-1">
           <SectionHeader
@@ -349,7 +336,7 @@ export default function VideoDetails({
             gradientClassName="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient"
           />
           <div className="space-y-4 py-4">
-            {recommendVideos.slice(0, 24).map((videoItem) => (
+            {randomVideos(hotVideos, 25).filter(({ slug }) => item.slug !== slug).map((videoItem, index) => index === 24 ? null : (
               <div key={videoItem.slug} className="">
                 <VideoCard videoItem={videoItem} direction="row" />
               </div>

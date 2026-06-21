@@ -12,7 +12,7 @@ export function VideoCardSkeleton({
     <div className={cn("video-card", direction === "row" ? "flex gap-4" : "")}>
       <div
         className={cn(
-          "relative aspect-[2/3]",
+          "relative aspect-2/3",
           direction === "row" ? "w-1/3 shrink-0" : "w-full",
         )}
       >

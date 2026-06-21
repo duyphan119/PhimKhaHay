@@ -1,12 +1,11 @@
 import Breadcrumb from "@/components/breadcrumb";
-import VideoCard from "@/components/video-card";
-import VideosFilter from "@/components/videos-filter";
-import VideosPagination from "@/components/videos-pagination";
-import { searchVideos } from "@/lib/video";
-import { Clapperboard, Film01FreeIcons, HugeiconsFreeIcons, SearchRemoveIcon } from "@hugeicons/core-free-icons";
+import { videosApi } from "@/features/videos/api";
+import VideoCard from "@/features/videos/components/video-card";
+import VideosFilter from "@/features/videos/components/videos-filter";
+import VideosPagination from "@/features/videos/components/videos-pagination";
+import { Clapperboard } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 type Props = {
   searchParams: Promise<TVideosParams & { keyword: string }>;
@@ -17,15 +16,13 @@ export const generateMetadata = async ({
 }: Props): Promise<Metadata> => {
   const awaitedSearchParams = await searchParams;
 
-  const { keyword, ...otherParams } = awaitedSearchParams;
-
-  const { data } = await searchVideos(keyword, otherParams);
+  const data = await videosApi.search(awaitedSearchParams);
   if (!data || !data.seoOnPage) return {
-    title: "KDPhim | Tìm kiếm",
+    title: "phimkhahay | Tìm kiếm",
     description: "Kết quả tìm kiếm",
   }
   return {
-    title: `KDPhim | ${data.seoOnPage.titleHead}`,
+    title: `phimkhahay | ${data.seoOnPage.titleHead}`,
     description: data.seoOnPage.descriptionHead,
   };
 };
@@ -33,11 +30,10 @@ export const generateMetadata = async ({
 export default async function Page({ searchParams }: Props) {
   const awaitedSearchParams = await searchParams;
 
-  const { keyword, ...otherParams } = awaitedSearchParams;
 
-  const { data } = await searchVideos(keyword, otherParams);
+  const data = await videosApi.search(awaitedSearchParams);
 
-  if (!data || !data.items) return <div className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed bg-muted/20 px-6 text-center">
+  if (!data) return <div className="flex min-h-75 flex-col items-center justify-center rounded-2xl border border-dashed bg-muted/20 px-6 text-center">
     <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
       <HugeiconsIcon icon={Clapperboard} className="h-8 w-8 text-muted-foreground" />
     </div>
@@ -63,12 +59,11 @@ export default async function Page({ searchParams }: Props) {
           />
         </div>
 
-        <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
           {data.items?.map((videoItem) => (
             <div key={videoItem._id} className="col-span-1">
               <VideoCard
                 videoItem={videoItem}
-                imageDomain={data.APP_DOMAIN_CDN_IMAGE}
               />
             </div>
           ))}

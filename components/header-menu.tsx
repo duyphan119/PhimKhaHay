@@ -14,7 +14,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { typeList, exampleCategories, exampleCountries } from "@/lib/constants";
+import { categories } from "@/features/categories/api";
+import { countries } from "@/features/countries/api";
+import { typelist } from "@/features/typelist/api";
 import { getYears } from "@/lib/utils";
 import {
   DashboardSquare01Icon,
@@ -29,9 +31,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useState } from "react";
 
-type Props = {};
-
-export default function HeaderMenu({ }: Props) {
+export default function HeaderMenu() {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);
@@ -56,7 +56,7 @@ export default function HeaderMenu({ }: Props) {
           <Link
             href="/"
             onClick={handleClose}
-            className="flex items-center gap-1.5 px-2 py-2 rounded-sm text-foreground hover:text-destructive transition-colors duration-200 overflow-hidden  hover:bg-gradient-to-r hover:from-destructive/20 hover:to-transparent relative before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-0 before:w-1 before:rounded-full before:bg-destructive before:opacity-0 before:transition-all before:duration-100 hover:before:h-full hover:before:opacity-100"
+            className="flex items-center gap-1.5 px-2 py-2 rounded-sm text-foreground hover:text-primary overflow-hidden transition-all duration-200 hover:bg-linear-to-r hover:from-primary/20 hover:to-transparent relative before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-0 before:w-1 before:rounded-full before:bg-primary before:opacity-0 before:transition-all before:duration-100 hover:before:h-full hover:before:opacity-100"
           >
             <HugeiconsIcon icon={Home} size={18} />
             Trang chủ
@@ -64,7 +64,7 @@ export default function HeaderMenu({ }: Props) {
           <Link
             href="/phim-hot"
             onClick={handleClose}
-            className="flex items-center gap-1.5 px-2 py-2 rounded-sm text-foreground hover:text-destructive overflow-hidden transition-all duration-200 hover:bg-gradient-to-r hover:from-destructive/20 hover:to-transparent relative before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-0 before:w-1 before:rounded-full before:bg-destructive before:opacity-0 before:transition-all before:duration-100 hover:before:h-full hover:before:opacity-100"
+            className="flex items-center gap-1.5 px-2 py-2 rounded-sm text-foreground hover:text-primary overflow-hidden transition-all duration-200 hover:bg-linear-to-r hover:from-primary/20 hover:to-transparent relative before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-0 before:w-1 before:rounded-full before:bg-primary before:opacity-0 before:transition-all before:duration-100 hover:before:h-full hover:before:opacity-100"
           >
             <HugeiconsIcon icon={Fire} size={18} />
             Phim hot
@@ -78,12 +78,12 @@ export default function HeaderMenu({ }: Props) {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="grid grid-cols-2">
-                  {typeList.map((item) => (
+                  {typelist.map((item) => (
                     <Link
                       key={item.name}
                       href={`/danh-sach/${item.slug}`}
                       onClick={handleClose}
-                      className="no-underline p-1 hover:text-destructive transition-colors duration-200"
+                      className="no-underline p-1 hover:text-primary transition-colors duration-200"
                     >
                       {item.name}
                     </Link>
@@ -98,12 +98,12 @@ export default function HeaderMenu({ }: Props) {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="grid grid-cols-2">
-                  {exampleCategories.map((category) => (
+                  {categories.map((category) => (
                     <Link
                       key={category.name}
                       href={`/the-loai/${category.slug}`}
                       onClick={handleClose}
-                      className="no-underline p-1 hover:text-destructive transition-colors duration-200"
+                      className="no-underline p-1 hover:text-primary transition-colors duration-200"
                     >
                       {category.name}
                     </Link>
@@ -117,12 +117,12 @@ export default function HeaderMenu({ }: Props) {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="grid grid-cols-2">
-                  {exampleCountries.map((country) => (
+                  {countries.map((country) => (
                     <Link
                       key={country.name}
                       href={`/quoc-gia/${country.slug}`}
                       onClick={handleClose}
-                      className="no-underline p-1 hover:text-destructive transition-colors duration-200"
+                      className="no-underline p-1 hover:text-primary transition-colors duration-200"
                     >
                       {country.name}
                     </Link>
@@ -141,9 +141,9 @@ export default function HeaderMenu({ }: Props) {
                   {getYears().map((year) => (
                     <Link
                       key={year}
-                      href={`/nam/${year}`}
+                      href={`/nam-phat-hanh/${year}`}
                       onClick={handleClose}
-                      className="no-underline p-1 hover:text-destructive transition-colors duration-200"
+                      className="no-underline p-1 hover:text-primary transition-colors duration-200"
                     >
                       {year}
                     </Link>

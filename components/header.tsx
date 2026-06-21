@@ -3,31 +3,55 @@
 import { Search } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import HeaderMenu from "./header-menu";
 import HeaderSearch from "./header-search";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-type Props = {};
 
-export default function Header({ }: Props) {
+export default function Header() {
+  const pathname = usePathname();
+
+  const [isBackgroundTransparent, setIsBackgroundTransparent] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (pathname === "/" && window.scrollY === 0) {
+        setIsBackgroundTransparent(true);
+      } else {
+        setIsBackgroundTransparent(false);
+      }
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [pathname]);
+
   return (
-    <header className="bg-background fixed top-0 inset-x-0 z-10">
+    <header className={cn("fixed top-0 inset-x-0 z-10 bg-background", isBackgroundTransparent ? "sm:bg-transparent" : "")}>
       <div className="flex justify-between items-center gap-2 h-16 _container relative">
         <div className="flex items-center gap-2">
           <HeaderMenu />
           <Link
             href="/"
             title="Đi tới trang chủ"
-            className="aspect-[1983/793] block relative h-12"
+            className="aspect-3/1 block relative h-10"
           >
             <Image
               src={"/images/logo.png"}
               fill={true}
               alt="Logo"
-              sizes="(max-width: 1200px) 1983px, 20vw"
+              sizes="(max-width: 1200px) 1536px, 20vw"
               loading="eager"
               unoptimized
+              className="object-cover"
             />
           </Link>
         </div>

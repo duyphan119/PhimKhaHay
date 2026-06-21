@@ -16,3 +16,15 @@ export const getYears = () =>
     { length: new Date().getFullYear() - 1970 + 1 },
     (_, i) => 1970 + i,
   ).reverse();
+
+export function randomVideos<T>(videos: T[], newLength?: number): T[] {
+  const shuffled = [...videos];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return newLength ? shuffled.slice(0, newLength) : shuffled;
+}
