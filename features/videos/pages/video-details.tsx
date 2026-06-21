@@ -7,8 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import VideoCasts from "@/features/casts/components/video-casts";
 import RelatedVideos from "@/features/videos/components/related-videos";
 import VideoCard from "@/features/videos/components/video-card";
-import hotVideos from "@/lib/hot-videos.json";
-import { cn, randomVideos } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Download, Fire, Play } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
@@ -23,6 +22,7 @@ type VideoDetailsPageProps = {
   currentEpisodeSlug?: string;
   serverIndex?: number;
   currentBreadcrumb?: string;
+  hotVideos: any[];
 }
 
 export default function VideoDetailsPage({
@@ -31,7 +31,7 @@ export default function VideoDetailsPage({
   children,
   currentEpisodeSlug,
   serverIndex,
-  currentBreadcrumb,
+  currentBreadcrumb, hotVideos
 }: VideoDetailsPageProps) {
   const videoTypeSlug = item.type === "series" ? "phim-bo" : "phim-le";
   const videoTypeName = item.type === "series" ? "Phim bộ" : "Phim lẻ";
@@ -336,7 +336,7 @@ export default function VideoDetailsPage({
             gradientClassName="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient"
           />
           <div className="space-y-4 py-4">
-            {randomVideos(hotVideos, 25).filter(({ slug }) => item.slug !== slug).map((videoItem, index) => index === 24 ? null : (
+            {hotVideos.map((videoItem) => (videoItem.slug === item.slug) ? null : (
               <div key={videoItem.slug} className="">
                 <VideoCard videoItem={videoItem} direction="row" />
               </div>

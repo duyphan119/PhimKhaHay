@@ -26,13 +26,13 @@ export default function VideoCard({
         href={`/phim/${videoItem.slug}`}
         title={videoItem.name}
         className={cn(
-          "block aspect-2/3 relative",
+          "block aspect-2/3 relative overflow-hidden ",
           direction === "row" ? "w-1/3 shrink-0" : "w-full",
         )}
       >
 
 
-        <VideoImage src={videoItem.thumb_url} alt={videoItem.slug} />
+        <VideoImage src={videoItem.thumb_url} alt={videoItem.slug} className="group-hover:scale-105 transition-transform duration-400" />
 
         {direction === "col" && videoItem.episode_current ? (
           <div className="absolute top-0 right-0 text-xs bg-destructive text-destructive-foreground rounded-tr-sm rounded-bl-sm px-1">

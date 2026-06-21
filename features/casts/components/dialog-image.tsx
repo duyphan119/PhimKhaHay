@@ -18,7 +18,7 @@ export default function DialogImage({ children, image }: DialogImageProps) {
   if (!image.file_path) return children
   return (
     <Dialog >
-      <DialogTrigger>{children}</DialogTrigger>
+      <DialogTrigger className="w-full">{children}</DialogTrigger>
       <DialogContent showCloseButton={false} className="border-0 bg-transparent shadow-none">
         <DialogHeader className="sr-only">
           <DialogTitle className="">zoom ảnh</DialogTitle>

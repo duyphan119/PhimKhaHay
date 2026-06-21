@@ -24,7 +24,7 @@ export default async function Page({ searchParams }: Props) {
   const awaitedSearchParams = await searchParams;
 
   const currentPage = Number(awaitedSearchParams.page) || 1;
-  const limit = 20;
+  const limit = 48;
 
   return (
     <div className="_container space-y-4 py-4">

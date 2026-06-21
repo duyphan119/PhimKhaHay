@@ -2,9 +2,9 @@ import { ArrowLeft02Icon, ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
 import Link from "next/link";
-
+import hotVideos from "@/lib/hot-videos.json";
 import { buttonVariants } from "@/components/ui/button";
-import { getServerName, stripHtml } from "@/lib/utils";
+import { getServerName, randomVideos, stripHtml } from "@/lib/utils";
 import VideoDetailsPage from "@/features/videos/pages/video-details";
 import { videosApi } from "@/features/videos/api";
 import { notFound } from "next/navigation";
@@ -84,7 +84,7 @@ export default async function Page({ params }: Props) {
     await getPageData(params);
   if (!data) return notFound();
 
-  const { item, currentEpisode, serverIndex, index, episodeSlug, currentServer } = data;
+  const { item, currentEpisode, serverIndex, currentServer } = data;
 
   if (!item || !currentEpisode) return notFound();
 
@@ -130,6 +130,7 @@ export default async function Page({ params }: Props) {
       currentEpisodeSlug={currentEpisode.slug}
       serverIndex={serverIndex}
       currentBreadcrumb={`${currentEpisode.name} - ${serverName}`}
+      hotVideos={randomVideos(hotVideos, 17)}
     >
       <div className="aspect-video overflow-hidden rounded-lg bg-slate-950">
 

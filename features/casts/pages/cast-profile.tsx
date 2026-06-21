@@ -18,7 +18,7 @@ export default function CastProfilePage({ id }: CastProfilePageProps) {
   }, [id]);
 
 
-
+  console.log(details)
   if (!details) return null;
   return (
     <div className="_container py-4">

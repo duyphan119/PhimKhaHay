@@ -1,9 +1,10 @@
 import { castsApi } from "@/features/casts/api";
 import { videosApi } from "@/features/videos/api";
 import VideoDetailsPage from "@/features/videos/pages/video-details";
-import { stripHtml } from "@/lib/utils";
+import { randomVideos, stripHtml } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import hotVideos from "@/lib/hot-videos.json";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -36,5 +37,5 @@ export default async function Page({ params }: Props) {
 
   if (!data) return notFound();
 
-  return <VideoDetailsPage item={data.item} />;
+  return <VideoDetailsPage item={data.item} hotVideos={randomVideos(hotVideos, 17)} />;
 }

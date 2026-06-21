@@ -105,7 +105,7 @@ export default async function Home() {
           <section className="space-y-2 lg:space-y-4">
             <SectionHeader {...firstSection} />
             <div className="gap-2 lg:gap-4 grid grid-cols-12">
-              {randomVideos(hotVideos, 24).map((videoItem: ThotedVideo) => (
+              {randomVideos(hotVideos, 22).map((videoItem: ThotedVideo) => (
                 <div key={videoItem.slug} className="col-span-4 lg:col-span-12">
                   <VideoCard
                     videoItem={videoItem}

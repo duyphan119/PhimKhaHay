@@ -44,7 +44,7 @@ export default function CastProfile({
         }
         alt={name}
         fill
-        className="object-cover transition-transform duration-500 hover:scale-105"
+        className="object-cover transition-transform duration-400 hover:scale-105"
         loading="eager"
         sizes="(max-width: 640px) 100vw, 50vw"
       />
@@ -71,7 +71,7 @@ export default function CastProfile({
           aspect_ratio: 2 / 3,
           file_path: profile_path
         }}>
-          <div className="relative aspect-2/3 overflow-hidden">
+          <div className="relative aspect-2/3 overflow-hidden cursor-zoom-in">
             {imageChildren}
           </div>
         </DialogImage>
