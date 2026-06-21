@@ -130,6 +130,7 @@ export const categoriesApi = {
     try {
       const response = await fetch(
         `${process.env.DOMAIN_API}/the-loai/${categorySlug}?${queryString.stringify(params || {})}`,
+        { next: { revalidate: 60 } },
       );
 
       const jsonData = await response.json();

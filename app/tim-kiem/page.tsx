@@ -52,12 +52,7 @@ export default async function Page({ searchParams }: Props) {
       <div className="_container space-y-4 py-4">
         <Breadcrumb items={data.breadCrumb} />
 
-        <div className="">
-          <VideosFilter
-            defaultParams={awaitedSearchParams}
-            isSearchFilter={true}
-          />
-        </div>
+
 
         <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
           {data.items?.map((videoItem) => (

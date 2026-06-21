@@ -19,6 +19,7 @@ export const yearsApi = {
     try {
       const response = await fetch(
         `${process.env.DOMAIN_API}/nam-phat-hanh/${year}?${queryString.stringify(params || {})}`,
+        { next: { revalidate: 60 } },
       );
 
       const jsonData = await response.json();

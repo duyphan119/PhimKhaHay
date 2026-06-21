@@ -283,6 +283,7 @@ export const countriesApi = {
     try {
       const response = await fetch(
         `${process.env.DOMAIN_API}/quoc-gia/${countrySlug}?${queryString.stringify(params || {})}`,
+        { next: { revalidate: 60 } },
       );
 
       const jsonData = await response.json();

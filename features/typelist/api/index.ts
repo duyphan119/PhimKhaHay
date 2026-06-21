@@ -29,6 +29,7 @@ export const typelistApi = {
     try {
       const response = await fetch(
         `${process.env.DOMAIN_API}/danh-sach/${slug}?${queryString.stringify(params || {})}`,
+        { next: { revalidate: 60 } },
       );
 
       const jsonData = await response.json();

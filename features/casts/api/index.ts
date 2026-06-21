@@ -4,6 +4,7 @@ export const castsApi = {
       const res = await fetch(
         `${process.env.DOMAIN_TMDB_API}/${tmdbType}/${tmdbId}/credits?language=vi-VN`,
         {
+          next: { revalidate: 60 },
           headers: {
             Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
           },
@@ -22,6 +23,7 @@ export const castsApi = {
       const res = await fetch(
         `${process.env.DOMAIN_TMDB_API}/person/${castId}?language=vi-VN`,
         {
+          next: { revalidate: 60 },
           headers: {
             Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
           },
@@ -40,6 +42,7 @@ export const castsApi = {
       const res = await fetch(
         `${process.env.DOMAIN_TMDB_API}/person/${castId}/images?language=vi-VN`,
         {
+          next: { revalidate: 60 },
           headers: {
             Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
           },

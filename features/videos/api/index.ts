@@ -8,7 +8,9 @@ export const videosApi = {
     breadCrumb: TBreadcrumbItem[];
   } | null> => {
     try {
-      const response = await fetch(`${process.env.DOMAIN_API}/home`);
+      const response = await fetch(`${process.env.DOMAIN_API}/home`, {
+        next: { revalidate: 60 },
+      });
 
       const jsonData = await response.json();
 
@@ -57,6 +59,7 @@ export const videosApi = {
     try {
       const response = await fetch(
         `${process.env.DOMAIN_API}/tim-kiem?${queryString.stringify(params || {})}`,
+        { next: { revalidate: 60 } },
       );
 
       const jsonData = await response.json();
@@ -70,7 +73,9 @@ export const videosApi = {
     return null;
   },
   getVideoByTmdb: async (tmdbType: string, tmdbId: string) => {
-    const res = await fetch(`https://phimapi.com/tmdb/${tmdbType}/${tmdbId}`);
+    const res = await fetch(`https://phimapi.com/tmdb/${tmdbType}/${tmdbId}`, {
+      next: { revalidate: 60 },
+    });
 
     return res.json() as Promise<TVideoDetailsResponse>;
   },
@@ -79,6 +84,7 @@ export const videosApi = {
       fetch(
         `${process.env.DOMAIN_TMDB_API}/person/${castId}/tv_credits?language=vi-VN`,
         {
+          next: { revalidate: 60 },
           headers: {
             Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
           },
@@ -87,6 +93,7 @@ export const videosApi = {
       fetch(
         `${process.env.DOMAIN_TMDB_API}/person/${castId}/movie_credits?language=vi-VN`,
         {
+          next: { revalidate: 60 },
           headers: {
             Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
           },

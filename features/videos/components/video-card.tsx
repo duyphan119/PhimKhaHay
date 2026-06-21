@@ -36,7 +36,7 @@ export default function VideoCard({
 
         {direction === "col" && videoItem.episode_current ? (
           <div className="absolute top-0 right-0 text-xs bg-destructive text-destructive-foreground rounded-tr-sm rounded-bl-sm px-1">
-            {videoItem.episode_current.replace("Hoàn tất", "")}
+            {videoItem.episode_current.replace("Hoàn tất", "").replace("Hoàn Tất", "")}
           </div>
         ) : null}
         {direction === "col" && videoItem.lang ? (
