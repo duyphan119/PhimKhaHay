@@ -23,6 +23,7 @@ export default function VideoImage({
       className={cn("object-cover", className)}
       loading="lazy"
       crossOrigin="anonymous"
+      unoptimized
     />
   );
 }
