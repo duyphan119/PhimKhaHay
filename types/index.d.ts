@@ -285,20 +285,16 @@ type TMovieCredit = {
   order: number;
 };
 
-type TWatchedVideo = {
-  name: string;
-  slug: string;
-  poster_url: string;
-
-  server_index: number;
-  server_name: number;
-
-  episode_name: string;
-  episode_slug: string;
-};
-
 type THotVideo = {
   name: string;
   slug: string;
   thumb_url: string;
+};
+
+type TWatchedVideo = {
+  name: string;
+  slug: string;
+  serverIndex: number;
+  episodeName: string;
+  poster_url: string;
 };

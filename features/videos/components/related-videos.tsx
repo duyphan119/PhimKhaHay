@@ -38,7 +38,7 @@ export default function RelatedVideos({ categories, countries, currentSlug, type
         gradientClassName="from-yellow-500 via-orange-400 to-yellow-300"
       />
 
-      <div className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-4">
+      <div className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {data.items.filter(({ slug }) => currentSlug !== slug).slice(0, 24).map((videoItem) => (
           <div key={videoItem._id} className="col-span-1">
             <VideoCard videoItem={videoItem} />

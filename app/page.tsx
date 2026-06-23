@@ -4,6 +4,7 @@ import CastProfile from "@/features/casts/components/cast-profile";
 import { countriesApi } from "@/features/countries/api";
 import { videosApi } from "@/features/videos/api";
 import VideoCard from "@/features/videos/components/video-card";
+import HomeWatchedVideos from "@/features/watched-videos/components/home-watched-videos";
 import { HOT_VIDEOS, HOT_CASTS } from "@/lib/constants";
 import {
   Fire,
@@ -80,10 +81,11 @@ export default async function Home() {
       <HeroCarousel items={carouselItems.status === 'fulfilled' ? (carouselItems.value?.items || []) : []} />
       <div className="_container grid grid-cols-12 gap-8">
         <div className="col-span-12 lg:col-span-9 space-y-4 lg:space-y-8">
+          <HomeWatchedVideos />
           {otherSections.map((item, index) => (
             <section key={index} className="space-y-2 lg:space-y-4">
               <SectionHeader  {...item} />
-              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-4">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {index === otherSections.length - 1 ? HOT_CASTS.map((cast) => (
                   <CastProfile
                     key={cast.id}
@@ -104,7 +106,7 @@ export default async function Home() {
         <div className="col-span-12 lg:col-span-3">
           <section className="space-y-2 lg:space-y-4">
             <SectionHeader {...firstSection} />
-            <div className="gap-2 lg:gap-4 grid grid-cols-12">
+            <div className="gap-4 grid grid-cols-12">
               {HOT_VIDEOS.slice(0, 24).map((videoItem: ThotedVideo) => (
                 <div key={videoItem.slug} className="col-span-4 lg:col-span-12">
                   <VideoCard

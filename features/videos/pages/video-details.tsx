@@ -12,8 +12,9 @@ import { cn } from "@/lib/utils";
 import { Download, Fire, Play } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import VideoImage from "../components/video-image";
+import { watchedVideosApi } from "@/features/watched-videos/api";
 
 
 type VideoDetailsPageProps = {
@@ -50,7 +51,24 @@ export default function VideoDetailsPage({
       }
     }
   }
-  console.log({ episodes: item.episodes })
+
+  useEffect(() => {
+    if (currentEpisodeName) {
+      const timerId = setTimeout(() => {
+        watchedVideosApi.create({
+          serverIndex: serverIndex || 0,
+          episodeName: currentEpisodeName,
+          name: item.name,
+          slug: item.slug,
+          poster_url: item.poster_url
+        })
+      }, 1)
+
+      return () => {
+        clearTimeout(timerId)
+      }
+    }
+  }, [serverIndex, currentEpisodeName, item.name, item.slug, item.poster_url])
 
   return (
     <div className="_container py-4 flex flex-col gap-4">
