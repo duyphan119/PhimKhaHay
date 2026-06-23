@@ -7,6 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import VideoCasts from "@/features/casts/components/video-casts";
 import RelatedVideos from "@/features/videos/components/related-videos";
 import VideoCard from "@/features/videos/components/video-card";
+import { HOT_VIDEOS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Download, Fire, Play } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -19,19 +20,18 @@ type VideoDetailsPageProps = {
   item: TMovieDetails;
   hideButtons?: boolean;
   children?: React.ReactNode;
-  currentEpisodeSlug?: string;
+  currentEpisodeName?: string;
   serverIndex?: number;
   currentBreadcrumb?: string;
-  hotVideos: any[];
 }
 
 export default function VideoDetailsPage({
   item,
   hideButtons,
   children,
-  currentEpisodeSlug,
+  currentEpisodeName,
   serverIndex,
-  currentBreadcrumb, hotVideos
+  currentBreadcrumb,
 }: VideoDetailsPageProps) {
   const videoTypeSlug = item.type === "series" ? "phim-bo" : "phim-le";
   const videoTypeName = item.type === "series" ? "Phim bộ" : "Phim lẻ";
@@ -50,7 +50,7 @@ export default function VideoDetailsPage({
       }
     }
   }
-
+  console.log({ episodes: item.episodes })
 
   return (
     <div className="_container py-4 flex flex-col gap-4">
@@ -300,12 +300,12 @@ export default function VideoDetailsPage({
                           {server.server_data.map((item, _index) => {
                             const episodeIsActive =
                               serverIsActive &&
-                              item.slug === currentEpisodeSlug;
+                              item.name === currentEpisodeName;
                             return (
                               <Link
                                 key={_index}
                                 title={item.name}
-                                href={`/xem-phim/${videoSlug}/${index}/${item.slug}`}
+                                href={`/xem-phim/${videoSlug}/${index}/${item.name}`}
                                 className={buttonVariants({
                                   variant: episodeIsActive
                                     ? "sky"
@@ -336,14 +336,13 @@ export default function VideoDetailsPage({
             gradientClassName="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient"
           />
           <div className="space-y-4 py-4">
-            {hotVideos.map((videoItem) => (videoItem.slug === item.slug) ? null : (
+            {HOT_VIDEOS.map((videoItem) => (videoItem.slug === item.slug) ? null : (
               <div key={videoItem.slug} className="">
                 <VideoCard videoItem={videoItem} direction="row" />
               </div>
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );

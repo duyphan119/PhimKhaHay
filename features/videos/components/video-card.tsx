@@ -1,4 +1,3 @@
-import { buttonVariants } from "@/components/ui/button";
 import VideoImage from "@/features/videos/components/video-image";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -36,7 +35,7 @@ export default function VideoCard({
 
         {direction === "col" && videoItem.episode_current ? (
           <div className="absolute top-0 right-0 text-xs bg-destructive text-destructive-foreground rounded-tr-sm rounded-bl-sm px-1">
-            {videoItem.episode_current.replace("Hoàn tất", "").replace("Hoàn Tất", "")}
+            {videoItem.episode_current}
           </div>
         ) : null}
         {direction === "col" && videoItem.lang ? (

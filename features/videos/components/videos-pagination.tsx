@@ -7,7 +7,6 @@ import { usePathname, useRouter } from "next/navigation";
 import queryString from "query-string";
 import { useEffect, useRef } from "react";
 import { buttonVariants } from "../../../components/ui/button";
-import { cn } from "@/lib/utils";
 
 type Props = {
   pagination: TPagination;

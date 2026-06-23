@@ -1,12 +1,11 @@
+import { buttonVariants } from "@/components/ui/button";
+import { videosApi } from "@/features/videos/api";
+import VideoDetailsPage from "@/features/videos/pages/video-details";
+import { getServerName, stripHtml } from "@/lib/utils";
 import { ArrowLeft02Icon, ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import hotVideos from "@/lib/hot-videos.json";
-import { buttonVariants } from "@/components/ui/button";
-import { getServerName, randomVideos, stripHtml } from "@/lib/utils";
-import VideoDetailsPage from "@/features/videos/pages/video-details";
-import { videosApi } from "@/features/videos/api";
 import { notFound } from "next/navigation";
 
 type Params = {
@@ -22,11 +21,11 @@ type Props = {
 const createEpisodeLink = (
   movieSlug: string,
   serverIndex: number,
-  episodeSlug?: string,
-) => `/xem-phim/${movieSlug}/${serverIndex}/${episodeSlug}`;
+  episodeName?: string,
+) => `/xem-phim/${movieSlug}/${serverIndex}/${episodeName}`;
 
 async function getPageData(params: Promise<Params>) {
-  const { slug, ep: episodeSlug, index } = await params;
+  const { slug, ep: episodeName, index } = await params;
 
   const data = await videosApi.getDetails(slug);
 
@@ -37,13 +36,13 @@ async function getPageData(params: Promise<Params>) {
   const currentServer = data.item.episodes?.[serverIndex];
 
   const currentEpisode = currentServer?.server_data?.find(
-    (ep) => ep.slug === episodeSlug,
+    (ep) => ep.name === episodeName,
   );
 
   return {
     slug,
     index,
-    episodeSlug,
+    episodeName,
     item: data.item,
     serverIndex,
     currentServer,
@@ -60,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: "Phim không tồn tại hoặc đã bị xoá.",
     };
   }
-  const { item, currentEpisode, serverIndex, index, episodeSlug } = data;
+  const { item, currentEpisode, serverIndex } = data;
 
   const episodeName =
     currentEpisode?.name || currentEpisode?.filename || "Xem phim";
@@ -90,7 +89,7 @@ export default async function Page({ params }: Props) {
 
   const currentEpisodeIndex =
     currentServer?.server_data?.findIndex(
-      (ep) => ep.slug === currentEpisode.slug,
+      (ep) => ep.name === currentEpisode.name,
     ) ?? -1;
 
   const prevEpisode =
@@ -107,7 +106,7 @@ export default async function Page({ params }: Props) {
     ? createEpisodeLink(
       item.slug,
       currentEpisodeIndex > 0 ? serverIndex : serverIndex - 1,
-      prevEpisode.slug,
+      prevEpisode.name,
     )
     : undefined;
 
@@ -117,7 +116,7 @@ export default async function Page({ params }: Props) {
       currentEpisodeIndex < currentServer.server_data.length - 1
         ? serverIndex
         : serverIndex + 1,
-      nextEpisode.slug,
+      nextEpisode.name,
     )
     : undefined;
 
@@ -127,10 +126,9 @@ export default async function Page({ params }: Props) {
     <VideoDetailsPage
       item={item}
       hideButtons
-      currentEpisodeSlug={currentEpisode.slug}
+      currentEpisodeName={currentEpisode.name}
       serverIndex={serverIndex}
       currentBreadcrumb={`${currentEpisode.name} - ${serverName}`}
-      hotVideos={randomVideos(hotVideos, 17)}
     >
       <div className="aspect-video overflow-hidden rounded-lg bg-slate-950">
 

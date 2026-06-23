@@ -4,9 +4,7 @@ import CastProfile from "@/features/casts/components/cast-profile";
 import { countriesApi } from "@/features/countries/api";
 import { videosApi } from "@/features/videos/api";
 import VideoCard from "@/features/videos/components/video-card";
-import { hotCasts } from "@/lib/constants";
-import hotVideos from "@/lib/hot-videos.json";
-import { randomVideos } from "@/lib/utils";
+import { HOT_VIDEOS, HOT_CASTS } from "@/lib/constants";
 import {
   Fire,
   Globe02Icon,
@@ -52,23 +50,25 @@ const sections = [
 ]
 
 export default async function Home() {
-  const currentYear = new Date().getFullYear();
   const [carouselItems, ...data] = await Promise.allSettled([
     videosApi.getHome(),
     countriesApi.getVideos("trung-quoc", {
       page: "1",
       limit: "24",
-      year: currentYear + ''
+      sort_field: 'modified.time',
+      sort_type: 'desc'
     }),
     countriesApi.getVideos("han-quoc", {
       page: "1",
       limit: "24",
-      year: currentYear + ''
+      sort_field: 'modified.time',
+      sort_type: 'desc'
     }),
     countriesApi.getVideos("nhat-ban", {
       page: "1",
       limit: "24",
-      year: currentYear + ''
+      sort_field: 'modified.time',
+      sort_type: 'desc'
     }),
   ])
   const sectionVideos = data.map((item) => item.status === 'fulfilled' ? item.value : null)
@@ -84,7 +84,7 @@ export default async function Home() {
             <section key={index} className="space-y-2 lg:space-y-4">
               <SectionHeader  {...item} />
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-4">
-                {index === otherSections.length - 1 ? hotCasts.map((cast) => (
+                {index === otherSections.length - 1 ? HOT_CASTS.map((cast) => (
                   <CastProfile
                     key={cast.id}
                     {...cast}
@@ -105,7 +105,7 @@ export default async function Home() {
           <section className="space-y-2 lg:space-y-4">
             <SectionHeader {...firstSection} />
             <div className="gap-2 lg:gap-4 grid grid-cols-12">
-              {randomVideos(hotVideos, 24).map((videoItem: ThotedVideo) => (
+              {HOT_VIDEOS.slice(0, 24).map((videoItem: ThotedVideo) => (
                 <div key={videoItem.slug} className="col-span-4 lg:col-span-12">
                   <VideoCard
                     videoItem={videoItem}

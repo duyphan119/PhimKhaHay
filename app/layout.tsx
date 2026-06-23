@@ -7,7 +7,6 @@ import type { Metadata } from "next";
 import { Figtree, Geist, Geist_Mono } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
-import TopSpace from "@/components/top-space";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -54,7 +53,6 @@ export default function RootLayout({
         >
           <NextTopLoader color="#0369a1" />
           <Header />
-          <TopSpace />
           {children}
           <Footer />
           <ScrollToTop />

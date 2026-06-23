@@ -296,3 +296,9 @@ type TWatchedVideo = {
   episode_name: string;
   episode_slug: string;
 };
+
+type THotVideo = {
+  name: string;
+  slug: string;
+  thumb_url: string;
+};

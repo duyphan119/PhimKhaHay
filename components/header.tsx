@@ -35,7 +35,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className={cn("fixed top-0 inset-x-0 z-10 bg-background", isBackgroundTransparent ? "sm:bg-transparent" : "")}>
+    <header className={cn(pathname === "/" ? "sticky sm:fixed" : "sticky", "top-0 inset-x-0 z-10 bg-background", isBackgroundTransparent ? "sm:bg-transparent" : "")}>
       <div className="flex justify-between items-center gap-2 h-16 _container relative">
         <div className="flex items-center gap-2">
           <HeaderMenu />

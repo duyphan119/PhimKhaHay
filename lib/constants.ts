@@ -1,6 +1,8 @@
+import hotVideos from "./hot-videos.json";
+
 export const TMDB_IMAGE_DOMAIN = process.env.DOMAIN_TMDB_IMAGE;
 
-export const hotCasts = [
+export const HOT_CASTS = [
   {
     gender: 1,
     id: 2440951,
@@ -38,3 +40,5 @@ export const hotCasts = [
     profile_path: "/ci7uOTYUSk4Utg9gHvqVnqCPIUn.jpg",
   },
 ];
+
+export const HOT_VIDEOS = hotVideos;

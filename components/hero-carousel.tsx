@@ -18,7 +18,7 @@ type HeroCarouselProps = {
 
 export default function HeroCarousel({ items }: HeroCarouselProps) {
   return (
-    <section className="mt-16 sm:mt-0">
+    <section className="">
       <CarouselAutoplay delay={4567}>
         <CarouselContent>
           {items
