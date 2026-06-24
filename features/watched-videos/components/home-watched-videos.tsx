@@ -24,7 +24,7 @@ export default function HomeWatchedVideos() {
     <section className="space-y-2 lg:space-y-4">
       <SectionHeader title="Xem tiếp?" icon={History} href="/lich-su-xem" iconColor="text-pink-600" gradientClassName="text-pink-600 text-rose-700 text-red-600" />
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-4">
-        {videos.map((videoItem) => (
+        {videos.slice(0, 6).map((videoItem) => (
           <div key={videoItem.slug} className="col-span-1">
             <VideoCard
               videoItem={{
