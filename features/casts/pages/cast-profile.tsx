@@ -5,6 +5,7 @@ import { castsApi } from "../api";
 import Breadcrumb from "@/components/breadcrumb";
 import CastProfile from "../components/cast-profile";
 import CastVideos from "@/features/videos/components/cast-videos";
+import { Button } from "@/components/ui/button";
 
 
 type CastProfilePageProps = {
@@ -17,9 +18,26 @@ export default function CastProfilePage({ id }: CastProfilePageProps) {
     castsApi.getDetails(id).then((data) => setDetails(data))
   }, [id]);
 
+  if (!details) return <div className="flex flex-col items-center justify-center py-20 text-center">
+    <div className="max-w-md rounded-2xl border bg-secondary p-6 shadow-sm">
+      <h3 className="mb-2 text-xl font-semibold">
+        Không thể tải dữ liệu
+      </h3>
 
-  console.log(details)
-  if (!details) return null;
+      <p className="text-sm text-muted-foreground">
+        Có thể nguồn dữ liệu hiện đang bị chặn bởi nhà mạng hoặc khu vực của
+        bạn. Vui lòng bật <span className="font-medium">1.1.1.1 WARP</span> rồi
+        tải lại trang để tiếp tục sử dụng.
+      </p>
+
+      <Button
+        onClick={() => window.location.reload()}
+        className="mt-4"
+      >
+        Tải lại trang
+      </Button>
+    </div>
+  </div>;
   return (
     <div className="_container py-4">
       <div className="grid grid-cols-4 gap-4">
