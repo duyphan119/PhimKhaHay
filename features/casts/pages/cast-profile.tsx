@@ -14,9 +14,12 @@ type CastProfilePageProps = {
 
 export default function CastProfilePage({ id }: CastProfilePageProps) {
   const [details, setDetails] = useState<TCastProfile | null>(null);
+  const [isFetched, setIsFetched] = useState(false);
   useEffect(() => {
-    castsApi.getDetails(id).then((data) => setDetails(data))
+    castsApi.getDetails(id).then((data) => setDetails(data)).finally(() => setIsFetched(true))
   }, [id]);
+
+  if (!isFetched) return null;
 
   if (!details) return <div className="flex flex-col items-center justify-center py-20 text-center">
     <div className="max-w-md rounded-2xl border bg-secondary p-6 shadow-sm">

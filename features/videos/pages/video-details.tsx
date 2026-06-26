@@ -16,7 +16,6 @@ import { Fragment, useEffect } from "react";
 import VideoImage from "../components/video-image";
 import { watchedVideosApi } from "@/features/watched-videos/api";
 
-
 type VideoDetailsPageProps = {
   item: TMovieDetails;
   hideButtons?: boolean;
@@ -24,7 +23,7 @@ type VideoDetailsPageProps = {
   currentEpisodeName?: string;
   serverIndex?: number;
   currentBreadcrumb?: string;
-}
+};
 
 export default function VideoDetailsPage({
   item,
@@ -60,15 +59,15 @@ export default function VideoDetailsPage({
           episodeName: currentEpisodeName,
           name: item.name,
           slug: item.slug,
-          poster_url: item.poster_url
-        })
-      }, 1)
+          poster_url: item.poster_url,
+        });
+      }, 1);
 
       return () => {
-        clearTimeout(timerId)
-      }
+        clearTimeout(timerId);
+      };
     }
-  }, [serverIndex, currentEpisodeName, item.name, item.slug, item.poster_url])
+  }, [serverIndex, currentEpisodeName, item.name, item.slug, item.poster_url]);
 
   return (
     <div className="_container py-4 flex flex-col gap-4">
@@ -142,7 +141,7 @@ export default function VideoDetailsPage({
                 children ? "order-4" : "order-2",
               )}
             >
-              <div className="relative aspect-2/3 w-full overflow-hidden bg-slate-950 md:col-span-1">
+              <div className="relative aspect-394/701 w-full overflow-hidden bg-slate-950 md:col-span-1">
                 <VideoImage src={item.thumb_url} alt={item.name} />
 
                 {hideButtons ? null : (
@@ -260,6 +259,16 @@ export default function VideoDetailsPage({
                     {item.episode_total}
                   </div>
                 </div>
+
+                <div className="bg-muted px-3 py-2 rounded-md shadow-sm text-xs  text-muted-foreground">
+                  <div className="font-semibold">Nội dung phim</div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: item.content || "Chưa có mô tả cho phim này.",
+                    }}
+                    className="mt-2 leading-5 text-justify"
+                  ></div>
+                </div>
               </div>
             </article>
             <div className={cn("space-y-4", children ? "order-5" : "order-3")}>
@@ -269,15 +278,19 @@ export default function VideoDetailsPage({
                 tmdbType={item.tmdb.type}
               />
 
-              <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-xl font-semibold">Nội dung phim</h2>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: item.content || "Chưa có mô tả cho phim này.",
-                  }}
-                  className="mt-4 leading-7 text-muted-foreground text-sm text-justify"
-                ></div>
-              </div>
+
+
+              {(children || !item.trailer_url) ? null : (
+                <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
+                  <h2 className="text-xl font-semibold">
+                    Trailer
+                  </h2>
+                  <iframe
+                    src={item.trailer_url.replace("watch?v=", "embed/")}
+                    className="w-full aspect-video mt-4 rounded-md border"
+                  />
+                </div>
+              )}
             </div>
             {item.episodes?.length ? (
               <div
@@ -344,7 +357,14 @@ export default function VideoDetailsPage({
               </div>
             ) : null}
           </div>
-          <RelatedVideos currentSlug={item.slug} categories={item.category} countries={item.country} year={item.year} typelist={item.type === 'series' ? "phim-bo" : "phim-le"} />
+          <RelatedVideos
+            currentSlug={item.slug}
+            categories={item.category}
+            countries={item.country}
+            year={item.year}
+            typelist={item.type === "series" ? "phim-bo" : "phim-le"}
+            className="sticky top-16"
+          />
         </div>
         <div className="col-span-4 sm:col-span-1">
           <SectionHeader
@@ -354,11 +374,13 @@ export default function VideoDetailsPage({
             gradientClassName="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 bg-clip-text text-transparent tracking-wide bg-[length:200%_200%] animate-gradient"
           />
           <div className="space-y-4 py-4">
-            {HOT_VIDEOS.map((videoItem) => (videoItem.slug === item.slug) ? null : (
+            {HOT_VIDEOS.filter(({ slug }) => slug !== item.slug).slice(0, 24).map((videoItem) =>
+            (
               <div key={videoItem.slug} className="">
                 <VideoCard videoItem={videoItem} direction="row" />
               </div>
-            ))}
+            ),
+            )}
           </div>
         </div>
       </div>

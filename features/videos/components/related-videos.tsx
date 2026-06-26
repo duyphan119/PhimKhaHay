@@ -12,17 +12,18 @@ type RelatedVideosProps = {
   typelist: TTypeListItem['slug'];
   year: number;
   currentSlug: string;
+  className?: string;
 }
 
-export default function RelatedVideos({ categories, countries, currentSlug, typelist, year }: RelatedVideosProps) {
+export default function RelatedVideos({ categories, countries, currentSlug, typelist, year, className = '' }: RelatedVideosProps) {
   const [data, setData] = useState<{ items: TMovieItem[] } | null>(null);
 
   useEffect(() => {
     typelistApi.getVideos(typelist, {
       category: categories.map(({ slug }) => slug).join(","),
       country: countries.map(({ slug }) => slug).join(","),
+      limit: "25",
       year: year + '',
-      limit: "25"
     }).then((data) => {
       setData(data)
     }).catch(error => console.log(error));
@@ -30,7 +31,7 @@ export default function RelatedVideos({ categories, countries, currentSlug, type
 
   if (!data) return null;
   return (
-    <section className="">
+    <section className={className}>
       <SectionHeader
         title="Phim tương tự"
         icon={EggFriedIcon}
