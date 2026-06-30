@@ -1,18 +1,8 @@
 [
   {
-    "name": "Vũ Lâm Linh",
-    "slug": "vu-lam-linh",
-    "thumb_url": "vu-lam-linh-thumb.jpg"
-  },
-  {
-    "name": "Cô Đi Mà Lấy Chồng Tôi (Bản Nhật)",
-    "slug": "co-di-ma-lay-chong-toi-ban-nhat",
-    "thumb_url": "co-di-ma-lay-chong-toi-ban-nhat-thumb.jpg"
-  },
-  {
-    "name": "Thanh Tra Bí Mật",
-    "slug": "thanh-tra-bi-mat",
-    "thumb_url": "thanh-tra-bi-mat-thumb.jpg"
+    "name": "Phàm Nhân Tu Tiên Truyện",
+    "slug": "pham-nhan-tu-tien-truyen",
+    "thumb_url": "pham-nhan-tu-tien-truyen-thumb.jpg"
   },
   {
     "name": "Tàng Hải Truyện",
@@ -20,29 +10,79 @@
     "thumb_url": "tang-hai-truyen-thumb.jpg"
   },
   {
-    "name": "Nhất Kiến Khuynh Tâm",
-    "slug": "nhat-kien-khuynh-tam",
-    "thumb_url": "nhat-kien-khuynh-tam-thumb.jpg"
+    "name": "Mặc Vũ Vân Gian",
+    "slug": "mac-vu-van-gian",
+    "thumb_url": "mac-vu-van-gian-thumb.jpg"
   },
   {
-    "name": "Còn Ra Thể Thống Gì Nữa",
-    "slug": "con-ra-the-thong-gi-nua-2026",
-    "thumb_url": "con-ra-the-thong-gi-nua-2026-thumb.jpg"
+    "name": "Bạch Nguyệt Phạn Tinh",
+    "slug": "bach-nguyet-phan-tinh",
+    "thumb_url": "bach-nguyet-phan-tinh-thumb.jpg"
   },
   {
-    "name": "Mạc Ly",
-    "slug": "mac-ly",
-    "thumb_url": "mac-ly-thumb-1780987241567.jpg"
+    "name": "Đại Mộng Quy Ly",
+    "slug": "dai-mong-quy-ly",
+    "thumb_url": "dai-mong-quy-ly-thumb.jpg"
   },
   {
-    "name": "Đoán Xem Tôi Là Ai",
-    "slug": "doan-xem-toi-la-ai",
-    "thumb_url": "doan-xem-toi-la-ai-thumb.jpg"
+    "name": "Ngũ Phúc Lâm Môn",
+    "slug": "ngu-phuc-lam-mon",
+    "thumb_url": "ngu-phuc-lam-mon-thumb.jpg"
   },
   {
-    "name": "Tôi Ở Đỉnh Cao Đợi Cậu",
-    "slug": "toi-o-dinh-cao-doi-cau",
-    "thumb_url": "toi-o-dinh-cao-doi-cau-thumb.jpg"
+    "name": "Triều Tuyết Lục",
+    "slug": "trieu-tuyet-luc",
+    "thumb_url": "trieu-tuyet-luc-thumb.jpg"
+  },
+  {
+    "name": "Good Boy",
+    "slug": "good-boy",
+    "thumb_url": "good-boy-thumb.jpg"
+  },
+  {
+    "name": "Đường Triều Quỷ Sự Lục (Phần 4)",
+    "slug": "duong-quy-ky-dam",
+    "thumb_url": "duong-quy-ky-dam-thumb-1766133965311.jpg"
+  },
+  {
+    "name": "Đường Triều Quỷ Sự Lục (Phần 3)",
+    "slug": "duong-trieu-quy-su-luc-phan-3",
+    "thumb_url": "duong-trieu-quy-su-luc-phan-3-thumb.jpg"
+  },
+  {
+    "name": "Đường Triều Quỷ Sự Lục (Phần 2)",
+    "slug": "duong-trieu-quy-su-luc-phan-2",
+    "thumb_url": "duong-trieu-quy-su-luc-phan-2-thumb.jpg"
+  },
+  {
+    "name": "Đường Triều Quỷ Sự Lục",
+    "slug": "duong-trieu-quy-su-luc",
+    "thumb_url": "duong-trieu-quy-su-luc-thumb.jpg"
+  },
+  {
+    "name": "Cô Châu",
+    "slug": "co-chau",
+    "thumb_url": "co-chau-thumb.jpg"
+  },
+  {
+    "name": "Hoa Gian Lệnh",
+    "slug": "hoa-gian-lenh",
+    "thumb_url": "hoa-gian-lenh-thumb.jpg"
+  },
+  {
+    "name": "Lưu Thủy Điều Điều",
+    "slug": "luu-thuy-dieu-dieu",
+    "thumb_url": "luu-thuy-dieu-dieu-thumb.jpg"
+  },
+  {
+    "name": "Tử Dạ Quy",
+    "slug": "tu-da-quy",
+    "thumb_url": "tu-da-quy-thumb.jpg"
+  },
+  {
+    "name": "Thiên Thu Lệnh",
+    "slug": "thien-thu-lenh",
+    "thumb_url": "thien-thu-lenh-thumb.jpg"
   },
   {
     "name": "Thiên Đóa Đào Hoa Nhất Thế Khai",
@@ -50,19 +90,49 @@
     "thumb_url": "thien-doa-dao-hoa-nhat-the-khai-thumb.jpg"
   },
   {
-    "name": "Nhất Tiếu Tùy Ca",
-    "slug": "nhat-tieu-tuy-ca",
-    "thumb_url": "nhat-tieu-tuy-ca-thumb.jpg"
+    "name": "Ngọc Minh Trà Cốt",
+    "slug": "ngoc-minh-tra-cot",
+    "thumb_url": "ngoc-minh-tra-cot-thumb.jpg"
+  },
+  {
+    "name": "Đường Cung Kỳ Án: Thanh Vụ Phong Minh",
+    "slug": "duong-cung-ky-an-thanh-vu-phong-minh",
+    "thumb_url": "duong-cung-ky-an-thanh-vu-phong-minh-thumb-1770343152878.jpg"
+  },
+  {
+    "name": "Em Là Niềm Kiêu Hãnh Của Anh",
+    "slug": "em-la-niem-kieu-hanh-cua-anh",
+    "thumb_url": "em-la-niem-kieu-hanh-cua-anh-thumb.jpg"
+  },
+  {
+    "name": "Khói Lửa Nhân Gian Của Tôi",
+    "slug": "khoi-lua-nhan-gian-cua-toi",
+    "thumb_url": "khoi-lua-nhan-gian-cua-toi-thumb.jpg"
+  },
+  {
+    "name": "Đừng Rung Động Vì Anh",
+    "slug": "dung-rung-dong-vi-anh",
+    "thumb_url": "dung-rung-dong-vi-anh-thumb.jpg"
+  },
+  {
+    "name": "Rất Nhớ, Rất Nhớ Anh",
+    "slug": "rat-nho-rat-nho-anh",
+    "thumb_url": "rat-nho-rat-nho-anh-thumb.jpg"
+  },
+  {
+    "name": "Nghe Nói Em Thích Tôi",
+    "slug": "nghe-noi-anh-thich-toi",
+    "thumb_url": "nghe-noi-anh-thich-toi-thumb.jpg"
+  },
+  {
+    "name": "Anh Cũng Có Ngày Này",
+    "slug": "anh-cung-co-ngay-nay",
+    "thumb_url": "anh-cung-co-ngay-nay-thumb.jpg"
   },
   {
     "name": "Quân Trang Thân Yêu",
     "slug": "quan-trang-than-yeu",
     "thumb_url": "quan-trang-than-yeu-thumb.jpg"
-  },
-  {
-    "name": "Thiên Thu Lệnh",
-    "slug": "thien-thu-lenh",
-    "thumb_url": "thien-thu-lenh-thumb.jpg"
   },
   {
     "name": "Lưu Ly Mỹ Nhân Sát",
@@ -75,14 +145,9 @@
     "thumb_url": "gio-nam-hieu-long-toi-thumb.jpg"
   },
   {
-    "name": "Em Là Niềm Kiêu Hãnh Của Anh",
-    "slug": "em-la-niem-kieu-hanh-cua-anh",
-    "thumb_url": "em-la-niem-kieu-hanh-cua-anh-thumb.jpg"
-  },
-  {
-    "name": "Anh Cũng Có Ngày Này",
-    "slug": "anh-cung-co-ngay-nay",
-    "thumb_url": "anh-cung-co-ngay-nay-thumb.jpg"
+    "name": "Nhất Kiến Khuynh Tâm",
+    "slug": "nhat-kien-khuynh-tam",
+    "thumb_url": "nhat-kien-khuynh-tam-thumb.jpg"
   },
   {
     "name": "Tinh Lạc Ngưng Thành Đường",
@@ -90,29 +155,14 @@
     "thumb_url": "trailer-tinh-lac-ngung-thanh-duong-thumb.jpg"
   },
   {
-    "name": "Giai Ngẫu Thiên Thành",
-    "slug": "giai-ngau-thien-thanh",
-    "thumb_url": "giai-ngau-thien-thanh-thumb.jpg"
+    "name": "Lương Ngôn Tả Ý",
+    "slug": "luong-ngon-ta-y",
+    "thumb_url": "luong-ngon-ta-y-thumb.jpg"
   },
   {
-    "name": "Lưu Thủy Điều Điều",
-    "slug": "luu-thuy-dieu-dieu",
-    "thumb_url": "luu-thuy-dieu-dieu-thumb.jpg"
-  },
-  {
-    "name": "Ngũ Phúc Lâm Môn",
-    "slug": "ngu-phuc-lam-mon",
-    "thumb_url": "ngu-phuc-lam-mon-thumb.jpg"
-  },
-  {
-    "name": "Mặc Vũ Vân Gian",
-    "slug": "mac-vu-van-gian",
-    "thumb_url": "mac-vu-van-gian-thumb.jpg"
-  },
-  {
-    "name": "Con Đường Bình Phàm",
-    "slug": "con-duong-binh-pham",
-    "thumb_url": "con-duong-binh-pham-thumb.jpg"
+    "name": "Chỉ Là Quan Hệ Hôn Nhân",
+    "slug": "chi-la-quan-he-hon-nhan",
+    "thumb_url": "chi-la-quan-he-hon-nhan-thumb.jpg"
   },
   {
     "name": "Khanh Khanh Ngã Tâm",
@@ -120,29 +170,64 @@
     "thumb_url": "khanh-khanh-nga-tam-thumb.jpg"
   },
   {
-    "name": "Lương Ngôn Tả Ý",
-    "slug": "luong-ngon-ta-y",
-    "thumb_url": "luong-ngon-ta-y-thumb.jpg"
+    "name": "Đấu La Đại Lục: Nhiên Hồn Chiến",
+    "slug": "dau-la-dai-luc-nhien-hon-chien",
+    "thumb_url": "dau-la-dai-luc-nhien-hon-chien-thumb.jpg"
   },
   {
-    "name": "Đại Mộng Quy Ly",
-    "slug": "dai-mong-quy-ly",
-    "thumb_url": "dai-mong-quy-ly-thumb.jpg"
+    "name": "Chàng Thư Ký Hoàn Hảo",
+    "slug": "chang-thu-ky-hoan-hao",
+    "thumb_url": "chang-thu-ky-hoan-hao-thumb.jpg"
   },
   {
-    "name": "Phượng Hoàng Đài Thượng",
-    "slug": "phuong-hoang-dai-thuong",
-    "thumb_url": "phuong-hoang-dai-thuong-thumb.jpg"
+    "name": "Sự Trở Lại Của Thẩm Phán",
+    "slug": "su-tro-lai-cua-tham-phan",
+    "thumb_url": "su-tro-lai-cua-tham-phan-thumb.jpg"
   },
   {
-    "name": "Hoa Gian Lệnh",
-    "slug": "hoa-gian-lenh",
-    "thumb_url": "hoa-gian-lenh-thumb.jpg"
+    "name": "Luật Sư Công Ích",
+    "slug": "luat-su-cong-ich",
+    "thumb_url": "luat-su-cong-ich-thumb.jpg"
   },
   {
-    "name": "Phàm Nhân Tu Tiên Truyện",
-    "slug": "pham-nhan-tu-tien-truyen",
-    "thumb_url": "pham-nhan-tu-tien-truyen-thumb.jpg"
+    "name": "Giấc Mơ Người Luật Sư",
+    "slug": "giac-mo-nguoi-luat-su",
+    "thumb_url": "giac-mo-nguoi-luat-su-thumb.jpg"
+  },
+  {
+    "name": "Thanh Tra Bí Mật",
+    "slug": "thanh-tra-bi-mat",
+    "thumb_url": "thanh-tra-bi-mat-thumb.jpg"
+  },
+  {
+    "name": "Nghi Phạm Cận Kề",
+    "slug": "ke-phan-boi-than-mat",
+    "thumb_url": "ke-phan-boi-than-mat-thumb.jpg"
+  },
+  {
+    "name": "Người Làm Ăn Lớn",
+    "slug": "nguoi-lam-an-lon",
+    "thumb_url": "nguoi-lam-an-lon-thumb.jpg"
+  },
+  {
+    "name": "Phá Kén",
+    "slug": "pha-ken-2025",
+    "thumb_url": "pha-ken-2025-thumb.jpg"
+  },
+  {
+    "name": "Tội Phạm IQ Thấp",
+    "slug": "toi-pham-iq-thap",
+    "thumb_url": "toi-pham-iq-thap-thumb.jpg"
+  },
+  {
+    "name": "Hồ Sơ Nam Bộ",
+    "slug": "ho-so-nam-bo",
+    "thumb_url": "ho-so-nam-bo-thumb.jpg"
+  },
+  {
+    "name": "Con Đường Bình Phàm",
+    "slug": "con-duong-binh-pham",
+    "thumb_url": "con-duong-binh-pham-thumb.jpg"
   },
   {
     "name": "Thiếu Niên Babylon",
@@ -150,24 +235,84 @@
     "thumb_url": "thieu-nien-babylon-thumb.jpg"
   },
   {
-    "name": "Trăm Năm Hòa Hợp, Ước Định Một Lời",
-    "slug": "tram-nam-hoa-hop-uoc-dinh-mot-loi",
-    "thumb_url": "tram-nam-hoa-hop-uoc-dinh-mot-loi-thumb.jpg"
-  },
-  {
     "name": "Xứng Đáng Để Yêu",
     "slug": "xung-dang-de-yeu",
     "thumb_url": "xung-dang-de-yeu-thumb.jpg"
   },
   {
-    "name": "Cô Châu",
-    "slug": "co-chau",
-    "thumb_url": "co-chau-thumb.jpg"
+    "name": "Giai Ngẫu Thiên Thành",
+    "slug": "giai-ngau-thien-thanh",
+    "thumb_url": "giai-ngau-thien-thanh-thumb.jpg"
   },
   {
-    "name": "Chỉ Là Quan Hệ Hôn Nhân",
-    "slug": "chi-la-quan-he-hon-nhan",
-    "thumb_url": "chi-la-quan-he-hon-nhan-thumb.jpg"
+    "name": "Mạc Ly",
+    "slug": "mac-ly",
+    "thumb_url": "mac-ly-thumb-1780987241567.jpg"
+  },
+  {
+    "name": "Kiều Sở",
+    "slug": "kieu-so",
+    "thumb_url": "kieu-so-thumb.jpg"
+  },
+  {
+    "name": "Nhất Tiếu Tùy Ca",
+    "slug": "nhat-tieu-tuy-ca",
+    "thumb_url": "nhat-tieu-tuy-ca-thumb.jpg"
+  },
+  {
+    "name": "Phượng Hoàng Đài Thượng",
+    "slug": "phuong-hoang-dai-thuong",
+    "thumb_url": "phuong-hoang-dai-thuong-thumb.jpg"
+  },
+  {
+    "name": "Nguyệt Lân Ỷ Kỷ",
+    "slug": "nguyet-lan-y-ky",
+    "thumb_url": "nguyet-lan-y-ky-thumb.jpg"
+  },
+  {
+    "name": "Tiêu Nhân (Phần 2)",
+    "slug": "tieu-nhan-phan-2",
+    "thumb_url": "tieu-nhan-phan-2-thumb.jpg"
+  },
+  {
+    "name": "Đặc Vụ Kim Tái Khởi Động",
+    "slug": "dac-vu-kim-tai-khoi-dong",
+    "thumb_url": "dac-vu-kim-tai-khoi-dong-thumb.jpg"
+  },
+  {
+    "name": "Thiên Hương",
+    "slug": "thien-huong",
+    "thumb_url": "thien-huong-thumb.jpg"
+  },
+  {
+    "name": "Vũ Lâm Linh",
+    "slug": "vu-lam-linh",
+    "thumb_url": "vu-lam-linh-thumb.jpg"
+  },
+  {
+    "name": "Cô Đi Mà Lấy Chồng Tôi (Bản Nhật)",
+    "slug": "co-di-ma-lay-chong-toi-ban-nhat",
+    "thumb_url": "co-di-ma-lay-chong-toi-ban-nhat-thumb.jpg"
+  },
+  {
+    "name": "Còn Ra Thể Thống Gì Nữa",
+    "slug": "con-ra-the-thong-gi-nua-2026",
+    "thumb_url": "con-ra-the-thong-gi-nua-2026-thumb.jpg"
+  },
+  {
+    "name": "Đoán Xem Tôi Là Ai",
+    "slug": "doan-xem-toi-la-ai",
+    "thumb_url": "doan-xem-toi-la-ai-thumb.jpg"
+  },
+  {
+    "name": "Tôi Ở Đỉnh Cao Đợi Cậu",
+    "slug": "toi-o-dinh-cao-doi-cau",
+    "thumb_url": "toi-o-dinh-cao-doi-cau-thumb.jpg"
+  },
+  {
+    "name": "Trăm Năm Hòa Hợp, Ước Định Một Lời",
+    "slug": "tram-nam-hoa-hop-uoc-dinh-mot-loi",
+    "thumb_url": "tram-nam-hoa-hop-uoc-dinh-mot-loi-thumb.jpg"
   },
   {
     "name": "Trường An Thiếu Niên Hành",
@@ -180,49 +325,14 @@
     "thumb_url": "突然的喜欢-thumb-1769077269133.jpg"
   },
   {
-    "name": "Ngọc Minh Trà Cốt",
-    "slug": "ngoc-minh-tra-cot",
-    "thumb_url": "ngoc-minh-tra-cot-thumb.jpg"
-  },
-  {
     "name": "Đếm Ngược Nói Yêu Em",
     "slug": "dem-nguoc-noi-yeu-em",
     "thumb_url": "dem-nguoc-noi-yeu-em-thumb.jpg"
   },
   {
-    "name": "Đấu La Đại Lục: Nhiên Hồn Chiến",
-    "slug": "dau-la-dai-luc-nhien-hon-chien",
-    "thumb_url": "dau-la-dai-luc-nhien-hon-chien-thumb.jpg"
-  },
-  {
-    "name": "Nghe Nói Em Thích Tôi",
-    "slug": "nghe-noi-anh-thich-toi",
-    "thumb_url": "nghe-noi-anh-thich-toi-thumb.jpg"
-  },
-  {
     "name": "Thanh Xuân Của Tôi",
     "slug": "thanh-xuan-cua-toi",
     "thumb_url": "thanh-xuan-cua-toi-thumb.jpg"
-  },
-  {
-    "name": "Nghi Phạm Cận Kề",
-    "slug": "ke-phan-boi-than-mat",
-    "thumb_url": "ke-phan-boi-than-mat-thumb.jpg"
-  },
-  {
-    "name": "Chàng Thư Ký Hoàn Hảo",
-    "slug": "chang-thu-ky-hoan-hao",
-    "thumb_url": "chang-thu-ky-hoan-hao-thumb.jpg"
-  },
-  {
-    "name": "Good Boy",
-    "slug": "good-boy",
-    "thumb_url": "good-boy-thumb.jpg"
-  },
-  {
-    "name": "Giấc Mơ Người Luật Sư",
-    "slug": "giac-mo-nguoi-luat-su",
-    "thumb_url": "giac-mo-nguoi-luat-su-thumb.jpg"
   },
   {
     "name": "Thần đèn ơi, ước đi",
@@ -233,11 +343,6 @@
     "name": "Tiếng yêu này anh dịch được không?",
     "slug": "tieng-yeu-nay-anh-dich-duoc-khong",
     "thumb_url": "tieng-yeu-nay-anh-dich-duoc-khong-thumb.jpg"
-  },
-  {
-    "name": "Sự Trở Lại Của Thẩm Phán",
-    "slug": "su-tro-lai-cua-tham-phan",
-    "thumb_url": "su-tro-lai-cua-tham-phan-thumb.jpg"
   },
   {
     "name": "Cơn Say Mùa Xuân",
@@ -260,89 +365,14 @@
     "thumb_url": "gia-tri-tuyet-doi-cua-lang-man-thumb.jpg"
   },
   {
-    "name": "Khói Lửa Nhân Gian Của Tôi",
-    "slug": "khoi-lua-nhan-gian-cua-toi",
-    "thumb_url": "khoi-lua-nhan-gian-cua-toi-thumb.jpg"
-  },
-  {
-    "name": "Đừng Rung Động Vì Anh",
-    "slug": "dung-rung-dong-vi-anh",
-    "thumb_url": "dung-rung-dong-vi-anh-thumb.jpg"
-  },
-  {
-    "name": "Đường Triều Quỷ Sự Lục",
-    "slug": "duong-trieu-quy-su-luc",
-    "thumb_url": "duong-trieu-quy-su-luc-thumb.jpg"
-  },
-  {
-    "name": "Đường Triều Quỷ Sự Lục (Phần 2)",
-    "slug": "duong-trieu-quy-su-luc-phan-2",
-    "thumb_url": "duong-trieu-quy-su-luc-phan-2-thumb.jpg"
-  },
-  {
-    "name": "Đường Triều Quỷ Sự Lục (Phần 3)",
-    "slug": "duong-trieu-quy-su-luc-phan-3",
-    "thumb_url": "duong-trieu-quy-su-luc-phan-3-thumb.jpg"
-  },
-  {
     "name": "Được Ăn Cả Ngã Về Không",
     "slug": "duoc-an-ca-nga-ve-khong-trung-quoc",
     "thumb_url": "duoc-an-ca-nga-ve-khong-trung-quoc-thumb.jpg"
   },
   {
-    "name": "Đường Triều Quỷ Sự Lục (Phần 4)",
-    "slug": "duong-quy-ky-dam",
-    "thumb_url": "duong-quy-ky-dam-thumb-1766133965311.jpg"
-  },
-  {
-    "name": "Tử Dạ Quy",
-    "slug": "tu-da-quy",
-    "thumb_url": "tu-da-quy-thumb.jpg"
-  },
-  {
-    "name": "Tân Lên Nhầm Kiệu Hoa Được Chồng Như Ý (Kiệu Hoa Hỉ Sự)",
-    "slug": "tan-len-nham-kieu-hoa-duoc-chong-nhu-y-kieu-hoa-hi-su",
-    "thumb_url": "tan-len-nham-kieu-hoa-duoc-chong-nhu-y-kieu-hoa-hi-su-thumb.jpg"
-  },
-  {
-    "name": "Triều Tuyết Lục",
-    "slug": "trieu-tuyet-luc",
-    "thumb_url": "trieu-tuyet-luc-thumb.jpg"
-  },
-  {
-    "name": "Đường Cung Kỳ Án: Thanh Vụ Phong Minh",
-    "slug": "duong-cung-ky-an-thanh-vu-phong-minh",
-    "thumb_url": "duong-cung-ky-an-thanh-vu-phong-minh-thumb-1770343152878.jpg"
-  },
-  {
-    "name": "Rất Nhớ, Rất Nhớ Anh",
-    "slug": "rat-nho-rat-nho-anh",
-    "thumb_url": "rat-nho-rat-nho-anh-thumb.jpg"
-  },
-  {
-    "name": "Bạch Nguyệt Phạn Tinh",
-    "slug": "bach-nguyet-phan-tinh",
-    "thumb_url": "bach-nguyet-phan-tinh-thumb.jpg"
-  },
-  {
-    "name": "Người Làm Ăn Lớn",
-    "slug": "nguoi-lam-an-lon",
-    "thumb_url": "nguoi-lam-an-lon-thumb.jpg"
-  },
-  {
     "name": "Sông Trăng Hoán Mệnh",
     "slug": "song-trang-hoan-menh",
     "thumb_url": "song-trang-hoan-menh-thumb.jpg"
-  },
-  {
-    "name": "Luật Sư Công Ích",
-    "slug": "luat-su-cong-ich",
-    "thumb_url": "luat-su-cong-ich-thumb.jpg"
-  },
-  {
-    "name": "Phá Kén",
-    "slug": "pha-ken-2025",
-    "thumb_url": "pha-ken-2025-thumb.jpg"
   },
   {
     "name": "Rất Vui Không Gặp Em",
@@ -360,26 +390,6 @@
     "thumb_url": "xin-chao-1983-thumb.jpg"
   },
   {
-    "name": "Nguyệt Lân Ỷ Kỷ",
-    "slug": "nguyet-lan-y-ky",
-    "thumb_url": "nguyet-lan-y-ky-thumb.jpg"
-  },
-  {
-    "name": "Tiêu Nhân (Phần 2)",
-    "slug": "tieu-nhan-phan-2",
-    "thumb_url": "tieu-nhan-phan-2-thumb.jpg"
-  },
-  {
-    "name": "Tội Phạm IQ Thấp",
-    "slug": "toi-pham-iq-thap",
-    "thumb_url": "toi-pham-iq-thap-thumb.jpg"
-  },
-  {
-    "name": "Kiều Sở",
-    "slug": "kieu-so",
-    "thumb_url": "kieu-so-thumb.jpg"
-  },
-  {
     "name": "Nhất Niệm Sơ Kiến Cẩm Y Dao",
     "slug": "nhat-niem-so-kien-cam-y-dao",
     "thumb_url": "nhat-niem-so-kien-cam-y-dao-thumb.jpg"
@@ -388,10 +398,5 @@
     "name": "Chuyên Gia Tuổi Trung Niên",
     "slug": "chuyen-gia-tuoi-trung-nien",
     "thumb_url": "chuyen-gia-tuoi-trung-nien-thumb.jpg"
-  },
-  {
-    "name": "Hồ Sơ Nam Bộ",
-    "slug": "ho-so-nam-bo",
-    "thumb_url": "ho-so-nam-bo-thumb.jpg"
   }
 ]

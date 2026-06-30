@@ -5,7 +5,6 @@ import VideoImage from "@/features/videos/components/video-image";
 import { ArrowRight, Search } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useDebounce } from "@uidotdev/usehooks";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -96,47 +95,49 @@ export default function HeaderSearch({ }: Props) {
       </form>
 
       {open && dataVideos ? (
-        <div className="absolute right-8 left-8 sm:left-1/5 md:left-1/4 lg:left-1/3 xl:left-1/2 top-12 bg-background/80 shadow rounded-lg">
-          <div className="max-h-[50vh] w-screen overflow-y-auto no-scrollbar space-y-2 py-2">
-            {dataVideos.items.map((videoItem) => (
-              <div
-                key={videoItem._id}
-                className="flex gap-2"
-                onClick={handleClose}
-              >
-                <Link
-                  href={`/phim/${videoItem.slug}`}
-                  title={videoItem.name}
-                  className="w-1/3 md:w-1/4 aspect-video relative shrink-0"
+        <>
+          <div onClick={handleClose} className="fixed top-12 bottom-0 inset-x-0 bg-black/50"></div>
+          <div className="absolute right-8 left-8 sm:left-1/5 md:left-1/4 lg:left-1/3 xl:left-1/2 top-12 bg-background/80 shadow rounded-lg">
+            <div className="max-h-[50vh] w-full overflow-y-auto no-scrollbar space-y-2 py-2">
+              {dataVideos.items.map((videoItem) => (
+                <div
+                  key={videoItem._id}
+                  className="flex gap-2"
+                  onClick={handleClose}
                 >
-                  <VideoImage src={videoItem.poster_url} alt={videoItem.name} />
-                </Link>
-                <div className="text-foreground">
                   <Link
                     href={`/phim/${videoItem.slug}`}
-                    className="hover:text-destructive transition-colors duration-200 line-clamp-3"
+                    title={videoItem.name}
+                    className="w-1/3 md:w-1/4 aspect-video relative shrink-0"
                   >
-                    {videoItem.name}
+                    <VideoImage src={videoItem.poster_url} alt={videoItem.name} />
                   </Link>
-
+                  <div className="text-foreground w-2/3 md:w-3/4">
+                    <Link
+                      href={`/phim/${videoItem.slug}`}
+                      className="hover:text-destructive transition-colors duration-200 line-clamp-3"
+                    >
+                      {videoItem.name}
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          {dataVideos.params.pagination.totalItems > dataVideos.params.pagination.totalItemsPerPage ? (
-            <div className="">
-              <Link
-                href={`/tim-kiem?keyword=${keyword}&page=2`}
-                title="Xem thêm kết quả"
-                onClick={handleClose}
-                className="w-full flex items-center justify-center gap-1 hover:text-destructive transition-colors duration-200 p-4"
-              >
-                Xem thêm
-                <HugeiconsIcon icon={ArrowRight} size={14} />
-              </Link>
+              ))}
             </div>
-          ) : null}
-        </div>
+            {dataVideos.params.pagination.totalItems > dataVideos.params.pagination.totalItemsPerPage ? (
+              <div className="">
+                <Link
+                  href={`/tim-kiem?keyword=${keyword}&page=2`}
+                  title="Xem thêm kết quả"
+                  onClick={handleClose}
+                  className="w-full flex items-center justify-center gap-1 hover:text-destructive transition-colors duration-200 p-4"
+                >
+                  Xem thêm
+                  <HugeiconsIcon icon={ArrowRight} size={14} />
+                </Link>
+              </div>
+            ) : null}
+          </div>
+        </>
       ) : null}
     </div>
   );

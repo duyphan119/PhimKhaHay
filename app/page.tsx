@@ -82,6 +82,7 @@ export default async function Home() {
       <div className="_container grid grid-cols-12 gap-8">
         <div className="col-span-12 lg:col-span-9 space-y-4 lg:space-y-8">
           <HomeWatchedVideos />
+
           {otherSections.map((item, index) => (
             <section key={index} className="space-y-2 lg:space-y-4">
               <SectionHeader  {...item} />
