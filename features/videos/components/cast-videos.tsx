@@ -39,38 +39,34 @@ export default function CastVideos({ cast }: Props) {
           const data: { cast: TTvCredit[] } = await tvRes.value.json();
 
           data.cast.forEach(async (item) => {
+            // split để tránh tmdb để tên phim dạng <name> - <origin_name>
             const keyword = item.name.split(" - ")[0];
             const res = await videosApi.search({ keyword });
-            // if (item.first_air_date?.includes("2018")) {
-
-            //   console.log(keyword, item.first_air_date)
-            // }
             // console.log(keyword, res?.items, item)
-            if (res && res.items.length > 0) {
+            if (!res || res.items.length === 0) return;
 
-              // filter lấy ra các phim cùng quốc gia, cùng năm, cùng loại
-              // find phim có id = tmdb_id
-              const filteredVideos = res.items.filter((video) => country ? video.country.find(({ slug }) => slug === country.slug && video.type === 'series' && item.first_air_date?.includes(video.year + '')) : true)
-              // console.log(keyword, filteredVideos)
-              let result = filteredVideos.find((value) => item.id === value.tmdb.id);
-              // nếu không có video có tmdb_id thì tìm video có tên giống với keyword
-              if (!result) {
-                result = filteredVideos.find((value) => value.name.toLowerCase() === keyword.toLowerCase() || value.origin_name.toLowerCase() === keyword.toLowerCase())
-              }
+            // filter lấy ra các phim cùng quốc gia, cùng loại
+            // không có so sánh cùng năm vì api để dữ liệu năm sai
+            // find phim có id = tmdb_id
+            const filteredVideos = res.items.filter((video) => country ? video.country.find(({ slug }) => slug === country.slug && video.type === 'series') : true)
 
-
-              if (result) {
-                setTvList((prev) => {
-                  const next = [...prev.filter((item) => item._id !== result._id), result];
-
-                  return next.sort(
-                    (a, b) =>
-                      new Date(b.modified.time).getTime() -
-                      new Date(a.modified.time).getTime(),
-                  );
-                });
-              }
+            let result = filteredVideos.find((value) => item.id === value.tmdb.id);
+            // nếu không có video có tmdb_id thì tìm video có tên giống với keyword
+            if (!result) {
+              result = filteredVideos.find((value) => value.name.toLowerCase() === keyword.toLowerCase() || value.origin_name.toLowerCase() === keyword.toLowerCase())
             }
+
+            if (!result) return;
+
+            setTvList((prev) => {
+              const next = [...prev.filter((item) => item._id !== result._id), result];
+
+              return next.sort(
+                (a, b) =>
+                  new Date(b.modified.time).getTime() -
+                  new Date(a.modified.time).getTime(),
+              );
+            });
 
           });
         }
@@ -81,32 +77,30 @@ export default function CastVideos({ cast }: Props) {
 
           data.cast.forEach(async (item) => {
             const keyword = item.title.split(" - ")[0];;
-            // console.log(keyword)
+
             const res = await videosApi.search({ keyword });
 
-            if (res && res.items.length > 0) {
-              // filter lấy ra các phim cùng quốc gia
-              // find phim có id = tmdb_id
-              const filteredVideos = res.items.filter((video) => country ? video.country.find(({ slug }) => slug === country.slug && video.type === 'single' && item.release_date?.includes(video.year + '')) : true)
-              let result = filteredVideos.find((value) => item.id === value.tmdb.id);
-              // nếu không có video có tmdb_id thì tìm video có tên giống với keyword
-              if (!result) {
-                result = filteredVideos.find((value) => value.name.toLowerCase() === keyword.toLowerCase() || value.origin_name.toLowerCase() === keyword.toLowerCase())
-              }
+            if (!res || res.items.length === 0) return;
 
+            const filteredVideos = res.items.filter((video) => country ? video.country.find(({ slug }) => slug === country.slug && video.type === 'single') : true)
 
-              if (result) {
-                setMovieList((prev) => {
-                  const next = [...prev.filter((item) => item._id !== result._id), result];
+            let result = filteredVideos.find((value) => item.id === value.tmdb.id);
 
-                  return next.sort(
-                    (a, b) =>
-                      new Date(b.modified.time).getTime() -
-                      new Date(a.modified.time).getTime(),
-                  );
-                });
-              }
+            if (!result) {
+              result = filteredVideos.find((value) => value.name.toLowerCase() === keyword.toLowerCase() || value.origin_name.toLowerCase() === keyword.toLowerCase())
             }
+
+            if (!result) return;
+
+            setMovieList((prev) => {
+              const next = [...prev.filter((item) => item._id !== result._id), result];
+
+              return next.sort(
+                (a, b) =>
+                  new Date(b.modified.time).getTime() -
+                  new Date(a.modified.time).getTime(),
+              );
+            });
           });
         }
       } finally {

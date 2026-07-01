@@ -27,10 +27,14 @@ export default function CastImages({ cast }: CastImagesProps) {
         setIsLoading(false)
       }
     })()
-  }, [cast])
+  }, [cast]);
+
+  if (isLoading) return null;
 
   const filteredImages = images.filter(({ file_path }) => file_path !== cast.profile_path);
+
   if (filteredImages.length === 0) return null;
+
   return (
     <div className="rounded-xl bg-muted/40 p-4">
       <div className="mb-4 flex items-center gap-2">

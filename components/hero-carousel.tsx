@@ -5,7 +5,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import VideoImage from "@/features/videos/components/video-image";

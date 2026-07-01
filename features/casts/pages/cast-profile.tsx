@@ -14,12 +14,16 @@ type CastProfilePageProps = {
 
 export default function CastProfilePage({ id }: CastProfilePageProps) {
   const [details, setDetails] = useState<TCastProfile | null>(null);
-  const [isFetched, setIsFetched] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>();
   useEffect(() => {
-    castsApi.getDetails(id).then((data) => setDetails(data)).finally(() => setIsFetched(true))
+    setIsLoading(true);
+    castsApi.getDetails(id)
+      .then((data) => setDetails(data))
+      .finally(() => setIsLoading(false))
   }, [id]);
 
-  if (!isFetched) return null;
+
+  if (isLoading) return null;
 
   if (!details) return <div className="flex flex-col items-center justify-center py-20 text-center">
     <div className="max-w-md rounded-2xl border bg-secondary p-6 shadow-sm">
@@ -41,6 +45,7 @@ export default function CastProfilePage({ id }: CastProfilePageProps) {
       </Button>
     </div>
   </div>;
+
   return (
     <div className="_container py-4">
       <div className="grid grid-cols-4 gap-4">

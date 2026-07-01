@@ -27,30 +27,4 @@ export default async function Page({ params }: Props) {
   const awaitedParams = await params;
 
   return <CastProfilePage id={awaitedParams.castId} />
-
-  // const castDetails = await castsApi.getDetails(awaitedParams.castId);
-
-  // if (!castDetails) return null;
-
-  // return (
-  //   <div className="_container py-4">
-  //     <div className="grid grid-cols-4 gap-4">
-  //       <div className="col-span-4">
-  //         <Breadcrumb
-  //           items={[
-  //             {
-  //               isCurrent: true,
-  //               name: castDetails.name,
-  //               position: 1,
-  //             },
-  //           ]}
-  //         />
-  //       </div>
-  //       <div className="col-span-4 md:col-span-1">
-  //         <CastProfile {...castDetails} />
-  //       </div>
-  //       <CastVideos castId={awaitedParams.castId} />
-  //     </div>
-  //   </div>
-  // );
 }
